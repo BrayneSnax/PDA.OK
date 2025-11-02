@@ -17,26 +17,26 @@ interface Props {
 const getTimeGlowStyle = (container: ContainerId) => {
   const glowStyles = {
     morning: {
-      backgroundColor: '#F5E6CC28', // Increased opacity from 15 to 28
-      borderColor: '#F5E6CC60', // Increased from 40 to 60
+      backgroundColor: '#F5E6CC45', // Increased from 28 to 45
+      borderColor: '#F5E6CC80', // Increased from 60 to 80
       shadowColor: '#F5E6CC',
       labelColor: '#D4A574',
     },
     afternoon: {
-      backgroundColor: '#B0E0E625', // Increased from 12 to 25
-      borderColor: '#B0E0E655', // Increased from 35 to 55
+      backgroundColor: '#B0E0E640', // Increased from 25 to 40
+      borderColor: '#B0E0E675', // Increased from 55 to 75
       shadowColor: '#B0E0E6',
       labelColor: '#5FA8B8',
     },
     evening: {
-      backgroundColor: '#8C4B3F30', // Increased from 18 to 30
-      borderColor: '#8C4B3F65', // Increased from 45 to 65
+      backgroundColor: '#8C4B3F48', // Increased from 30 to 48
+      borderColor: '#8C4B3F85', // Increased from 65 to 85
       shadowColor: '#8C4B3F',
       labelColor: '#E8B4A8',
     },
     late: {
-      backgroundColor: '#3A3F4528', // Increased from 15 to 28
-      borderColor: '#3A3F4560', // Increased from 40 to 60
+      backgroundColor: '#3A3F4545', // Increased from 28 to 45
+      borderColor: '#3A3F4580', // Increased from 60 to 80
       shadowColor: '#3A3F45',
       labelColor: '#8B9DC3',
     },
@@ -342,10 +342,10 @@ const styles = StyleSheet.create({
     padding: 18, // Increased from 14 for more breathing room
     marginBottom: 14, // Increased from 8 for better separation
     borderWidth: 1,
-    shadowOffset: { width: 0, height: 3 }, // Increased from 2
-    shadowOpacity: 0.18, // Increased from 0.08 for deeper glow
-    shadowRadius: 10, // Increased from 6 for wider glow
-    elevation: 4, // Increased from 2
+    shadowOffset: { width: 0, height: 4 }, // Increased from 3
+    shadowOpacity: 0.28, // Increased from 0.18 for even deeper glow
+    shadowRadius: 14, // Increased from 10 for wider glow spread
+    elevation: 6, // Increased from 4
   },
   largeBlock: {
     minHeight: 90, // Increased from 75
