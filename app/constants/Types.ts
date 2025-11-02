@@ -71,6 +71,20 @@ export interface Pattern {
   category?: string; // Optional: 'anchor', 'substance', 'time', 'general'
 }
 
+export interface Conversation {
+  id: string;
+  date: string; // YYYY-MM-DDTHH:mm:ss.sssZ
+  timestamp: number;
+  substanceName: string; // e.g., "Cannabis"
+  substanceMythicName?: string; // e.g., "Green Godmother"
+  archetypeName?: string; // e.g., "Analyst" (if archetype was active)
+  messages: Array<{
+    speaker: string; // "Green Godmother", "Analyst", "The Field"
+    text: string;
+    speakerType: 'substance' | 'archetype' | 'field';
+  }>;
+}
+
 export interface FoodEntry {
   id: string;
   date: string; // YYYY-MM-DDTHH:mm:ss.sssZ
@@ -113,6 +127,7 @@ export interface AppState {
   patterns: Pattern[];
   foodEntries: FoodEntry[];
   archetypes: Archetype[]; // User's archetypes (includes defaults + custom)
+  conversations: Conversation[]; // Substance-archetype dialogues
   activeContainer: ContainerId;
 
 }

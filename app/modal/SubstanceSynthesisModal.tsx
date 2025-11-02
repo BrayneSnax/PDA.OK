@@ -12,7 +12,7 @@ interface Props {
   onClose: () => void;
   momentData: Partial<Moment>;
   colors: ColorScheme;
-  onConversationGenerated?: (messages: Array<{speaker: string; text: string; speakerType: 'substance' | 'archetype' | 'field'}>) => void;
+  onConversationGenerated?: (messages: Array<{speaker: string; text: string; speakerType: 'substance' | 'archetype' | 'field'}>, conversationData?: any) => void;
   activeArchetype?: any;
 }
 
@@ -39,7 +39,7 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
     }
   }, [isVisible]);
 
-  const handleSave = async () => {
+  const handleSave = () => {
     if (!synthesisState.intention || !synthesisState.sensation || !synthesisState.reflection) {
       alert('Please fill in Intention, Sensation, and Reflection before saving.');
       return;
@@ -61,15 +61,12 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
 
     addSubstanceMoment(finalMoment);
     
-    // Generate conversation if substance name is available and callback provided
-    if (onConversationGenerated && momentData.allyName) {
-      // Generate conversation and wait for it to complete
-      await generateConversation(momentData.allyName, synthesisState.intention, synthesisState.synthesis);
-      // Close modal after a brief delay to ensure state updates
-      setTimeout(() => onClose(), 150);
-    } else {
-      onClose();
+    // Generate conversation silently for internal coherence (saved to journal)
+    if (momentData.allyName) {
+      generateConversation(momentData.allyName, synthesisState.intention, synthesisState.synthesis);
     }
+    
+    onClose();
   };
 
   const handleTextChange = (key: keyof typeof synthesisState, value: string) => {
@@ -125,9 +122,19 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
         }
       }
 
-      // Trigger conversation display
-      if (onConversationGenerated && messages.length > 0) {
-        onConversationGenerated(messages);
+      // Save conversation to storage (no popup)
+      if (messages.length > 0) {
+        const mythicName = (momentData as any).allyMythicName;
+        const conversationData = {
+          substanceName,
+          substanceMythicName: mythicName,
+          archetypeName: activeArchetype?.name,
+          messages,
+        };
+        // Call onConversationGenerated which should now save to storage
+        if (onConversationGenerated) {
+          onConversationGenerated(messages, conversationData);
+        }
       }
     } catch (error) {
       console.error('Error generating conversation:', error);

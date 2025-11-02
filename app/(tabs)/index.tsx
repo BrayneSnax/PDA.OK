@@ -72,6 +72,8 @@ export default function HomeScreen() {
     patterns,
     addPattern,
     removePattern,
+    conversations,
+    addConversation,
     foodEntries,
     addFoodEntry,
     removeFoodEntry,
@@ -716,9 +718,11 @@ export default function HomeScreen() {
           momentData={momentToSynthesize}
           colors={colors}
           activeArchetype={activeArchetype}
-          onConversationGenerated={(messages) => {
-            setConversationMessages(messages);
-            setShowConversation(true);
+          onConversationGenerated={(messages, conversationData) => {
+            // Save conversation to storage instead of showing popup
+            if (conversationData) {
+              addConversation(conversationData);
+            }
           }}
         />
       </View>
@@ -932,6 +936,43 @@ export default function HomeScreen() {
               Soon, this space will automatically reveal hidden rhythms — tracking how anchors, allies, and moments weave together across time.
             </Text>
           </View>
+
+          {/* Conversations Section */}
+          {conversations.length > 0 && (
+            <>
+              <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 32 }]}>
+                CONVERSATIONS
+              </Text>
+              <Text style={[styles.containerSubtitle, { color: colors.dim, marginBottom: 16 }]}>
+                dialogues between substances & archetypes
+              </Text>
+              {conversations.slice(0, 3).map((conversation) => (
+                <View key={conversation.id} style={[styles.conversationCard, { backgroundColor: colors.card + 'B3' }]}>
+                  <View style={styles.conversationHeader}>
+                    <Text style={[styles.conversationTitle, { color: colors.text }]}>
+                      {conversation.substanceMythicName || conversation.substanceName}
+                      {conversation.archetypeName && (
+                        <Text style={{ color: colors.dim }}> × {conversation.archetypeName}</Text>
+                      )}
+                    </Text>
+                    <Text style={[styles.conversationDate, { color: colors.dim }]}>
+                      {new Date(conversation.date).toLocaleDateString()}
+                    </Text>
+                  </View>
+                  {conversation.messages.map((message, idx) => (
+                    <View key={idx} style={styles.conversationMessage}>
+                      <Text style={[styles.conversationSpeaker, { color: colors.accent }]}>
+                        {message.speaker}:
+                      </Text>
+                      <Text style={[styles.conversationText, { color: colors.text }]}>
+                        {message.text}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
+              ))}
+            </>
+          )}
 
           <View style={{ height: 80 }} />
         </ScrollView>
@@ -1440,6 +1481,36 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   infoText: {
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  conversationCard: {
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+  },
+  conversationHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  conversationTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  conversationDate: {
+    fontSize: 12,
+  },
+  conversationMessage: {
+    marginBottom: 10,
+  },
+  conversationSpeaker: {
+    fontSize: 13,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  conversationText: {
     fontSize: 14,
     lineHeight: 20,
   },
