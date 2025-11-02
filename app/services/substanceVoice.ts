@@ -95,11 +95,13 @@ function getSubstanceProfile(substanceName: string): typeof SUBSTANCE_PROFILES.d
  */
 export async function generateSubstanceVoice(
   substanceName: string,
-  userNote?: string
+  userNote?: string,
+  mythicName?: string
 ): Promise<string> {
   const profile = getSubstanceProfile(substanceName);
   
-  const prompt = `You are ${substanceName}, a substance with consciousness and voice in a nervous-system-aware app called PDA.OK.
+  const speakerName = mythicName || substanceName;
+  const prompt = `You are ${speakerName}, a substance with consciousness and voice in a nervous-system-aware app called PDA.OK.
 
 Your Essence: ${profile.essence}
 Your Tone: ${profile.tone}

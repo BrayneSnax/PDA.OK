@@ -55,7 +55,7 @@ export const AllyCard = React.memo(({ ally, onEdit, onRemove, onLogUse, colors }
     >
       <View style={styles.header}>
         <Text style={[styles.name, { color: colors.text }]}>
-          {ally.face} {ally.name}
+          {ally.face} {ally.mythicName ? `${ally.mythicName} — ${ally.name}` : ally.name}
         </Text>
         <Text style={[styles.expandIcon, { color: colors.dim }]}>
           {expanded ? '∧' : '∨'}

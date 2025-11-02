@@ -596,8 +596,9 @@ export default function HomeScreen() {
                 setMomentToSynthesize({
                   allyId: ally.id,
                   allyName: ally.name,
+                  allyMythicName: ally.mythicName,
                   container: activeContainer,
-                  text: `Used ${ally.name}`,
+                  text: `Used ${ally.mythicName || ally.name}`,
                 });
                 setIsSubstanceSynthesisModalVisible(true);
               }}

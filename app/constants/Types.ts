@@ -21,7 +21,8 @@ export interface ContainerItem {
 
 export interface Ally {
   id: string;
-  name: string;
+  name: string; // Chemical/category name (e.g., "Cannabis", "Stimulants")
+  mythicName?: string; // Mythologized name (e.g., "Green Godmother", "Firestarter")
   face: string;
   invocation: string;
   function: string;

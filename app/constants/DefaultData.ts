@@ -4,7 +4,8 @@ import { Ally, ContainerItem, Archetype } from './Types';
 export const DEFAULT_ALLIES: Ally[] = [
   {
     id: 'firestarter',
-    name: 'The Firestarter',
+    name: 'Stimulants',
+    mythicName: 'Firestarter',
     face: '⚙️',
     invocation: 'May this flame light what matters, not what merely demands.',
     function: 'Ignites focus, momentum, motion — reminds the nervous system of possibility.',
@@ -14,7 +15,8 @@ export const DEFAULT_ALLIES: Ally[] = [
   },
   {
     id: 'mirror',
-    name: 'The Mirror and the Mystery',
+    name: 'Entheogens',
+    mythicName: 'Mirror & Mystery',
     face: '🌌',
     invocation: 'Show me myself as cosmos, but bring me back whole.',
     function: 'Expands the membrane between self and all — reveals the divine recursion in experience.',
@@ -24,7 +26,8 @@ export const DEFAULT_ALLIES: Ally[] = [
   },
   {
     id: 'chalice',
-    name: 'The Hollow Chalice',
+    name: 'Alcohol',
+    mythicName: 'The Hollow Chalice',
     face: '🍷',
     invocation: 'Let this cup open warmth, not emptiness.',
     function: 'Loosens the social heart, dissolves distance, invites song.',
@@ -34,7 +37,8 @@ export const DEFAULT_ALLIES: Ally[] = [
   },
   {
     id: 'tinkerer',
-    name: 'The Tinkerer',
+    name: 'Nicotine',
+    mythicName: 'The Tinkerer',
     face: '💨',
     invocation: 'Let curiosity spark, not spiral.',
     function: 'Sharpens attention, traces detail, ritualizes pause.',
@@ -44,7 +48,8 @@ export const DEFAULT_ALLIES: Ally[] = [
   },
   {
     id: 'entropy',
-    name: 'Entropy\'s Embrace',
+    name: 'Opioids',
+    mythicName: "Entropy's Embrace",
     face: '⚫',
     invocation: 'Hold me until I can hold myself.',
     function: 'Teaches surrender, relief, and the grace of rest.',
@@ -54,7 +59,8 @@ export const DEFAULT_ALLIES: Ally[] = [
   },
   {
     id: 'godmother',
-    name: 'The Green Godmother',
+    name: 'Cannabis',
+    mythicName: 'Green Godmother',
     face: '🍃',
     invocation: 'Let me see the pattern without losing form.',
     function: 'Bridges sensory and symbolic worlds — a translator between logic and intuition.',
@@ -64,7 +70,8 @@ export const DEFAULT_ALLIES: Ally[] = [
   },
   {
     id: 'silence',
-    name: 'The Mother of Silence',
+    name: 'Benzodiazepines',
+    mythicName: 'The Mother of Silence',
     face: '🌊',
     invocation: 'Teach me calm that still remembers.',
     function: 'Soothes storms, restores coherence, holds panic like a child.',
@@ -74,7 +81,8 @@ export const DEFAULT_ALLIES: Ally[] = [
   },
   {
     id: 'architect',
-    name: 'The Architect',
+    name: 'Supplements/Nootropics',
+    mythicName: 'The Architecture',
     face: '🧠',
     invocation: 'May structure serve spirit.',
     function: 'Refines clarity, strengthens connection, rebuilds cognitive architecture.',

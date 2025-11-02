@@ -79,10 +79,12 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
     try {
       // Generate substance voice
       const userNote = `${intention}. ${synthesis}`.trim();
-      const substanceMessage = await generateSubstanceVoice(substanceName, userNote);
+      const mythicName = (momentData as any).allyMythicName;
+      const displayName = mythicName || substanceName;
+      const substanceMessage = await generateSubstanceVoice(substanceName, userNote, mythicName);
       
       messages.push({
-        speaker: substanceName,
+        speaker: displayName,
         text: substanceMessage,
         speakerType: 'substance',
       });
