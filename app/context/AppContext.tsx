@@ -97,7 +97,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         patterns: Array.isArray(savedState.patterns) ? savedState.patterns : [],
         foodEntries: Array.isArray(savedState.foodEntries) ? savedState.foodEntries : [],
         archetypes: Array.isArray(savedState.archetypes) && savedState.archetypes.length > 0 ? savedState.archetypes : DEFAULT_ARCHETYPES,
-        activeContainer: savedState.activeContainer || getCurrentContainer(),
+        activeContainer: getCurrentContainer(), // Always use current time, don't load stale value
       } as AppState;
 
       setItems(normalized.items);

@@ -103,10 +103,10 @@ export const ThresholdCard: React.FC<ThresholdCardProps> = ({
         }),
       ]).start();
 
-      // Auto-dismiss after 2000ms (matching ActionToast timing)
+      // Auto-dismiss after 2500ms
       const timer = setTimeout(() => {
         dismissCard();
-      }, 2000);
+      }, 2500);
 
       return () => clearTimeout(timer);
     }
