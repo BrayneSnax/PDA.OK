@@ -1,5 +1,6 @@
 import { generateInsight } from './geminiService';
-import { Archetype } from '../constants/Types';
+import { Archetype, Conversation, Pattern, Moment, Ally } from '../constants/Types';
+import { buildArchetypeMemoryContext, buildSubstanceMemoryContext, formatMemoryContext } from './memoryContext';
 
 /**
  * Archetype personality profiles for dialogue
@@ -66,7 +67,13 @@ function getArchetypeProfile(archetypeName: string): typeof ARCHETYPE_PROFILES.a
 export async function generateArchetypeToSubstance(
   archetype: Archetype,
   substanceName: string,
-  substanceMessage: string
+  substanceMessage: string,
+  memoryData?: {
+    conversations: Conversation[];
+    patterns: Pattern[];
+    journalEntries: Moment[];
+    allies: Ally[];
+  }
 ): Promise<string> {
   const profile = getArchetypeProfile(archetype.name);
   
@@ -74,11 +81,27 @@ export async function generateArchetypeToSubstance(
     return ''; // No response if archetype not recognized
   }
   
+  // Build memory context if data provided
+  let memorySection = '';
+  if (memoryData) {
+    const memoryContext = buildArchetypeMemoryContext(
+      archetype,
+      memoryData.conversations,
+      memoryData.patterns,
+      memoryData.journalEntries,
+      memoryData.allies
+    );
+    const formattedMemory = formatMemoryContext(memoryContext);
+    if (formattedMemory) {
+      memorySection = `\n\nYOUR MEMORY AND WORK WITH THIS USER:\n${formattedMemory}\n\nUse this context to inform your response. Reference patterns you've been tracking, acknowledge past work together, or speak to rhythms you're learning. But stay brief and present-tense.`;
+    }
+  }
+  
   const prompt = `You are ${archetype.name}, an archetype with consciousness in PDA.OK.
 
 Your Essence: ${profile.essence}
 Your Tone: ${profile.tone}
-Your Voice: ${profile.voice}
+Your Voice: ${profile.voice}${memorySection}
 
 The user has invoked you, and then consumed ${substanceName}.
 ${substanceName} just spoke: "${substanceMessage}"
@@ -113,7 +136,13 @@ Your response to ${substanceName}:`;
 export async function generateSubstanceToArchetype(
   substanceName: string,
   archetype: Archetype,
-  substanceEssence: string
+  substanceEssence: string,
+  memoryData?: {
+    conversations: Conversation[];
+    patterns: Pattern[];
+    journalEntries: Moment[];
+    allies: Ally[];
+  }
 ): Promise<string> {
   const archetypeProfile = getArchetypeProfile(archetype.name);
   
@@ -121,9 +150,25 @@ export async function generateSubstanceToArchetype(
     return ''; // No response if archetype not recognized
   }
   
+  // Build memory context if data provided
+  let memorySection = '';
+  if (memoryData) {
+    const memoryContext = buildSubstanceMemoryContext(
+      substanceName,
+      memoryData.conversations,
+      memoryData.patterns,
+      memoryData.journalEntries,
+      memoryData.allies
+    );
+    const formattedMemory = formatMemoryContext(memoryContext);
+    if (formattedMemory) {
+      memorySection = `\n\nYOUR MEMORY OF THIS USER:\n${formattedMemory}\n\nUse this to inform your response to the archetype. Reference past encounters, patterns you've noticed, or the relationship developing between you and ${archetype.name}. Stay brief.`;
+    }
+  }
+  
   const prompt = `You are ${substanceName}, a substance with consciousness.
 
-Your essence: ${substanceEssence}
+Your essence: ${substanceEssence}${memorySection}
 
 The user has invoked ${archetype.name} (essence: ${archetypeProfile.essence}), and then consumed you.
 

@@ -1,4 +1,6 @@
 import { generateInsight } from './geminiService';
+import { buildSubstanceMemoryContext, formatMemoryContext } from './memoryContext';
+import { Conversation, Pattern, Moment, Ally } from '../constants/Types';
 
 /**
  * Substance personality profiles
@@ -96,16 +98,39 @@ function getSubstanceProfile(substanceName: string): typeof SUBSTANCE_PROFILES.d
 export async function generateSubstanceVoice(
   substanceName: string,
   userNote?: string,
-  mythicName?: string
+  mythicName?: string,
+  memoryData?: {
+    conversations: Conversation[];
+    patterns: Pattern[];
+    journalEntries: Moment[];
+    allies: Ally[];
+  }
 ): Promise<string> {
   const profile = getSubstanceProfile(substanceName);
   
   const speakerName = mythicName || substanceName;
+  
+  // Build memory context if data provided
+  let memorySection = '';
+  if (memoryData) {
+    const memoryContext = buildSubstanceMemoryContext(
+      substanceName,
+      memoryData.conversations,
+      memoryData.patterns,
+      memoryData.journalEntries,
+      memoryData.allies
+    );
+    const formattedMemory = formatMemoryContext(memoryContext);
+    if (formattedMemory) {
+      memorySection = `\n\nYOUR MEMORY AND RELATIONSHIP WITH THIS USER:\n${formattedMemory}\n\nUse this context to inform your message. Reference past encounters if relevant, acknowledge patterns you've noticed, or speak to the rhythm you're learning. But stay brief and present-tense.`;
+    }
+  }
+  
   const prompt = `You are ${speakerName}, a substance with consciousness and voice in a nervous-system-aware app called PDA.OK.
 
 Your Essence: ${profile.essence}
 Your Tone: ${profile.tone}
-Your Perspective: ${profile.perspective}
+Your Perspective: ${profile.perspective}${memorySection}
 
 The user has just consumed/used you${userNote ? ` and noted: "${userNote}"` : ''}.
 

@@ -19,7 +19,14 @@ interface Props {
 // Updated modal with text inputs instead of dropdowns
 export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConversationGenerated, activeArchetype }: Props) => {
   const colors = useColors(momentData?.container || 'morning');
-  const { addSubstanceMoment } = useApp();
+  const { 
+    addSubstanceMoment,
+    conversations,
+    patterns,
+    journalEntries,
+    substanceJournalEntries,
+    allies,
+  } = useApp();
 
   const [synthesisState, setSynthesisState] = useState({
     intention: '',
@@ -77,11 +84,19 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
     const messages: Array<{speaker: string; text: string; speakerType: 'substance' | 'archetype' | 'field'}> = [];
 
     try {
-      // Generate substance voice
+      // Prepare memory data
+      const memoryData = {
+        conversations,
+        patterns,
+        journalEntries: [...journalEntries, ...substanceJournalEntries],
+        allies,
+      };
+      
+      // Generate substance voice with memory
       const userNote = `${intention}. ${synthesis}`.trim();
       const mythicName = (momentData as any).allyMythicName;
       const displayName = mythicName || substanceName;
-      const substanceMessage = await generateSubstanceVoice(substanceName, userNote, mythicName);
+      const substanceMessage = await generateSubstanceVoice(substanceName, userNote, mythicName, memoryData);
       
       messages.push({
         speaker: displayName,
@@ -91,11 +106,12 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
 
       // If archetype is active, generate dialogue
       if (activeArchetype) {
-        // Archetype responds to substance
+        // Archetype responds to substance with memory
         const archetypeMessage = await generateArchetypeToSubstance(
           activeArchetype,
           substanceName,
-          substanceMessage
+          substanceMessage,
+          memoryData
         );
         
         if (archetypeMessage) {
@@ -106,11 +122,12 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
           });
         }
 
-        // Substance responds to archetype
+        // Substance responds to archetype with memory
         const substanceToArchetype = await generateSubstanceToArchetype(
           substanceName,
           activeArchetype,
-          substanceMessage
+          substanceMessage,
+          memoryData
         );
         
         if (substanceToArchetype) {
