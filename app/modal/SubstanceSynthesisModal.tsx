@@ -39,7 +39,7 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
     }
   }, [isVisible]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!synthesisState.intention || !synthesisState.sensation || !synthesisState.reflection) {
       alert('Please fill in Intention, Sensation, and Reflection before saving.');
       return;
@@ -63,9 +63,10 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
     
     // Generate conversation if substance name is available and callback provided
     if (onConversationGenerated && momentData.allyName) {
-      // Generate conversation THEN close modal after a brief delay
-      generateConversation(momentData.allyName, synthesisState.intention, synthesisState.synthesis);
-      setTimeout(() => onClose(), 100); // Small delay to ensure state updates
+      // Generate conversation and wait for it to complete
+      await generateConversation(momentData.allyName, synthesisState.intention, synthesisState.synthesis);
+      // Close modal after a brief delay to ensure state updates
+      setTimeout(() => onClose(), 150);
     } else {
       onClose();
     }
