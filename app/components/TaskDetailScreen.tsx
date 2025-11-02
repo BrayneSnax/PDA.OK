@@ -107,7 +107,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
-            marginBottom: (container === 'evening' || container === 'late') ? 22 : 12, // Extra 10px for evening/late
+            marginBottom: container === 'morning' ? 14 : container === 'afternoon' ? 20 : container === 'evening' ? 18 : 18, // Container-specific spacing
           }
         ]}>
           <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>NOTICE</Text>
@@ -152,7 +152,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
-            marginBottom: (container === 'evening' || container === 'late') ? 22 : 12,
+            marginBottom: container === 'morning' ? 14 : container === 'afternoon' ? 20 : container === 'evening' ? 18 : 18,
           }
         ]}>
           <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>ACT</Text>
@@ -198,7 +198,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
               backgroundColor: timeGlow.backgroundColor,
               borderColor: timeGlow.borderColor,
               shadowColor: timeGlow.shadowColor,
-              marginBottom: (container === 'evening' || container === 'late') ? 22 : 12,
+              marginBottom: container === 'morning' ? 14 : container === 'afternoon' ? 20 : container === 'evening' ? 18 : 18,
             }
           ]}>
             <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>REFLECT</Text>
@@ -342,8 +342,8 @@ const styles = StyleSheet.create({
   // Organic glow blocks
   glowBlock: {
     borderRadius: 16,
-    padding: 16, // Increased from 14 for better fit
-    marginBottom: 12, // Increased from 10 for better separation
+    padding: 18, // Base padding
+    marginBottom: 12, // Base margin (overridden per container)
     borderWidth: 1,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.28,
@@ -351,21 +351,21 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   largeBlock: {
-    minHeight: 80, // Increased from 70
+    minHeight: 95, // Increased for expansion targets
   },
   mediumBlock: {
-    minHeight: 85, // Increased from 75
+    minHeight: 100, // Increased for expansion targets
   },
   smallBlock: {
-    minHeight: 75, // Increased from 65
+    minHeight: 90, // Increased for expansion targets
   },
   glowText: {
     textAlign: 'center',
   },
   didItButton: {
     width: '100%',
-    paddingVertical: 10, // Reduced from 12
-    marginBottom: 8, // Reduced from 12
+    paddingVertical: 14, // Increased for expansion
+    marginBottom: 14, // Increased for expansion
     borderRadius: 14,
   },
   didItText: {
@@ -392,11 +392,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   noteInput: {
-    minHeight: 32, // Reduced from 36
+    minHeight: 40, // Increased for expansion
     borderRadius: 14,
-    padding: 8, // Reduced from 10
-    marginTop: 8, // Reduced from 12
-    marginBottom: 8, // Reduced from 10
+    padding: 12, // Increased for expansion
+    marginTop: 14, // Increased for expansion
+    marginBottom: 14, // Increased for expansion
     borderWidth: 1,
     fontSize: 14,
     lineHeight: 19,
