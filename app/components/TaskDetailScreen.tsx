@@ -23,10 +23,10 @@ const getTimeGlowStyle = (container: ContainerId) => {
       labelColor: '#B8864E', // Darker label for contrast
     },
     afternoon: {
-      backgroundColor: '#B0E0E640', // Increased from 25 to 40
-      borderColor: '#B0E0E675', // Increased from 55 to 75
-      shadowColor: '#B0E0E6',
-      labelColor: '#5FA8B8',
+      backgroundColor: '#5FA8B845', // Richer teal/aqua (was pale #B0E0E6)
+      borderColor: '#5FA8B880', // More saturated border
+      shadowColor: '#5FA8B8',
+      labelColor: '#4A8A9A', // Darker for contrast
     },
     evening: {
       backgroundColor: '#8C4B3F48', // Increased from 30 to 48
@@ -311,17 +311,17 @@ const styles = StyleSheet.create({
     paddingTop: 0, // Reduced from 6 to shift content up
   },
   backButton: {
-    paddingVertical: 4,
-    marginBottom: 4,
+    paddingVertical: 2, // Reduced from 4
+    marginBottom: 2, // Reduced from 4
   },
   backText: {
     fontSize: 16,
     fontWeight: '500',
   },
   title: {
-    fontSize: 22,
+    fontSize: 20, // Reduced from 22
     fontWeight: '700',
-    marginBottom: 4,
+    marginBottom: 2, // Reduced from 4
   },
   // Label inside the bubble - centered, same color as text
   inlineLabel: {
@@ -339,30 +339,30 @@ const styles = StyleSheet.create({
   // Organic glow blocks
   glowBlock: {
     borderRadius: 16,
-    padding: 18, // Increased from 14 for more breathing room
-    marginBottom: 14, // Increased from 8 for better separation
+    padding: 14, // Reduced from 18 to fit tightly
+    marginBottom: 10, // Reduced from 14 to compress vertically
     borderWidth: 1,
-    shadowOffset: { width: 0, height: 4 }, // Increased from 3
-    shadowOpacity: 0.28, // Increased from 0.18 for even deeper glow
-    shadowRadius: 14, // Increased from 10 for wider glow spread
-    elevation: 6, // Increased from 4
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.28,
+    shadowRadius: 14,
+    elevation: 6,
   },
   largeBlock: {
-    minHeight: 90, // Increased from 75
+    minHeight: 70, // Reduced from 90
   },
   mediumBlock: {
-    minHeight: 95, // Increased from 78
+    minHeight: 75, // Reduced from 95
   },
   smallBlock: {
-    minHeight: 85, // Increased from 72
+    minHeight: 65, // Reduced from 85
   },
   glowText: {
     textAlign: 'center',
   },
   didItButton: {
     width: '100%',
-    paddingVertical: 12,
-    marginBottom: 12,
+    paddingVertical: 10, // Reduced from 12
+    marginBottom: 8, // Reduced from 12
     borderRadius: 14,
   },
   didItText: {
@@ -389,11 +389,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   noteInput: {
-    minHeight: 36,
+    minHeight: 32, // Reduced from 36
     borderRadius: 14,
-    padding: 10,
-    marginTop: 12,
-    marginBottom: 10,
+    padding: 8, // Reduced from 10
+    marginTop: 8, // Reduced from 12
+    marginBottom: 8, // Reduced from 10
     borderWidth: 1,
     fontSize: 14,
     lineHeight: 19,
