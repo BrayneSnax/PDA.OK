@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
   // Organic glow blocks
   glowBlock: {
     borderRadius: 16,
-    padding: 18, // Base padding
+    padding: 16, // Reduced to compress
     marginBottom: 12, // Base margin (overridden per container)
     borderWidth: 1,
     shadowOffset: { width: 0, height: 4 },
@@ -351,21 +351,21 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   largeBlock: {
-    minHeight: 95, // Increased for expansion targets
+    minHeight: 85, // Reduced to fit all buttons
   },
   mediumBlock: {
-    minHeight: 100, // Increased for expansion targets
+    minHeight: 90, // Reduced to fit all buttons
   },
   smallBlock: {
-    minHeight: 90, // Increased for expansion targets
+    minHeight: 80, // Reduced to fit all buttons
   },
   glowText: {
     textAlign: 'center',
   },
   didItButton: {
     width: '100%',
-    paddingVertical: 14, // Increased for expansion
-    marginBottom: 14, // Increased for expansion
+    paddingVertical: 12, // Reduced to compress
+    marginBottom: 12, // Reduced to compress
     borderRadius: 14,
   },
   didItText: {
@@ -392,11 +392,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   noteInput: {
-    minHeight: 40, // Increased for expansion
+    minHeight: 36, // Reduced to compress
     borderRadius: 14,
-    padding: 12, // Increased for expansion
-    marginTop: 14, // Increased for expansion
-    marginBottom: 14, // Increased for expansion
+    padding: 10, // Reduced to compress
+    marginTop: 12, // Reduced to compress
+    marginBottom: 12, // Reduced to compress
     borderWidth: 1,
     fontSize: 14,
     lineHeight: 19,
