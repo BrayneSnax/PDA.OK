@@ -4,16 +4,20 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Modal 
 import { ContainerId, ColorScheme, Moment } from '../constants/Types';
 import { useApp } from '../context/AppContext';
 import useColors from '../hooks/useColors';
+import { generateSubstanceVoice } from '../services/substanceVoice';
+import { generateArchetypeToSubstance, generateSubstanceToArchetype } from '../services/archetypeDialogue';
 
 interface Props {
   isVisible: boolean;
   onClose: () => void;
   momentData: Partial<Moment>;
   colors: ColorScheme;
+  onConversationGenerated?: (messages: Array<{speaker: string; text: string; speakerType: 'substance' | 'archetype' | 'field'}>) => void;
+  activeArchetype?: any;
 }
 
 // Updated modal with text inputs instead of dropdowns
-export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData }: Props) => {
+export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConversationGenerated, activeArchetype }: Props) => {
   const colors = useColors(momentData?.container || 'morning');
   const { addSubstanceMoment } = useApp();
 
@@ -56,11 +60,73 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData }: Prop
     } as Omit<Moment, 'id' | 'timestamp' | 'date'>;
 
     addSubstanceMoment(finalMoment);
+    
+    // Generate conversation if substance name is available and callback provided
+    if (onConversationGenerated && momentData.allyName) {
+      generateConversation(momentData.allyName, synthesisState.intention, synthesisState.synthesis);
+    }
+    
     onClose();
   };
 
   const handleTextChange = (key: keyof typeof synthesisState, value: string) => {
     setSynthesisState(prev => ({ ...prev, [key]: value }));
+  };
+
+  const generateConversation = async (substanceName: string, intention: string, synthesis: string) => {
+    const messages: Array<{speaker: string; text: string; speakerType: 'substance' | 'archetype' | 'field'}> = [];
+
+    try {
+      // Generate substance voice
+      const userNote = `${intention}. ${synthesis}`.trim();
+      const substanceMessage = await generateSubstanceVoice(substanceName, userNote);
+      
+      messages.push({
+        speaker: substanceName,
+        text: substanceMessage,
+        speakerType: 'substance',
+      });
+
+      // If archetype is active, generate dialogue
+      if (activeArchetype) {
+        // Archetype responds to substance
+        const archetypeMessage = await generateArchetypeToSubstance(
+          activeArchetype,
+          substanceName,
+          substanceMessage
+        );
+        
+        if (archetypeMessage) {
+          messages.push({
+            speaker: activeArchetype.name,
+            text: archetypeMessage,
+            speakerType: 'archetype',
+          });
+        }
+
+        // Substance responds to archetype
+        const substanceToArchetype = await generateSubstanceToArchetype(
+          substanceName,
+          activeArchetype,
+          substanceMessage
+        );
+        
+        if (substanceToArchetype) {
+          messages.push({
+            speaker: substanceName,
+            text: substanceToArchetype,
+            speakerType: 'substance',
+          });
+        }
+      }
+
+      // Trigger conversation display
+      if (onConversationGenerated && messages.length > 0) {
+        onConversationGenerated(messages);
+      }
+    } catch (error) {
+      console.error('Error generating conversation:', error);
+    }
   };
 
   return (

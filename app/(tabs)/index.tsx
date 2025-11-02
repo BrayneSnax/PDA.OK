@@ -24,6 +24,7 @@ import { ContainerId } from '../constants/Types';
 import { TemporalIntelligenceCard } from '../components/TemporalIntelligenceCard';
 import { DailySynthesisCard } from '../components/DailySynthesisCard';
 import { SynthesisHistoryModal } from '../components/SynthesisHistoryModal';
+import { ConversationCard } from '../components/ConversationCard';
 import { CompletionPulse } from '../components/CompletionPulse';
 import { ShiftToast } from '../components/ShiftToast';
 import { ActionToast } from '../components/ActionToast';
@@ -101,6 +102,8 @@ export default function HomeScreen() {
   const [isAddAllyModalVisible, setIsAddAllyModalVisible] = useState(false);
   const [isEditAllyModalVisible, setIsEditAllyModalVisible] = useState(false);
   const [isSynthesisHistoryVisible, setIsSynthesisHistoryVisible] = useState(false);
+  const [showConversation, setShowConversation] = useState(false);
+  const [conversationMessages, setConversationMessages] = useState<Array<{speaker: string; text: string; speakerType: 'substance' | 'archetype' | 'field'}>>([]);
   const [isSynthesisModalVisible, setIsSynthesisModalVisible] = useState(false);
   const [isSubstanceSynthesisModalVisible, setIsSubstanceSynthesisModalVisible] = useState(false);
   const [allyToEdit, setAllyToEdit] = useState(null);
@@ -528,6 +531,16 @@ export default function HomeScreen() {
           onClose={() => setIsSynthesisHistoryVisible(false)}
           colors={colors}
         />
+
+        <ConversationCard
+          isVisible={showConversation}
+          messages={conversationMessages}
+          colors={colors}
+          onDismiss={() => {
+            setShowConversation(false);
+            setConversationMessages([]);
+          }}
+        />
         
         {/* Return Node - appears when archetype is active */}
         {activeArchetype && (
@@ -701,6 +714,11 @@ export default function HomeScreen() {
           }}
           momentData={momentToSynthesize}
           colors={colors}
+          activeArchetype={activeArchetype}
+          onConversationGenerated={(messages) => {
+            setConversationMessages(messages);
+            setShowConversation(true);
+          }}
         />
       </View>
     );
