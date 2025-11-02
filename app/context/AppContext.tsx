@@ -21,6 +21,7 @@ interface AppContextType extends AppState {
   addPattern: (pattern: Omit<Pattern, 'id' | 'timestamp' | 'date'>) => void;
   removePattern: (id: string) => void;
   addConversation: (conversation: Omit<import('../constants/Types').Conversation, 'id' | 'timestamp' | 'date'>) => void;
+  addFieldWhisper: (whisper: Omit<import('../constants/Types').FieldWhisper, 'id' | 'timestamp' | 'date'>) => void;
   addFoodEntry: (entry: Omit<FoodEntry, 'id' | 'timestamp' | 'date'>) => void;
   removeFoodEntry: (id: string) => void;
   addArchetype: (archetype: Omit<import('../constants/Types').Archetype, 'id'>) => void;
@@ -53,6 +54,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [patterns, setPatterns] = useState<Pattern[]>([]);
   const [foodEntries, setFoodEntries] = useState<FoodEntry[]>([]);
   const [conversations, setConversations] = useState<import('../constants/Types').Conversation[]>([]);
+  const [fieldWhispers, setFieldWhispers] = useState<import('../constants/Types').FieldWhisper[]>([]);
   const [archetypes, setArchetypes] = useState<Archetype[]>(DEFAULT_ARCHETYPES);
   const [activeContainer, setActiveContainer] = useState<ContainerId>(getCurrentContainer());
   const [activeArchetypeId, setActiveArchetypeId] = useState<string | null>(null);
@@ -72,7 +74,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, conversations, archetypes, activeContainer, loading]);
+  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, conversations, fieldWhispers, archetypes, activeContainer, loading]);
 
   const loadData = useCallback(async () => {
     const savedState = await loadAppState();
@@ -99,6 +101,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         patterns: Array.isArray(savedState.patterns) ? savedState.patterns : [],
         foodEntries: Array.isArray(savedState.foodEntries) ? savedState.foodEntries : [],
         conversations: Array.isArray(savedState.conversations) ? savedState.conversations : [],
+        fieldWhispers: Array.isArray(savedState.fieldWhispers) ? savedState.fieldWhispers : [],
         archetypes: Array.isArray(savedState.archetypes) && savedState.archetypes.length > 0 ? savedState.archetypes : DEFAULT_ARCHETYPES,
         activeContainer: getCurrentContainer(), // Always use current time, don't load stale value
       } as AppState;
@@ -111,6 +114,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setPatterns(normalized.patterns);
       setFoodEntries(normalized.foodEntries);
       setConversations(normalized.conversations);
+      setFieldWhispers(normalized.fieldWhispers);
       setArchetypes(normalized.archetypes);
       setActiveContainer(normalized.activeContainer);
 
@@ -128,11 +132,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
       patterns,
       foodEntries,
       conversations,
+      fieldWhispers,
       archetypes,
       activeContainer,
 
     });
-  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, conversations, archetypes, activeContainer]);
+  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, conversations, fieldWhispers, archetypes, activeContainer]);
 
   const addItem = useCallback((item: Omit<ContainerItem, 'id'>) => {
     const newItem: ContainerItem = {
@@ -285,6 +290,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setConversations(prev => [newConversation, ...prev]);
   }, []);
 
+  const addFieldWhisper = useCallback((whisper: Omit<import('../constants/Types').FieldWhisper, 'id' | 'timestamp' | 'date'>) => {
+    const now = new Date();
+    const newWhisper: import('../constants/Types').FieldWhisper = {
+      ...whisper,
+      id: generateId(),
+      date: now.toISOString(),
+      timestamp: now.getTime(),
+    };
+    setFieldWhispers(prev => [newWhisper, ...prev]);
+  }, []);
+
   const removePattern = useCallback((id: string) => {
     setPatterns(prev => prev.filter(p => p.id !== id));
   }, []);
@@ -334,6 +350,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     patterns,
     foodEntries,
     conversations,
+    fieldWhispers,
     archetypes,
     activeContainer,
 
@@ -352,6 +369,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     addPattern,
     removePattern,
     addConversation,
+    addFieldWhisper,
     addFoodEntry,
     removeFoodEntry,
     addArchetype,

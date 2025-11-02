@@ -46,6 +46,8 @@ import { ArchetypeDetailModal } from '../modal/ArchetypeDetailModal';
 import { AddArchetypeModal } from '../modal/AddArchetypeModal';
 import { EditArchetypeModal } from '../modal/EditArchetypeModal';
 import { ReturnNode } from '../components/ReturnNode';
+import { FieldWhisperSequence } from '../components/FieldWhisperSequence';
+import { generateFieldWhispers } from '../services/fieldWhisper';
 
 type Screen = 'home' | 'substances' | 'archetypes' | 'patterns' | 'nourish';
 
@@ -74,6 +76,8 @@ export default function HomeScreen() {
     removePattern,
     conversations,
     addConversation,
+    fieldWhispers,
+    addFieldWhisper,
     foodEntries,
     addFoodEntry,
     removeFoodEntry,
@@ -131,6 +135,11 @@ export default function HomeScreen() {
   const [showThresholdCard, setShowThresholdCard] = useState(false);
   const [previousContainer, setPreviousContainer] = useState<ContainerId>(activeContainer);
   const [isManualTransition, setIsManualTransition] = useState(false);
+  
+  // Field Whisper state
+  const [isGeneratingWhispers, setIsGeneratingWhispers] = useState(false);
+  const [activeWhispers, setActiveWhispers] = useState<string[]>([]);
+  const [showWhispers, setShowWhispers] = useState(false);
 
   // Update time every minute
   useEffect(() => {
@@ -170,6 +179,35 @@ export default function HomeScreen() {
   const handlePulseComplete = () => {
     setShowCompletionPulse(false);
     setShowShiftToast(true);
+  };
+
+  // Handle Field Whisper generation
+  const handleListenToField = async () => {
+    setIsGeneratingWhispers(true);
+    try {
+      const whispers = await generateFieldWhispers(
+        conversations,
+        patterns,
+        journalEntries,
+        substanceJournalEntries,
+        allies,
+        archetypes,
+        activeArchetypeId
+      );
+      
+      // Save whispers to storage
+      addFieldWhisper({ whispers });
+      
+      // Display whispers as ephemeral overlay
+      setActiveWhispers(whispers);
+      setShowWhispers(true);
+    } catch (error) {
+      console.error('Error generating Field Whispers:', error);
+      setActiveWhispers(['The Field is listening, but the signal is faint. Try again soon.']);
+      setShowWhispers(true);
+    } finally {
+      setIsGeneratingWhispers(false);
+    }
   };
 
   if (loading) {
@@ -937,6 +975,17 @@ export default function HomeScreen() {
             </Text>
           </View>
 
+          {/* Field Whispers Button */}
+          <TouchableOpacity
+            style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 24 }]}
+            onPress={handleListenToField}
+            disabled={isGeneratingWhispers}
+          >
+            <Text style={[styles.addButtonText, { color: colors.card }]}>
+              {isGeneratingWhispers ? '🌌 The Field is listening...' : '🌌 Listen to the Field'}
+            </Text>
+          </TouchableOpacity>
+
           {/* Conversations Section */}
           {conversations.length > 0 && (
             <>
@@ -989,6 +1038,18 @@ export default function HomeScreen() {
           }}
           colors={colors}
         />
+        
+        {/* Field Whisper Overlay */}
+        {showWhispers && activeWhispers.length > 0 && (
+          <FieldWhisperSequence
+            whispers={activeWhispers}
+            colors={colors}
+            onComplete={() => {
+              setShowWhispers(false);
+              setActiveWhispers([]);
+            }}
+          />
+        )}
       </View>
     );
   }

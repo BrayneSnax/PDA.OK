@@ -85,6 +85,13 @@ export interface Conversation {
   }>;
 }
 
+export interface FieldWhisper {
+  id: string;
+  date: string; // YYYY-MM-DDTHH:mm:ss.sssZ
+  timestamp: number;
+  whispers: string[]; // Array of poetic observations from the Field
+}
+
 export interface FoodEntry {
   id: string;
   date: string; // YYYY-MM-DDTHH:mm:ss.sssZ
@@ -128,6 +135,7 @@ export interface AppState {
   foodEntries: FoodEntry[];
   archetypes: Archetype[]; // User's archetypes (includes defaults + custom)
   conversations: Conversation[]; // Substance-archetype dialogues
+  fieldWhispers: FieldWhisper[]; // Field pattern observations
   activeContainer: ContainerId;
 
 }
