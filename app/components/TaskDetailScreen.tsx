@@ -17,10 +17,10 @@ interface Props {
 const getTimeGlowStyle = (container: ContainerId) => {
   const glowStyles = {
     morning: {
-      backgroundColor: '#F5E6CC45', // Increased from 28 to 45
-      borderColor: '#F5E6CC80', // Increased from 60 to 80
-      shadowColor: '#F5E6CC',
-      labelColor: '#D4A574',
+      backgroundColor: '#D4A57445', // Richer honey/amber tone (was pale #F5E6CC)
+      borderColor: '#D4A57480', // Warmer, more saturated border
+      shadowColor: '#D4A574',
+      labelColor: '#B8864E', // Darker label for contrast
     },
     afternoon: {
       backgroundColor: '#B0E0E640', // Increased from 25 to 40
