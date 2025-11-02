@@ -339,8 +339,8 @@ const styles = StyleSheet.create({
   // Organic glow blocks
   glowBlock: {
     borderRadius: 16,
-    padding: 14,
-    marginBottom: 8,
+    padding: 18, // Increased from 14 for more breathing room
+    marginBottom: 14, // Increased from 8 for better separation
     borderWidth: 1,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
@@ -348,13 +348,13 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   largeBlock: {
-    minHeight: 75,
+    minHeight: 90, // Increased from 75
   },
   mediumBlock: {
-    minHeight: 78,
+    minHeight: 95, // Increased from 78
   },
   smallBlock: {
-    minHeight: 72,
+    minHeight: 85, // Increased from 72
   },
   glowText: {
     textAlign: 'center',
