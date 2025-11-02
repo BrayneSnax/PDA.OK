@@ -63,10 +63,12 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
     
     // Generate conversation if substance name is available and callback provided
     if (onConversationGenerated && momentData.allyName) {
+      // Generate conversation THEN close modal after a brief delay
       generateConversation(momentData.allyName, synthesisState.intention, synthesisState.synthesis);
+      setTimeout(() => onClose(), 100); // Small delay to ensure state updates
+    } else {
+      onClose();
     }
-    
-    onClose();
   };
 
   const handleTextChange = (key: keyof typeof synthesisState, value: string) => {
