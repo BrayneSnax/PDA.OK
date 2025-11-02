@@ -17,26 +17,26 @@ interface Props {
 const getTimeGlowStyle = (container: ContainerId) => {
   const glowStyles = {
     morning: {
-      backgroundColor: '#F5E6CC15',
-      borderColor: '#F5E6CC40',
+      backgroundColor: '#F5E6CC28', // Increased opacity from 15 to 28
+      borderColor: '#F5E6CC60', // Increased from 40 to 60
       shadowColor: '#F5E6CC',
       labelColor: '#D4A574',
     },
     afternoon: {
-      backgroundColor: '#B0E0E612',
-      borderColor: '#B0E0E635',
+      backgroundColor: '#B0E0E625', // Increased from 12 to 25
+      borderColor: '#B0E0E655', // Increased from 35 to 55
       shadowColor: '#B0E0E6',
       labelColor: '#5FA8B8',
     },
     evening: {
-      backgroundColor: '#8C4B3F18',
-      borderColor: '#8C4B3F45',
+      backgroundColor: '#8C4B3F30', // Increased from 18 to 30
+      borderColor: '#8C4B3F65', // Increased from 45 to 65
       shadowColor: '#8C4B3F',
       labelColor: '#E8B4A8',
     },
     late: {
-      backgroundColor: '#3A3F4515',
-      borderColor: '#3A3F4540',
+      backgroundColor: '#3A3F4528', // Increased from 15 to 28
+      borderColor: '#3A3F4560', // Increased from 40 to 60
       shadowColor: '#3A3F45',
       labelColor: '#8B9DC3',
     },
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingTop: 6,
+    paddingTop: 0, // Reduced from 6 to shift content up
   },
   backButton: {
     paddingVertical: 4,
@@ -342,10 +342,10 @@ const styles = StyleSheet.create({
     padding: 18, // Increased from 14 for more breathing room
     marginBottom: 14, // Increased from 8 for better separation
     borderWidth: 1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 3 }, // Increased from 2
+    shadowOpacity: 0.18, // Increased from 0.08 for deeper glow
+    shadowRadius: 10, // Increased from 6 for wider glow
+    elevation: 4, // Increased from 2
   },
   largeBlock: {
     minHeight: 90, // Increased from 75
