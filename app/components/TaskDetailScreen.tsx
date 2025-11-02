@@ -107,7 +107,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
-            marginBottom: container === 'morning' ? 20 : container === 'afternoon' ? 14 : container === 'evening' ? 16 : 16, // Container-specific spacing
+            marginBottom: container === 'morning' ? 22 : container === 'afternoon' ? 20 : container === 'evening' ? 19 : 14, // Container-specific spacing
           }
         ]}>
           <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>NOTICE</Text>
@@ -152,7 +152,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
-            marginBottom: container === 'morning' ? 20 : container === 'afternoon' ? 14 : container === 'evening' ? 16 : 16,
+            marginBottom: container === 'morning' ? 22 : container === 'afternoon' ? 20 : container === 'evening' ? 19 : 14,
           }
         ]}>
           <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>ACT</Text>
@@ -198,7 +198,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
               backgroundColor: timeGlow.backgroundColor,
               borderColor: timeGlow.borderColor,
               shadowColor: timeGlow.shadowColor,
-              marginBottom: container === 'morning' ? 20 : container === 'afternoon' ? 14 : container === 'evening' ? 16 : 16,
+              marginBottom: container === 'morning' ? 22 : container === 'afternoon' ? 20 : container === 'evening' ? 19 : 14,
             }
           ]}>
             <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>REFLECT</Text>
