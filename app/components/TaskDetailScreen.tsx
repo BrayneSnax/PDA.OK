@@ -107,6 +107,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
+            marginBottom: (container === 'evening' || container === 'late') ? 22 : 12, // Extra 10px for evening/late
           }
         ]}>
           <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>NOTICE</Text>
@@ -151,6 +152,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
+            marginBottom: (container === 'evening' || container === 'late') ? 22 : 12,
           }
         ]}>
           <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>ACT</Text>
@@ -196,6 +198,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
               backgroundColor: timeGlow.backgroundColor,
               borderColor: timeGlow.borderColor,
               shadowColor: timeGlow.shadowColor,
+              marginBottom: (container === 'evening' || container === 'late') ? 22 : 12,
             }
           ]}>
             <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>REFLECT</Text>
@@ -339,8 +342,8 @@ const styles = StyleSheet.create({
   // Organic glow blocks
   glowBlock: {
     borderRadius: 16,
-    padding: 14, // Reduced from 18 to fit tightly
-    marginBottom: 10, // Reduced from 14 to compress vertically
+    padding: 16, // Increased from 14 for better fit
+    marginBottom: 12, // Increased from 10 for better separation
     borderWidth: 1,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.28,
@@ -348,13 +351,13 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   largeBlock: {
-    minHeight: 70, // Reduced from 90
+    minHeight: 80, // Increased from 70
   },
   mediumBlock: {
-    minHeight: 75, // Reduced from 95
+    minHeight: 85, // Increased from 75
   },
   smallBlock: {
-    minHeight: 65, // Reduced from 85
+    minHeight: 75, // Increased from 65
   },
   glowText: {
     textAlign: 'center',
