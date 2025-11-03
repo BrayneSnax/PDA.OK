@@ -145,7 +145,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
-            marginBottom: container === 'morning' ? 22 : container === 'afternoon' ? 20 : container === 'evening' ? 19 : 14, // Container-specific spacing
+            marginBottom: container === 'morning' ? 10 : container === 'afternoon' ? 10 : container === 'evening' ? 19 : 14, // Container-specific spacing - reduced for morning/afternoon to fit all 4 buttons
           }
         ]}>
           <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>NOTICE</Text>
@@ -190,7 +190,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
-            marginBottom: container === 'morning' ? 22 : container === 'afternoon' ? 20 : container === 'evening' ? 19 : 14,
+            marginBottom: container === 'morning' ? 10 : container === 'afternoon' ? 10 : container === 'evening' ? 19 : 14,
           }
         ]}>
           <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>ACT</Text>
@@ -236,7 +236,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
               backgroundColor: timeGlow.backgroundColor,
               borderColor: timeGlow.borderColor,
               shadowColor: timeGlow.shadowColor,
-              marginBottom: container === 'morning' ? 22 : container === 'afternoon' ? 20 : container === 'evening' ? 19 : 14,
+              marginBottom: container === 'morning' ? 10 : container === 'afternoon' ? 10 : container === 'evening' ? 19 : 14,
             }
           ]}>
             <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>REFLECT</Text>
@@ -389,7 +389,7 @@ const styles = StyleSheet.create({
   // Organic glow blocks
   glowBlock: {
     borderRadius: 16,
-    padding: 16, // Reduced to compress
+    padding: 14, // Reduced for morning/afternoon
     marginBottom: 12, // Base margin (overridden per container)
     borderWidth: 1,
     shadowOffset: { width: 0, height: 4 },
@@ -398,13 +398,13 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   largeBlock: {
-    minHeight: 85, // Reduced to fit all buttons
+    minHeight: 75, // Reduced to fit all buttons
   },
   mediumBlock: {
-    minHeight: 90, // Reduced to fit all buttons
+    minHeight: 80, // Reduced to fit all buttons
   },
   smallBlock: {
-    minHeight: 80, // Reduced to fit all buttons
+    minHeight: 70, // Reduced to fit all buttons
   },
   glowText: {
     textAlign: 'center',
@@ -438,11 +438,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   noteInput: {
-    minHeight: 36, // Reduced to compress
+    minHeight: 32, // Reduced for morning/afternoon
     borderRadius: 14,
-    padding: 10, // Reduced to compress
-    marginTop: 12, // Reduced to compress
-    marginBottom: 12, // Reduced to compress
+    padding: 8, // Reduced for morning/afternoon
+    marginTop: 8, // Reduced for morning/afternoon
+    marginBottom: 8, // Reduced for morning/afternoon
     borderWidth: 1,
     fontSize: 14,
     lineHeight: 19,
