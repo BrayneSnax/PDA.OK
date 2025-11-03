@@ -145,7 +145,8 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
-            marginBottom: container === 'morning' ? 10 : container === 'afternoon' ? 10 : container === 'evening' ? 19 : 14, // Container-specific spacing - reduced for morning/afternoon to fit all 4 buttons
+            padding: container === 'morning' || container === 'afternoon' ? 12 : 14,
+            marginBottom: container === 'morning' ? 8 : container === 'afternoon' ? 8 : container === 'evening' ? 16 : 12, // Container-specific spacing - tighter for morning/afternoon
           }
         ]}>
           <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>NOTICE</Text>
@@ -190,7 +191,8 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
-            marginBottom: container === 'morning' ? 10 : container === 'afternoon' ? 10 : container === 'evening' ? 19 : 14,
+            padding: container === 'morning' || container === 'afternoon' ? 12 : 14,
+            marginBottom: container === 'morning' ? 8 : container === 'afternoon' ? 8 : container === 'evening' ? 16 : 12,
           }
         ]}>
           <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>ACT</Text>
@@ -236,7 +238,8 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
               backgroundColor: timeGlow.backgroundColor,
               borderColor: timeGlow.borderColor,
               shadowColor: timeGlow.shadowColor,
-              marginBottom: container === 'morning' ? 10 : container === 'afternoon' ? 10 : container === 'evening' ? 19 : 14,
+              padding: container === 'morning' || container === 'afternoon' ? 12 : 14,
+              marginBottom: container === 'morning' ? 8 : container === 'afternoon' ? 8 : container === 'evening' ? 16 : 12,
             }
           ]}>
             <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>REFLECT</Text>
@@ -389,7 +392,7 @@ const styles = StyleSheet.create({
   // Organic glow blocks
   glowBlock: {
     borderRadius: 16,
-    padding: 14, // Reduced for morning/afternoon
+    padding: 14, // Default padding
     marginBottom: 12, // Base margin (overridden per container)
     borderWidth: 1,
     shadowOffset: { width: 0, height: 4 },
@@ -398,21 +401,21 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   largeBlock: {
-    minHeight: 75, // Reduced to fit all buttons
+    minHeight: 72, // Optimized for morning/afternoon
   },
   mediumBlock: {
-    minHeight: 80, // Reduced to fit all buttons
+    minHeight: 76, // Optimized for morning/afternoon
   },
   smallBlock: {
-    minHeight: 70, // Reduced to fit all buttons
+    minHeight: 68, // Optimized for morning/afternoon
   },
   glowText: {
     textAlign: 'center',
   },
   didItButton: {
     width: '100%',
-    paddingVertical: 12,
-    marginBottom: 8, // Reduced to remove extra space
+    paddingVertical: 11,
+    marginBottom: 6, // Further reduced
     borderRadius: 14,
   },
   didItText: {
@@ -425,11 +428,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    gap: 6,
+    gap: 5,
   },
   actionButton: {
     borderRadius: 12,
-    paddingVertical: 10,
+    paddingVertical: 9,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -438,11 +441,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   noteInput: {
-    minHeight: 32, // Reduced for morning/afternoon
+    minHeight: 28, // Further reduced for morning/afternoon
     borderRadius: 14,
-    padding: 8, // Reduced for morning/afternoon
-    marginTop: 8, // Reduced for morning/afternoon
-    marginBottom: 8, // Reduced for morning/afternoon
+    padding: 7, // Tighter padding
+    marginTop: 6, // Reduced margin
+    marginBottom: 6, // Reduced margin
     borderWidth: 1,
     fontSize: 14,
     lineHeight: 19,

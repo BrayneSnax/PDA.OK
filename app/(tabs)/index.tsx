@@ -519,9 +519,14 @@ export default function HomeScreen() {
                   handleCompletion(selectedItem.id);
                 } else {
                   // For other actions (skipped, forgot, couldn't, not relevant),
-                  // create a journal entry and show toast
+                  // show bloom effect, then create a journal entry and show toast
+                  setShowBloomEffect(true);
                   setCurrentActionType(status);
-                  setShowActionToast(true);
+                  
+                  // Delay the toast slightly so bloom effect is visible first
+                  setTimeout(() => {
+                    setShowActionToast(true);
+                  }, 400);
                   
                   addItem({
                     title: selectedItem.title,
