@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Animated } from 'react-native';
 import { ContainerItem, ColorScheme, ContainerId } from '../constants/Types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -73,6 +73,29 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   const allActionButtons = ['skipped', 'forgot', 'couldn\'t', 'not relevant'];
   const actionButtons = allActionButtons.slice(0, item.actionButtons || 4);
   
+  // Breathing animation for action buttons
+  const breathAnim = useRef(new Animated.Value(1)).current;
+  
+  useEffect(() => {
+    // Create continuous breathing animation
+    const breathing = Animated.loop(
+      Animated.sequence([
+        Animated.timing(breathAnim, {
+          toValue: 1.02,
+          duration: 2000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(breathAnim, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: true,
+        }),
+      ])
+    );
+    breathing.start();
+    return () => breathing.stop();
+  }, []);
+  
   const timeGlow = getTimeGlowStyle(container);
 
   // Get dynamic font sizes for each text field
@@ -81,7 +104,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   const reflectFontStyle = getDynamicFontSize(item.desire || '', 16, 23);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.bg, paddingBottom: insets.bottom }]}>
+    <View style={[styles.container, { backgroundColor: colors.bg, paddingBottom: 0 }]}>
       <TouchableOpacity style={styles.backButton} onPress={onClose}>
         <Text style={[styles.backText, { color: colors.text }]}>← back</Text>
       </TouchableOpacity>
@@ -284,21 +307,29 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             </TouchableOpacity>
 
             {actionButtons.map((action) => (
-              <TouchableOpacity
+              <Animated.View
                 key={action}
-                style={[
-                  styles.actionButton,
-                  {
-                    backgroundColor: colors.accent + '15',
-                    borderColor: colors.accent + '30',
-                    borderWidth: 1,
-                    opacity: action === 'not relevant' ? 0.7 : 1,
-                  },
-                ]}
-                onPress={() => onComplete(action as any, note)}
+                style={{
+                  width: '48%',
+                  transform: [{ scale: breathAnim }],
+                }}
               >
-                <Text style={[styles.actionText, { color: colors.text }]}>{action}</Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.actionButton,
+                    {
+                      backgroundColor: colors.accent + '15',
+                      borderColor: colors.accent + '30',
+                      borderWidth: 1,
+                      opacity: action === 'not relevant' ? 0.7 : 1,
+                      width: '100%',
+                    },
+                  ]}
+                  onPress={() => onComplete(action as any, note)}
+                >
+                  <Text style={[styles.actionText, { color: colors.text }]}>{action}</Text>
+                </TouchableOpacity>
+              </Animated.View>
             ))}
           </View>
         )}
@@ -364,8 +395,8 @@ const styles = StyleSheet.create({
   },
   didItButton: {
     width: '100%',
-    paddingVertical: 12, // Reduced to compress
-    marginBottom: 12, // Reduced to compress
+    paddingVertical: 12,
+    marginBottom: 8, // Reduced to remove extra space
     borderRadius: 14,
   },
   didItText: {
@@ -381,7 +412,6 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   actionButton: {
-    width: '48%',
     borderRadius: 12,
     paddingVertical: 10,
     alignItems: 'center',
