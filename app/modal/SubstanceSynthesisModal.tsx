@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Modal } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Modal, Platform } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 import { ContainerId, ColorScheme, Moment } from '../constants/Types';
 import { useApp } from '../context/AppContext';
@@ -178,7 +179,7 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
 
               <View style={styles.horizontalFieldsRow}>
                 <View style={styles.horizontalField}>
-                  <Text style={[styles.label, { color: colors.text }]}>Intention</Text>
+                  <Text style={[styles.label, { color: colors.text }]}>Time</Text>
                   <TextInput
                     style={[styles.textInput, styles.miniTextInput, { color: colors.text, backgroundColor: colors.bg, borderColor: colors.dim }]}
                     placeholder="..."
@@ -189,7 +190,7 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
                 </View>
 
                 <View style={styles.horizontalField}>
-                  <Text style={[styles.label, { color: colors.text }]}>Sensation</Text>
+                  <Text style={[styles.label, { color: colors.text }]}>Dose</Text>
                   <TextInput
                     style={[styles.textInput, styles.miniTextInput, { color: colors.text, backgroundColor: colors.bg, borderColor: colors.dim }]}
                     placeholder="..."
@@ -200,21 +201,34 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
                 </View>
 
                 <View style={styles.horizontalField}>
-                  <Text style={[styles.label, { color: colors.text }]}>Reflection</Text>
-                  <TextInput
-                    style={[styles.textInput, styles.miniTextInput, { color: colors.text, backgroundColor: colors.bg, borderColor: colors.dim }]}
-                    placeholder="..."
-                    placeholderTextColor={colors.dim}
-                    value={synthesisState.reflection}
-                    onChangeText={(text) => handleTextChange('reflection', text)}
-                  />
+                  <Text style={[styles.label, { color: colors.text }]}>Offering</Text>
+                  <View style={[styles.pickerContainer, { backgroundColor: colors.bg, borderColor: colors.dim }]}>
+                    <Picker
+                      selectedValue={synthesisState.reflection}
+                      onValueChange={(value) => handleTextChange('reflection', value)}
+                      style={[styles.picker, { color: colors.text }]}
+                      dropdownIconColor={colors.text}
+                    >
+                      <Picker.Item label="Select offering..." value="" />
+                      <Picker.Item label="Gratitude" value="Gratitude" />
+                      <Picker.Item label="Intention" value="Intention" />
+                      <Picker.Item label="Prayer" value="Prayer" />
+                      <Picker.Item label="Silence" value="Silence" />
+                      <Picker.Item label="Breath" value="Breath" />
+                      <Picker.Item label="Water to earth" value="Water to earth" />
+                      <Picker.Item label="Food to altar" value="Food to altar" />
+                      <Picker.Item label="Time in nature" value="Time in nature" />
+                      <Picker.Item label="Creative work" value="Creative work" />
+                      <Picker.Item label="Service to others" value="Service to others" />
+                    </Picker>
+                  </View>
                 </View>
               </View>
             </View>
 
             <View style={styles.promptSection}>
-              <Text style={[styles.guidedReflectionTitle, { color: colors.accent }]}>GUIDED REFLECTION</Text>
-              <Text style={[styles.promptTitle, { color: colors.text }]}>Synthesis & Invocation</Text>
+              <Text style={[styles.guidedReflectionTitle, { color: colors.accent }]}>GUIDED INVOCATION</Text>
+              <Text style={[styles.promptTitle, { color: colors.text }]}>Synthesis & Reflection</Text>
               <TextInput
                 style={[styles.textInput, styles.largeTextInput, { color: colors.text, backgroundColor: colors.bg, borderColor: colors.dim }]}
                 placeholder="Trace the atmosphere of the ritual — sensations, emotions, and any shift that followed..."
@@ -307,6 +321,16 @@ const styles = StyleSheet.create({
   },
   miniTextInput: {
     minHeight: 44,
+  },
+  pickerContainer: {
+    borderRadius: 8,
+    borderWidth: 1,
+    overflow: 'hidden',
+    minHeight: 44,
+    justifyContent: 'center',
+  },
+  picker: {
+    height: 44,
   },
   largeTextInput: {
     minHeight: 120,

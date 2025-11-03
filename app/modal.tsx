@@ -340,7 +340,8 @@ export const CraftMomentModal: React.FC<CraftMomentModalProps> = ({ isVisible, o
 
 
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Desire</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Notice</Text>
+              <Text style={[styles.helperText, { color: colors.dim, fontSize: 11, fontStyle: 'italic', marginBottom: 6 }]}>A word or phrase is enough...</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setBodyCue}
@@ -352,7 +353,8 @@ export const CraftMomentModal: React.FC<CraftMomentModalProps> = ({ isVisible, o
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Convince Yourself</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Act</Text>
+              <Text style={[styles.helperText, { color: colors.dim, fontSize: 11, fontStyle: 'italic', marginBottom: 6 }]}>A word or phrase is enough...</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setMicro}
@@ -364,7 +366,8 @@ export const CraftMomentModal: React.FC<CraftMomentModalProps> = ({ isVisible, o
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Result</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Reflect</Text>
+              <Text style={[styles.helperText, { color: colors.dim, fontSize: 11, fontStyle: 'italic', marginBottom: 6 }]}>A word or phrase is enough...</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setDesire}

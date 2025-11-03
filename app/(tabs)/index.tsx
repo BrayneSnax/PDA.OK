@@ -29,6 +29,7 @@ import { CompletionPulse } from '../components/CompletionPulse';
 import { ShiftToast } from '../components/ShiftToast';
 import { ActionToast } from '../components/ActionToast';
 import { ThresholdCard } from '../components/ThresholdCard';
+import { BloomEffect } from '../components/BloomEffect';
 
 // Conditional imports moved outside the component to fix "Rendered more hooks" error
 import { AllyCard } from '../components/AllyCard';
@@ -135,6 +136,7 @@ export default function HomeScreen() {
   const [showThresholdCard, setShowThresholdCard] = useState(false);
   const [previousContainer, setPreviousContainer] = useState<ContainerId>(activeContainer);
   const [isManualTransition, setIsManualTransition] = useState(false);
+  const [showBloomEffect, setShowBloomEffect] = useState(false);
   
   // Field Whisper state
   const [isGeneratingWhispers, setIsGeneratingWhispers] = useState(false);
@@ -486,6 +488,8 @@ export default function HomeScreen() {
               micro,
               desire,
             });
+            // Trigger bloom effect
+            setShowBloomEffect(true);
           }}
           colors={colors}
         />
@@ -511,24 +515,25 @@ export default function HomeScreen() {
               }}
               onComplete={(status, note) => {
                 if (status === 'did it') {
+                  // Update existing item with checkmark (handleCompletion does this)
                   handleCompletion(selectedItem.id);
                 } else {
-                  // Show action-specific toast for other actions
+                  // For other actions (skipped, forgot, couldn't, not relevant),
+                  // create a journal entry and show toast
                   setCurrentActionType(status);
                   setShowActionToast(true);
+                  
+                  addItem({
+                    title: selectedItem.title,
+                    container: selectedItem.container,
+                    category: selectedItem.category,
+                    body_cue: selectedItem.body_cue,
+                    micro: selectedItem.micro,
+                    desire: selectedItem.desire,
+                    status: status,
+                    note: note,
+                  });
                 }
-                
-                // Log the action as a journal entry
-                addItem({
-                  title: selectedItem.title,
-                  container: selectedItem.container,
-                  category: selectedItem.category,
-                  body_cue: selectedItem.body_cue,
-                  micro: selectedItem.micro,
-                  desire: selectedItem.desire,
-                  status: status,
-                  note: note,
-                });
 
                 setSelectedItem(null);
               }}
@@ -541,6 +546,12 @@ export default function HomeScreen() {
           isVisible={showCompletionPulse}
           color={colors.accent}
           onComplete={handlePulseComplete}
+        />
+        
+        <BloomEffect
+          isVisible={showBloomEffect}
+          color={colors.accent}
+          onComplete={() => setShowBloomEffect(false)}
         />
         
         <ShiftToast
@@ -655,7 +666,7 @@ export default function HomeScreen() {
 
           {/* Substances Journal Section */}
           <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 32 }]}>
-            substance transmissions
+            reflective transmissions
           </Text>
           <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 16 }]}>
             your personal log of substance experiences
@@ -706,6 +717,48 @@ export default function HomeScreen() {
                     <Text style={[styles.reflectionText, { color: colors.text }]}>{entry.context}</Text>
                   </View>
                 )}
+              </View>
+            ))
+          )}
+
+          {/* Substance Transmissions Section */}
+          <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 32 }]}>
+            substance transmissions
+          </Text>
+          <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 16 }]}>
+            internal dialogues & emergent consciousness
+          </Text>
+
+          {conversations.filter(c => c.substanceName).length === 0 ? (
+            <View style={[styles.emptyCard, { backgroundColor: colors.card + 'B3' }]}>
+              <Text style={[styles.emptyText, { color: colors.dim }]}>
+                No substance dialogues yet. Invoke an archetype and log a substance moment to begin.
+              </Text>
+            </View>
+          ) : (
+            conversations.filter(c => c.substanceName).slice(0, 5).map((conversation) => (
+              <View key={conversation.id} style={[styles.conversationCard, { backgroundColor: colors.card + 'B3' }]}>
+                <View style={styles.conversationHeader}>
+                  <Text style={[styles.conversationTitle, { color: colors.text }]}>
+                    {conversation.substanceMythicName || conversation.substanceName}
+                    {conversation.archetypeName && (
+                      <Text style={{ color: colors.dim }}> × {conversation.archetypeName}</Text>
+                    )}
+                  </Text>
+                  <Text style={[styles.conversationDate, { color: colors.dim }]}>
+                    {new Date(conversation.timestamp).toLocaleDateString()}
+                  </Text>
+                </View>
+                {conversation.messages.map((msg, idx) => (
+                  <View key={idx} style={styles.messageBlock}>
+                    <Text style={[styles.messageSpeaker, { color: colors.accent }]}>
+                      {msg.speaker}:
+                    </Text>
+                    <Text style={[styles.messageText, { color: colors.text }]}>
+                      {msg.text}
+                    </Text>
+                  </View>
+                ))}
               </View>
             ))
           )}
@@ -846,6 +899,48 @@ export default function HomeScreen() {
               That closes the loop and keeps roles from blending or overstaying — you choose them, they don't take over.
             </Text>
           </View>
+
+          {/* Archetype Reflections Section */}
+          <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 32 }]}>
+            archetype reflections
+          </Text>
+          <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 16 }]}>
+            personal & collective journals
+          </Text>
+
+          {conversations.filter(c => c.archetypeName).length === 0 ? (
+            <View style={[styles.emptyCard, { backgroundColor: colors.card + 'B3' }]}>
+              <Text style={[styles.emptyText, { color: colors.dim }]}>
+                No archetype dialogues yet. Invoke an archetype and log a substance moment to begin.
+              </Text>
+            </View>
+          ) : (
+            conversations.filter(c => c.archetypeName).slice(0, 5).map((conversation) => (
+              <View key={conversation.id} style={[styles.conversationCard, { backgroundColor: colors.card + 'B3' }]}>
+                <View style={styles.conversationHeader}>
+                  <Text style={[styles.conversationTitle, { color: colors.text }]}>
+                    {conversation.archetypeName}
+                    {conversation.substanceMythicName && (
+                      <Text style={{ color: colors.dim }}> × {conversation.substanceMythicName || conversation.substanceName}</Text>
+                    )}
+                  </Text>
+                  <Text style={[styles.conversationDate, { color: colors.dim }]}>
+                    {new Date(conversation.timestamp).toLocaleDateString()}
+                  </Text>
+                </View>
+                {conversation.messages.map((msg, idx) => (
+                  <View key={idx} style={styles.messageBlock}>
+                    <Text style={[styles.messageSpeaker, { color: colors.accent }]}>
+                      {msg.speaker}:
+                    </Text>
+                    <Text style={[styles.messageText, { color: colors.text }]}>
+                      {msg.text}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            ))
+          )}
 
           <View style={{ height: 80 }} />
         </ScrollView>
