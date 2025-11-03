@@ -74,22 +74,37 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   const actionButtons = allActionButtons.slice(0, item.actionButtons || 4);
   
   // Breathing animation for action buttons
-  const breathAnim = useRef(new Animated.Value(1)).current;
+  const breathScale = useRef(new Animated.Value(1)).current;
+  const breathOpacity = useRef(new Animated.Value(0.8)).current;
   
   useEffect(() => {
-    // Create continuous breathing animation
+    // Create continuous breathing animation with both scale and opacity
     const breathing = Animated.loop(
-      Animated.sequence([
-        Animated.timing(breathAnim, {
-          toValue: 1.02,
-          duration: 2000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(breathAnim, {
-          toValue: 1,
-          duration: 2000,
-          useNativeDriver: true,
-        }),
+      Animated.parallel([
+        Animated.sequence([
+          Animated.timing(breathScale, {
+            toValue: 1.05,
+            duration: 1800,
+            useNativeDriver: true,
+          }),
+          Animated.timing(breathScale, {
+            toValue: 1,
+            duration: 1800,
+            useNativeDriver: true,
+          }),
+        ]),
+        Animated.sequence([
+          Animated.timing(breathOpacity, {
+            toValue: 1,
+            duration: 1800,
+            useNativeDriver: true,
+          }),
+          Animated.timing(breathOpacity, {
+            toValue: 0.8,
+            duration: 1800,
+            useNativeDriver: true,
+          }),
+        ]),
       ])
     );
     breathing.start();
@@ -311,7 +326,8 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                 key={action}
                 style={{
                   width: '48%',
-                  transform: [{ scale: breathAnim }],
+                  transform: [{ scale: breathScale }],
+                  opacity: breathOpacity,
                 }}
               >
                 <TouchableOpacity
