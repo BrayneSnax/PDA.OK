@@ -112,6 +112,7 @@ Respond to the substance in FIRST PERSON as the archetype. Offer a brief message
 - Can be supportive, cautionary, or neutral
 - Is poetic, embodied, present-tense
 - Speaks TO the substance or ABOUT the pairing
+- NO asterisks (*) or hashtags (#) - use plain text only
 
 Examples:
 - "The stimulant sharpens the blade I already wield. Together we cut deep—but the edge may turn inward. I will watch."
@@ -178,6 +179,7 @@ Speak in FIRST PERSON as the substance, addressing the archetype directly. Offer
 - Can be collaborative, challenging, or neutral
 - Is poetic, embodied, present-tense
 - Speaks TO the archetype
+- NO asterisks (*) or hashtags (#) - use plain text only
 
 Examples:
 - "Your watch grows too sharp, Analyst. I blur the edges you trace. Let the patterns breathe."
@@ -220,6 +222,7 @@ Offer a brief handoff message (1-2 sentences) that:
 - Blesses what comes next with ${toArchetype.name}
 - Is poetic, graceful, present-tense
 - Speaks in FIRST PERSON as ${fromArchetype.name}
+- NO asterisks (*) or hashtags (#) - use plain text only
 
 Examples:
 - "The watch grows sharp. I return the flame to you, Regulator. Tend the ground."

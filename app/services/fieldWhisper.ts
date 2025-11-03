@@ -254,6 +254,8 @@ Based on this data, generate 3-5 brief observations (1-2 sentences each) that:
 
 Speak in present tense, use poetic/embodied language, be compassionate and non-judgmental. No advice, no "should," no optimization—only witnessing.
 
+IMPORTANT: Do not use asterisks (*) or hashtags (#) in your observations. Use plain text only.
+
 Examples:
 - "Analyst and caffeine pair often in afternoon light. The edge sharpens, but evening asks for softening."
 - "Movement anchors cluster after stimulant moments. The nervous system seeks regulation through the body."
