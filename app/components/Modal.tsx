@@ -1,5 +1,5 @@
-import React from 'react';
-import { Modal as ReactNativeModal, View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import React, { useState } from 'react';
+import { Modal as ReactNativeModal, View, StyleSheet, TouchableWithoutFeedback, useWindowDimensions } from 'react-native';
 
 interface Props {
   isVisible: boolean;
@@ -8,6 +8,14 @@ interface Props {
 }
 
 export const Modal = ({ isVisible, onClose, children }: Props) => {
+  const { height: windowHeight } = useWindowDimensions();
+  const [contentHeight, setContentHeight] = useState(0);
+  
+  // Soft cap so long cards don't overflow small screens
+  const MAX_HEIGHT = Math.round(windowHeight * 0.86);
+  const PADDING = 12; // Internal breathing
+  const targetHeight = contentHeight > 0 ? Math.min(contentHeight + PADDING * 2, MAX_HEIGHT) : undefined;
+  
   return (
     <ReactNativeModal
       animationType="slide"
@@ -18,8 +26,13 @@ export const Modal = ({ isVisible, onClose, children }: Props) => {
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.centeredView}>
           <TouchableWithoutFeedback>
-            <View style={styles.modalView}>
-              {children}
+            <View style={[styles.modalView, targetHeight ? { height: targetHeight } : undefined]}>
+              <View
+                onLayout={(e) => setContentHeight(e.nativeEvent.layout.height)}
+                style={styles.contentWrapper}
+              >
+                {children}
+              </View>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -54,6 +67,13 @@ const styles = StyleSheet.create({
     // NO flex: 1 - allow content-driven height
     flexGrow: 0,
     flexShrink: 1,
+  },
+  contentWrapper: {
+    // IMPORTANT: do not stretch; let intrinsic height pass through
+    flexGrow: 0,
+    flexShrink: 1,
+    height: undefined,
+    minHeight: undefined,
   },
 });
 
