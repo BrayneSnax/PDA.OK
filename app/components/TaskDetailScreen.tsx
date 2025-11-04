@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Animated, Platform } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { ContainerItem, ColorScheme, ContainerId } from '../constants/Types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -398,16 +397,17 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
           </TouchableOpacity>
         ) : (
           <View style={[styles.actionGrid, { gap: btnGap }]}>
-            {/* Anchor Set Button - gradient bridge from ACT to REFLECT */}
+            {/* Flow Aligned Button - similar to other buttons but more saturated */}
             <TouchableOpacity
               style={[
-                styles.actionButton, 
-                styles.didItButton, 
-                { 
-                  height: btnHeight, // PSS
-                  marginBottom: gap, // PSS
-                  overflow: 'hidden',
-                  backgroundColor: 'transparent',
+                styles.actionButton,
+                {
+                  backgroundColor: timeGlow.shadowColor + '50',
+                  borderColor: timeGlow.shadowColor + 'AA',
+                  borderWidth: 1.5,
+                  height: btnHeight,
+                  marginBottom: gap,
+                  width: '100%',
                 }
               ]}
               onPress={() => {
@@ -428,18 +428,6 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                 });
               }}
             >
-              <LinearGradient
-                colors={[timeGlow.shadowColor + 'CC', timeGlow.shadowColor + '88']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
-                }}
-              />
               <Animated.View
                 style={{
                   position: 'absolute',
@@ -451,20 +439,21 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                   opacity: shimmerOpacity,
                 }}
               />
-              <Text 
+              <Text
                 allowFontScaling={false}
                 style={[
-                  styles.didItText, 
-                  { 
-                    color: colors.bg,
-                    fontSize: fsBody,
-                    letterSpacing: -0.1,
-                    includeFontPadding: false,
-                    textAlignVertical: 'center',
-                    paddingVertical: Platform.OS === 'android' ? 2 : 0,
-                    ...(Platform.OS === 'android' ? { lineHeight: Math.round(fsBody * 1.35) } : {}),
+                  styles.actionButtonText,
+                  {
+                    color: colors.text,
+                    fontSize: fsBody - 1,
+                    fontWeight: '600',
+                    letterSpacing: 0.3,
+                    ...(Platform.OS === 'android' ? { lineHeight: Math.round((fsBody - 1) * 1.3) } : {}),
                   }
-              ]}>Anchor Set</Text>
+                ]}
+              >
+                Flow Aligned
+              </Text>
             </TouchableOpacity>
 
             {actionButtons.map((action) => (
@@ -518,9 +507,9 @@ const styles = StyleSheet.create({
     // NO flex: 1 - allow content-driven height
     flexGrow: 0,
     flexShrink: 1,
-    paddingHorizontal: 16,
-    paddingTop: 0, // Reduced from 6 to shift content up
-    paddingBottom: 16, // Add bottom padding for breathing room
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 20,
   },
   title: {
     fontSize: 20, // Reduced from 22
