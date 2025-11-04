@@ -87,8 +87,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   const breathScale = useRef(new Animated.Value(1)).current;
   const breathOpacity = useRef(new Animated.Value(0.8)).current;
   
-  // Heartbeat shimmer for Anchor Set button
-  const shimmerOpacity = useRef(new Animated.Value(0)).current;
+  // Shimmer removed - direct action on press
   
   useEffect(() => {
     // Create continuous breathing animation with both scale and opacity
@@ -414,34 +413,9 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                 }
               ]}
               onPress={() => {
-                // Heartbeat shimmer animation
-                Animated.sequence([
-                  Animated.timing(shimmerOpacity, {
-                    toValue: 1,
-                    duration: 200,
-                    useNativeDriver: true,
-                  }),
-                  Animated.timing(shimmerOpacity, {
-                    toValue: 0,
-                    duration: 300,
-                    useNativeDriver: true,
-                  }),
-                ]).start(() => {
-                  onComplete('did it', note);
-                });
+                onComplete('did it', note);
               }}
             >
-              <Animated.View
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
-                  backgroundColor: '#FFFFFF',
-                  opacity: shimmerOpacity,
-                }}
-              />
               <Text
                 allowFontScaling={false}
                 style={[
