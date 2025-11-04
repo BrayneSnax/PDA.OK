@@ -513,6 +513,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 12,
     paddingBottom: 20,
+    borderRadius: 32, // Soft rounded corners for modal card
+    overflow: 'hidden', // Ensure content respects rounded corners
   },
   title: {
     fontSize: 20, // Reduced from 22
