@@ -30,6 +30,7 @@ import { ShiftToast } from '../components/ShiftToast';
 import { ActionToast } from '../components/ActionToast';
 import { ThresholdCard } from '../components/ThresholdCard';
 import { BloomEffect } from '../components/BloomEffect';
+import { RingPulse } from '../components/RingPulse';
 
 // Conditional imports moved outside the component to fix "Rendered more hooks" error
 import { AllyCard } from '../components/AllyCard';
@@ -132,6 +133,7 @@ export default function HomeScreen() {
   const [showCompletionPulse, setShowCompletionPulse] = useState(false);
   const [showShiftToast, setShowShiftToast] = useState(false);
   const [showActionToast, setShowActionToast] = useState(false);
+  const [showRingPulse, setShowRingPulse] = useState(false);
   const [currentActionType, setCurrentActionType] = useState<'did it' | 'skipped' | 'forgot' | 'couldn\'t' | 'not relevant'>('did it');
   const [showThresholdCard, setShowThresholdCard] = useState(false);
   const [previousContainer, setPreviousContainer] = useState<ContainerId>(activeContainer);
@@ -519,11 +521,11 @@ export default function HomeScreen() {
                   handleCompletion(selectedItem.id);
                 } else {
                   // For other actions (skipped, forgot, couldn't, not relevant),
-                  // show bloom effect, then create a journal entry and show toast
-                  setShowBloomEffect(true);
+                  // show ring pulse, then create a journal entry and show toast
+                  setShowRingPulse(true);
                   setCurrentActionType(status);
                   
-                  // Delay the toast slightly so bloom effect is visible first
+                  // Delay the toast slightly so ring pulse is visible first
                   setTimeout(() => {
                     setShowActionToast(true);
                   }, 400);
@@ -551,6 +553,12 @@ export default function HomeScreen() {
           isVisible={showCompletionPulse}
           color={colors.accent}
           onComplete={handlePulseComplete}
+        />
+        
+        <RingPulse
+          isVisible={showRingPulse}
+          color={colors.accent}
+          onComplete={() => setShowRingPulse(false)}
         />
         
         <BloomEffect

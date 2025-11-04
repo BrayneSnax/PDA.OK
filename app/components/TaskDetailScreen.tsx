@@ -73,44 +73,6 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   const allActionButtons = ['skipped', 'forgot', 'couldn\'t', 'not relevant'];
   const actionButtons = allActionButtons.slice(0, item.actionButtons || 4);
   
-  // Breathing animation for action buttons
-  const breathScale = useRef(new Animated.Value(1)).current;
-  const breathOpacity = useRef(new Animated.Value(0.8)).current;
-  
-  useEffect(() => {
-    // Create continuous breathing animation with both scale and opacity
-    const breathing = Animated.loop(
-      Animated.parallel([
-        Animated.sequence([
-          Animated.timing(breathScale, {
-            toValue: 1.05,
-            duration: 1800,
-            useNativeDriver: true,
-          }),
-          Animated.timing(breathScale, {
-            toValue: 1,
-            duration: 1800,
-            useNativeDriver: true,
-          }),
-        ]),
-        Animated.sequence([
-          Animated.timing(breathOpacity, {
-            toValue: 1,
-            duration: 1800,
-            useNativeDriver: true,
-          }),
-          Animated.timing(breathOpacity, {
-            toValue: 0.8,
-            duration: 1800,
-            useNativeDriver: true,
-          }),
-        ]),
-      ])
-    );
-    breathing.start();
-    return () => breathing.stop();
-  }, []);
-  
   const timeGlow = getTimeGlowStyle(container);
 
   // Get dynamic font sizes for each text field
@@ -120,9 +82,6 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg, paddingBottom: 0 }]}>
-      <TouchableOpacity style={styles.backButton} onPress={onClose}>
-        <Text style={[styles.backText, { color: colors.text }]}>← back</Text>
-      </TouchableOpacity>
 
       {isEditMode ? (
         <TextInput
@@ -145,8 +104,8 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
-            padding: container === 'morning' || container === 'afternoon' ? 12 : 14,
-            marginBottom: container === 'morning' ? 8 : container === 'afternoon' ? 8 : container === 'evening' ? 16 : 12, // Container-specific spacing - tighter for morning/afternoon
+            padding: container === 'evening' || container === 'late' ? 10 : 12,
+            marginBottom: container === 'evening' || container === 'late' ? 6 : 8,
           }
         ]}>
           <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>NOTICE</Text>
@@ -191,8 +150,8 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
-            padding: container === 'morning' || container === 'afternoon' ? 12 : 14,
-            marginBottom: container === 'morning' ? 8 : container === 'afternoon' ? 8 : container === 'evening' ? 16 : 12,
+            padding: container === 'evening' || container === 'late' ? 10 : 12,
+            marginBottom: container === 'evening' || container === 'late' ? 6 : 8,
           }
         ]}>
           <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>ACT</Text>
@@ -325,30 +284,22 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             </TouchableOpacity>
 
             {actionButtons.map((action) => (
-              <Animated.View
+              <TouchableOpacity
                 key={action}
-                style={{
-                  width: '48%',
-                  transform: [{ scale: breathScale }],
-                  opacity: breathOpacity,
-                }}
+                style={[
+                  styles.actionButton,
+                  {
+                    backgroundColor: colors.accent + '15',
+                    borderColor: colors.accent + '30',
+                    borderWidth: 1,
+                    opacity: action === 'not relevant' ? 0.7 : 1,
+                    width: '48%',
+                  },
+                ]}
+                onPress={() => onComplete(action as any, note)}
               >
-                <TouchableOpacity
-                  style={[
-                    styles.actionButton,
-                    {
-                      backgroundColor: colors.accent + '15',
-                      borderColor: colors.accent + '30',
-                      borderWidth: 1,
-                      opacity: action === 'not relevant' ? 0.7 : 1,
-                      width: '100%',
-                    },
-                  ]}
-                  onPress={() => onComplete(action as any, note)}
-                >
-                  <Text style={[styles.actionText, { color: colors.text }]}>{action}</Text>
-                </TouchableOpacity>
-              </Animated.View>
+                <Text style={[styles.actionText, { color: colors.text }]}>{action}</Text>
+              </TouchableOpacity>
             ))}
           </View>
         )}
@@ -363,18 +314,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 0, // Reduced from 6 to shift content up
   },
-  backButton: {
-    paddingVertical: 2, // Reduced from 4
-    marginBottom: 2, // Reduced from 4
-  },
-  backText: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
+
   title: {
-    fontSize: 20, // Reduced from 22
+    fontSize: 19,
     fontWeight: '700',
-    marginBottom: 2, // Reduced from 4
+    marginBottom: 4,
+    marginTop: 4,
   },
   // Label inside the bubble - centered, same color as text
   inlineLabel: {
@@ -401,21 +346,21 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   largeBlock: {
-    minHeight: 72, // Optimized for morning/afternoon
+    minHeight: 70,
   },
   mediumBlock: {
-    minHeight: 76, // Optimized for morning/afternoon
+    minHeight: 74,
   },
   smallBlock: {
-    minHeight: 68, // Optimized for morning/afternoon
+    minHeight: 66,
   },
   glowText: {
     textAlign: 'center',
   },
   didItButton: {
     width: '100%',
-    paddingVertical: 11,
-    marginBottom: 6, // Further reduced
+    paddingVertical: 10,
+    marginBottom: 5,
     borderRadius: 14,
   },
   didItText: {
@@ -428,11 +373,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    gap: 5,
+    gap: 4,
   },
   actionButton: {
     borderRadius: 12,
-    paddingVertical: 9,
+    paddingVertical: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -441,11 +386,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   noteInput: {
-    minHeight: 28, // Further reduced for morning/afternoon
+    minHeight: 26,
     borderRadius: 14,
-    padding: 7, // Tighter padding
-    marginTop: 6, // Reduced margin
-    marginBottom: 6, // Reduced margin
+    padding: 6,
+    marginTop: 5,
+    marginBottom: 5,
     borderWidth: 1,
     fontSize: 14,
     lineHeight: 19,
