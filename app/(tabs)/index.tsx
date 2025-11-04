@@ -519,6 +519,8 @@ export default function HomeScreen() {
               }}
               onComplete={(status, note) => {
                 console.log('[DEBUG] onComplete called:', status, 'at', Date.now());
+                console.log('[DEBUG] status type:', typeof status, 'value:', JSON.stringify(status));
+                console.log('[DEBUG] status === "did it":', status === 'did it');
                 if (status === 'did it') {
                   // Update existing item with checkmark (handleCompletion does this)
                   console.log('[DEBUG] Calling handleCompletion for:', selectedItem.id);
