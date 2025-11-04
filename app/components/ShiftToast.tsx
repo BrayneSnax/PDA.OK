@@ -49,9 +49,12 @@ export const ShiftToast: React.FC<ShiftToastProps> = ({
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(20)).current; // Slide up from bottom
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
+  const messageRef = useRef<string>('');
 
   useEffect(() => {
     if (isVisible) {
+      // Get message only when toast becomes visible
+      messageRef.current = getWarmExhaleMessage();
       // Reset animations
       fadeAnim.setValue(0);
       slideAnim.setValue(20);
@@ -129,7 +132,7 @@ export const ShiftToast: React.FC<ShiftToastProps> = ({
         ]}
       >
         <Text style={[styles.text, { color: colors.text }]}>
-          {getWarmExhaleMessage()}
+          {messageRef.current}
         </Text>
       </TouchableOpacity>
     </Animated.View>

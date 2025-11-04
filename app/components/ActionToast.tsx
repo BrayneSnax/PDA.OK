@@ -106,11 +106,14 @@ export const ActionToast: React.FC<ActionToastProps> = ({
   const slideAnim = useRef(new Animated.Value(20)).current; // Slide up from bottom
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
   const shimmerAnim = useRef(new Animated.Value(0)).current;
-
-  const config = getActionConfig(actionType);
+  
+  // Store config in ref to avoid calling getActionConfig on every render
+  const configRef = useRef<{ message: string; duration: number; animation: string } | null>(null);
 
   useEffect(() => {
     if (isVisible) {
+      // Get config only when toast becomes visible (not on every render)
+      configRef.current = getActionConfig(actionType);
       // Reset animations
       fadeAnim.setValue(0);
       slideAnim.setValue(20);
@@ -137,7 +140,7 @@ export const ActionToast: React.FC<ActionToastProps> = ({
       ]).start();
 
       // Shimmer effect for "forgot" action
-      if (config.animation === 'shimmer') {
+      if (configRef.current?.animation === 'shimmer') {
         Animated.sequence([
           Animated.timing(shimmerAnim, {
             toValue: 1,
@@ -153,7 +156,7 @@ export const ActionToast: React.FC<ActionToastProps> = ({
       }
 
       // Horizontal shimmer for "not relevant" - single pass
-      if (config.animation === 'horizontal-shimmer') {
+      if (configRef.current?.animation === 'horizontal-shimmer') {
         Animated.timing(shimmerAnim, {
           toValue: 1,
           duration: 800,
@@ -164,7 +167,7 @@ export const ActionToast: React.FC<ActionToastProps> = ({
       // Auto-dismiss based on action duration
       const timer = setTimeout(() => {
         dismissToast();
-      }, config.duration);
+      }, configRef.current?.duration || 2000);
 
       return () => clearTimeout(timer);
     }
@@ -196,13 +199,13 @@ export const ActionToast: React.FC<ActionToastProps> = ({
 
   // Apply different opacity based on animation type
   const getOpacityStyle = () => {
-    if (config.animation === 'dim') {
+    if (configRef.current?.animation === 'dim') {
       return fadeAnim.interpolate({
         inputRange: [0, 1],
         outputRange: [0, 0.85], // Slightly dimmed
       });
     }
-    if (config.animation === 'fade-through') {
+    if (configRef.current?.animation === 'fade-through') {
       return fadeAnim.interpolate({
         inputRange: [0, 0.5, 1],
         outputRange: [0, 1, 0], // Fade in then out
@@ -234,7 +237,7 @@ export const ActionToast: React.FC<ActionToastProps> = ({
         ]}
       >
         {/* Shimmer overlay for "forgot" */}
-        {config.animation === 'shimmer' && (
+        {configRef.current?.animation === 'shimmer' && (
           <Animated.View
             style={[
               styles.shimmerOverlay,
@@ -247,7 +250,7 @@ export const ActionToast: React.FC<ActionToastProps> = ({
         )}
 
         {/* Horizontal shimmer for "not relevant" */}
-        {config.animation === 'horizontal-shimmer' && (
+        {configRef.current?.animation === 'horizontal-shimmer' && (
           <Animated.View
             style={[
               styles.horizontalShimmer,
@@ -270,7 +273,7 @@ export const ActionToast: React.FC<ActionToastProps> = ({
         )}
         
         <Text style={[styles.text, { color: colors.text }]}>
-          {config.message}
+          {configRef.current?.message || ''}
         </Text>
       </View>
     </Animated.View>
