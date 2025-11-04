@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ColorScheme, ContainerId } from '../constants/Types';
 
@@ -49,14 +49,14 @@ export const ShiftToast: React.FC<ShiftToastProps> = ({
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(20)).current; // Slide up from bottom
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
-  const messageRef = useRef<string>('');
+  // Initialize with first message so it's never blank (lazy init)
+  const [initialMessage] = useState(() => getWarmExhaleMessage());
+  const messageRef = useRef<string>(initialMessage);
 
   useEffect(() => {
     if (isVisible) {
-      console.log('[DEBUG ShiftToast] useEffect fired, isVisible=true at', Date.now());
       // Get message only when toast becomes visible
       messageRef.current = getWarmExhaleMessage();
-      console.log('[DEBUG ShiftToast] Selected message:', messageRef.current);
       // Reset animations
       fadeAnim.setValue(0);
       slideAnim.setValue(20);

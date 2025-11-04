@@ -111,11 +111,9 @@ export const ActionToast: React.FC<ActionToastProps> = ({
   const configRef = useRef<{ message: string; duration: number; animation: string } | null>(null);
 
   useEffect(() => {
-    if (isVisible) {
-      console.log('[DEBUG ActionToast] useEffect fired for actionType:', actionType, 'at', Date.now());
-      // Get config only when toast becomes visible (not on every render)
+    if (isVisible && actionType) {
+      // Get config only when toast becomes visible
       configRef.current = getActionConfig(actionType);
-      console.log('[DEBUG ActionToast] Selected message:', configRef.current?.message);
       // Reset animations
       fadeAnim.setValue(0);
       slideAnim.setValue(20);
