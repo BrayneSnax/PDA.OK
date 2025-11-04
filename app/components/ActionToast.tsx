@@ -12,37 +12,91 @@ interface ActionToastProps {
   onDismiss: () => void;
 }
 
+// Warm exhale messages for each action type
+const warmExhaleMessages: Record<ActionType, string[]> = {
+  'did it': [
+    'Completion hums softly through the weave.',
+    'The field takes notice; a small current turns.',
+    'You touched the thread and it remembered you.',
+    'The act lands; resonance thickens.',
+    'One quiet hinge opens a wider door.',
+    'Momentum gathers exactly where you are.',
+    'A simple Yes ripples the system.',
+    'Presence clicks into place; carry on.',
+  ],
+  'skipped': [
+    'Not this one; the cadence continues.',
+    'You stayed with what was real.',
+    'Skipping is also a rhythm.',
+    'The wave passed; another will rise.',
+    'You chose space over friction.',
+    'The field adjusts without judgment.',
+  ],
+  'forgot': [
+    'Memory blinked; the thread is still here.',
+    'No worry—attention will circle back.',
+    'The moment slid by; we can set a softer bell.',
+    'Forgetting is human; coherence remains.',
+    'A small lapse, not a verdict.',
+  ],
+  "couldn't": [
+    'Limits were true; the system listened.',
+    'Today asked too much—thanks for naming it.',
+    'The body said "not now"; we honor that.',
+    'Constraint acknowledged; no penalty.',
+    'A smaller step might fit next time.',
+  ],
+  'not relevant': [
+    'Right call; this one didn\'t belong.',
+    'Relevance is a form of care.',
+    'Alignment over obligation—good.',
+    'The field stays clean when you say no.',
+    'Clarity protects attention.',
+  ],
+};
+
+// Track message indices for rotation
+const messageIndices: Record<ActionType, number> = {
+  'did it': 0,
+  'skipped': 0,
+  'forgot': 0,
+  "couldn't": 0,
+  'not relevant': 0,
+};
+
 // Get message and duration for each action type
 const getActionConfig = (actionType: ActionType) => {
-  const configs: Record<ActionType, { message: string; duration: number; animation: string }> = {
+  const messages = warmExhaleMessages[actionType] || warmExhaleMessages['did it'];
+  const currentIndex = messageIndices[actionType];
+  const message = messages[currentIndex];
+  
+  // Rotate to next message
+  messageIndices[actionType] = (currentIndex + 1) % messages.length;
+  
+  const configs: Record<ActionType, { duration: number; animation: string }> = {
     'did it': {
-      message: 'Feel that shift?',
       duration: 2000,
       animation: 'fade',
     },
     'skipped': {
-      message: "Noted. You're staying fluid.",
       duration: 1800,
       animation: 'ripple',
     },
     'forgot': {
-      message: 'Forgetfulness is part of rhythm. Remembering returns.',
       duration: 2000,
       animation: 'shimmer',
     },
     "couldn't": {
-      message: "The field holds what couldn't move today.",
       duration: 2000,
       animation: 'dim',
     },
     'not relevant': {
-      message: 'Noted. The current carries on.',
       duration: 1800,
       animation: 'horizontal-shimmer',
     },
   };
 
-  return configs[actionType] || configs['did it'];
+  return { message, ...configs[actionType] };
 };
 
 // Get time-of-day background color for toast

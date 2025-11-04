@@ -9,6 +9,26 @@ interface ShiftToastProps {
   onDismiss: () => void;
 }
 
+// Warm exhale messages for "did it" / Align Flow
+const warmExhaleMessages = [
+  'Completion hums softly through the weave.',
+  'The field takes notice; a small current turns.',
+  'You touched the thread and it remembered you.',
+  'The act lands; resonance thickens.',
+  'One quiet hinge opens a wider door.',
+  'Momentum gathers exactly where you are.',
+  'A simple Yes ripples the system.',
+  'Presence clicks into place; carry on.',
+];
+
+let messageIndex = 0;
+
+const getWarmExhaleMessage = () => {
+  const message = warmExhaleMessages[messageIndex];
+  messageIndex = (messageIndex + 1) % warmExhaleMessages.length;
+  return message;
+};
+
 // Get time-of-day background color for toast
 const getToastBackground = (container: ContainerId) => {
   const backgrounds = {
@@ -109,7 +129,7 @@ export const ShiftToast: React.FC<ShiftToastProps> = ({
         ]}
       >
         <Text style={[styles.text, { color: colors.text }]}>
-          Completion hums softly through the weave.
+          {getWarmExhaleMessage()}
         </Text>
       </TouchableOpacity>
     </Animated.View>

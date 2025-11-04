@@ -80,7 +80,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   const [editedNotice, setEditedNotice] = useState(item.body_cue || '');
   const [editedAct, setEditedAct] = useState(item.micro || '');
   const [editedReflect, setEditedReflect] = useState(item.desire || '');
-  const allActionButtons = ['skipped', 'forgot', 'couldn\'t', 'not relevant'];
+  const allActionButtons = ['Skipped', 'Forgot', 'Couldn\'t', 'Not Relevant'];
   const actionButtons = allActionButtons.slice(0, item.actionButtons || 4);
   
   // Breathing animation for action buttons
@@ -449,7 +449,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                       backgroundColor: colors.accent + '15',
                       borderColor: colors.accent + '30',
                       borderWidth: 1,
-                      opacity: action === 'not relevant' ? 0.7 : 1,
+                      opacity: action === 'Not Relevant' ? 0.7 : 1,
                       width: '100%',
                       height: btnHeight, // PSS
                     },
