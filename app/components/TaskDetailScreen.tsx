@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Animated, Platform } from 'react-native';
 import { ContainerItem, ColorScheme, ContainerId } from '../constants/Types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -421,6 +421,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                     letterSpacing: -0.1, // Reduced from 0.5 to avoid Android clipping
                     includeFontPadding: false, // Android-only: remove extra padding
                     textAlignVertical: 'center', // Android-only: center text
+                    ...(Platform.OS === 'android' ? { lineHeight: Math.round(fsBody * 1.2) } : {}),
                   }
               ]}>DID IT</Text>
             </TouchableOpacity>
@@ -458,6 +459,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                         letterSpacing: -0.1, // Reduced from lsTight (-0.2) to avoid clipping
                         includeFontPadding: false, // Android-only
                         textAlignVertical: 'center', // Android-only
+                        ...(Platform.OS === 'android' ? { lineHeight: Math.round((fsBody - 2) * 1.2) } : {}),
                       }
                     ]}>{action}</Text>
                 </TouchableOpacity>
@@ -547,6 +549,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     gap: 6,
+    // DO NOT use flex:1 here - prevent stretching
+    alignItems: 'stretch',
+    height: 'auto' as any,
   },
   actionButton: {
     borderRadius: 12,
@@ -567,6 +572,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     fontSize: 14,
     lineHeight: 19,
+    // Anti-stretch
+    flexGrow: 0,
+    flexShrink: 1,
+    height: undefined,
   },
   titleInput: {
     borderWidth: 1,

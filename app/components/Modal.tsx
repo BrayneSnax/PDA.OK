@@ -9,12 +9,12 @@ interface Props {
 
 export const Modal = ({ isVisible, onClose, children }: Props) => {
   const { height: windowHeight } = useWindowDimensions();
-  const [contentHeight, setContentHeight] = useState(0);
+  const [contentHeight, setContentHeight] = useState<number | null>(null);
   
   // Soft cap so long cards don't overflow small screens
-  const MAX_HEIGHT = Math.round(windowHeight * 0.86);
-  const PADDING = 12; // Internal breathing
-  const targetHeight = contentHeight > 0 ? Math.min(contentHeight + PADDING * 2, MAX_HEIGHT) : undefined;
+  const MAX_HEIGHT = Math.floor(windowHeight * 0.86);
+  // Measure real content height, NO pre-reserved space
+  const targetHeight = contentHeight ? Math.min(contentHeight, MAX_HEIGHT) : null;
   
   return (
     <ReactNativeModal
@@ -60,16 +60,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    width: '90%', // Set a width to the modal
+    width: '92%', // Set a width to the modal
     maxWidth: 640, // Max width for larger screens
-    maxHeight: '88%', // Guard on very long content
     alignSelf: 'center', // Center the card
+    // IMPORTANT: never pre-declare flex/height/maxHeight here
     // NO flex: 1 - allow content-driven height
-    flexGrow: 0,
-    flexShrink: 1,
   },
   contentWrapper: {
     // IMPORTANT: do not stretch; let intrinsic height pass through
+    paddingHorizontal: 12,
+    paddingVertical: 12,
     flexGrow: 0,
     flexShrink: 1,
     height: undefined,
