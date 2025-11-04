@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Animated, Platform } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { ContainerItem, ColorScheme, ContainerId } from '../constants/Types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -87,6 +88,9 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   const breathScale = useRef(new Animated.Value(1)).current;
   const breathOpacity = useRef(new Animated.Value(0.8)).current;
   
+  // Heartbeat shimmer for Anchor Set button
+  const shimmerOpacity = useRef(new Animated.Value(0)).current;
+  
   useEffect(() => {
     // Create continuous breathing animation with both scale and opacity
     const breathing = Animated.loop(
@@ -148,10 +152,6 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
-      <TouchableOpacity style={styles.backButton} onPress={onClose}>
-        <Text style={[styles.backText, { color: colors.text }]}>← back</Text>
-      </TouchableOpacity>
-
       {isEditMode ? (
         <TextInput
           style={[
@@ -398,19 +398,59 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
           </TouchableOpacity>
         ) : (
           <View style={[styles.actionGrid, { gap: btnGap }]}>
-            {/* Did It Button - full width, prominent */}
+            {/* Anchor Set Button - gradient bridge from ACT to REFLECT */}
             <TouchableOpacity
               style={[
                 styles.actionButton, 
                 styles.didItButton, 
                 { 
-                  backgroundColor: colors.accent,
                   height: btnHeight, // PSS
                   marginBottom: gap, // PSS
+                  overflow: 'hidden',
+                  backgroundColor: 'transparent',
                 }
               ]}
-              onPress={() => onComplete('did it', note)}
+              onPress={() => {
+                // Heartbeat shimmer animation
+                Animated.sequence([
+                  Animated.timing(shimmerOpacity, {
+                    toValue: 1,
+                    duration: 200,
+                    useNativeDriver: true,
+                  }),
+                  Animated.timing(shimmerOpacity, {
+                    toValue: 0,
+                    duration: 300,
+                    useNativeDriver: true,
+                  }),
+                ]).start(() => {
+                  onComplete('did it', note);
+                });
+              }}
             >
+              <LinearGradient
+                colors={[timeGlow.shadowColor + 'CC', timeGlow.shadowColor + '88']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                }}
+              />
+              <Animated.View
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  backgroundColor: '#FFFFFF',
+                  opacity: shimmerOpacity,
+                }}
+              />
               <Text 
                 allowFontScaling={false}
                 style={[
@@ -424,7 +464,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                     paddingVertical: Platform.OS === 'android' ? 2 : 0,
                     ...(Platform.OS === 'android' ? { lineHeight: Math.round(fsBody * 1.35) } : {}),
                   }
-              ]}>DID IT</Text>
+              ]}>Anchor Set</Text>
             </TouchableOpacity>
 
             {actionButtons.map((action) => (
@@ -481,14 +521,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 0, // Reduced from 6 to shift content up
     paddingBottom: 16, // Add bottom padding for breathing room
-  },
-  backButton: {
-    paddingVertical: 0, // PSS: Eliminated padding
-    marginBottom: 0, // PSS: Eliminated margin
-  },
-  backText: {
-    fontSize: 16,
-    fontWeight: '500',
   },
   title: {
     fontSize: 20, // Reduced from 22
