@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 import { ColorScheme, ContainerId } from '../constants/Types';
 
-type ActionType = 'did it' | 'skipped' | 'forgot' | 'couldn\'t' | 'not relevant';
+type ActionType = 'skipped' | 'forgot' | 'couldn\'t' | 'not relevant';
 
 interface ActionToastProps {
   isVisible: boolean;
@@ -14,16 +14,6 @@ interface ActionToastProps {
 
 // Warm exhale messages for each action type
 const warmExhaleMessages: Record<ActionType, string[]> = {
-  'did it': [
-    'Completion hums softly through the weave.',
-    'The field takes notice; a small current turns.',
-    'You touched the thread and it remembered you.',
-    'The act lands; resonance thickens.',
-    'One quiet hinge opens a wider door.',
-    'Momentum gathers exactly where you are.',
-    'A simple Yes ripples the system.',
-    'Presence clicks into place; carry on.',
-  ],
   'skipped': [
     'Not this one; the cadence continues.',
     'You stayed with what was real.',
@@ -57,7 +47,6 @@ const warmExhaleMessages: Record<ActionType, string[]> = {
 
 // Track message indices for rotation
 const messageIndices: Record<ActionType, number> = {
-  'did it': 0,
   'skipped': 0,
   'forgot': 0,
   "couldn't": 0,
@@ -66,7 +55,7 @@ const messageIndices: Record<ActionType, number> = {
 
 // Get message and duration for each action type
 const getActionConfig = (actionType: ActionType) => {
-  const messages = warmExhaleMessages[actionType] || warmExhaleMessages['did it'];
+  const messages = warmExhaleMessages[actionType] || warmExhaleMessages['skipped'];
   const currentIndex = messageIndices[actionType];
   const message = messages[currentIndex];
   
@@ -74,10 +63,6 @@ const getActionConfig = (actionType: ActionType) => {
   messageIndices[actionType] = (currentIndex + 1) % messages.length;
   
   const configs: Record<ActionType, { duration: number; animation: string }> = {
-    'did it': {
-      duration: 2000,
-      animation: 'fade',
-    },
     'skipped': {
       duration: 1800,
       animation: 'ripple',

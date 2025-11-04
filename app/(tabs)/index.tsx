@@ -134,7 +134,7 @@ export default function HomeScreen() {
   const [showShiftToast, setShowShiftToast] = useState(false);
   const [showActionToast, setShowActionToast] = useState(false);
   const [showRingPulse, setShowRingPulse] = useState(false);
-  const [currentActionType, setCurrentActionType] = useState<'did it' | 'skipped' | 'forgot' | 'couldn\'t' | 'not relevant'>('did it');
+  const [currentActionType, setCurrentActionType] = useState<'skipped' | 'forgot' | 'couldn\'t' | 'not relevant'>('skipped');
   const [showThresholdCard, setShowThresholdCard] = useState(false);
   const [previousContainer, setPreviousContainer] = useState<ContainerId>(activeContainer);
   const [isManualTransition, setIsManualTransition] = useState(false);
