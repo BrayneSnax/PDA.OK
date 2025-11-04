@@ -13,6 +13,16 @@ interface Props {
   onSave?: (updatedItem: ContainerItem) => void;
 }
 
+// Proportional Scaling System (PSS)
+const getCardScale = (container: ContainerId): number => {
+  // Morning/Afternoon use 0.96 (−4%), Evening/Late use 1.0
+  return (container === 'morning' || container === 'afternoon') ? 0.96 : 1.0;
+};
+
+const scaleValue = (baseValue: number, scale: number): number => {
+  return Math.round(baseValue * scale);
+};
+
 // Get time-of-day responsive glow for boxes
 const getTimeGlowStyle = (container: ContainerId) => {
   const glowStyles = {
@@ -112,11 +122,29 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   }, []);
   
   const timeGlow = getTimeGlowStyle(container);
+  
+  // PSS: Get scale for this container
+  const cardScale = getCardScale(container);
+  
+  // PSS: Base typography tokens
+  const fsTitle = scaleValue(18, cardScale);
+  const fsLabel = scaleValue(11, cardScale);
+  const fsBody = scaleValue(16, cardScale);
+  const lhTight = 1.2;
+  const lhBody = 1.35;
+  const lsTight = -0.2;
+  
+  // PSS: Spacing tokens
+  const padY = scaleValue(14, cardScale);
+  const padX = scaleValue(12, cardScale);
+  const gap = scaleValue(10, cardScale);
+  const btnHeight = scaleValue(42, cardScale);
+  const btnGap = scaleValue(8, cardScale);
 
-  // Get dynamic font sizes for each text field
-  const noticeFontStyle = getDynamicFontSize(item.body_cue || '', 18, 26);
-  const actFontStyle = getDynamicFontSize(item.micro || '', 17, 24);
-  const reflectFontStyle = getDynamicFontSize(item.desire || '', 16, 23);
+  // Get dynamic font sizes for each text field (still using dynamic sizing for long text)
+  const noticeFontStyle = getDynamicFontSize(item.body_cue || '', fsBody, Math.round(fsBody * lhBody));
+  const actFontStyle = getDynamicFontSize(item.micro || '', fsBody - 1, Math.round((fsBody - 1) * lhBody));
+  const reflectFontStyle = getDynamicFontSize(item.desire || '', fsBody - 2, Math.round((fsBody - 2) * lhBody));
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg, paddingBottom: 0 }]}>
@@ -126,14 +154,34 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
 
       {isEditMode ? (
         <TextInput
-          style={[styles.title, styles.titleInput, { color: colors.text, textAlign: 'center', borderColor: timeGlow.borderColor }]}
+          style={[
+            styles.title, 
+            styles.titleInput, 
+            { 
+              color: colors.text, 
+              textAlign: 'center', 
+              borderColor: timeGlow.borderColor,
+              fontSize: fsTitle,
+              lineHeight: Math.round(fsTitle * lhTight),
+              letterSpacing: lsTight,
+            }
+          ]}
           value={editedTitle}
           onChangeText={setEditedTitle}
           placeholder="Task title"
           placeholderTextColor={colors.dim}
         />
       ) : (
-        <Text style={[styles.title, { color: colors.text, textAlign: 'center' }]}>{item.title}</Text>
+        <Text style={[
+          styles.title, 
+          { 
+            color: colors.text, 
+            textAlign: 'center',
+            fontSize: fsTitle,
+            lineHeight: Math.round(fsTitle * lhTight),
+            letterSpacing: lsTight,
+          }
+        ]}>{item.title}</Text>
       )}
 
       <View style={styles.content}>
@@ -145,10 +193,19 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
-            marginBottom: container === 'morning' ? 10 : container === 'afternoon' ? 10 : container === 'evening' ? 19 : 14, // Container-specific spacing - reduced for morning/afternoon to fit all 4 buttons
+            marginBottom: gap, // PSS: Uniform gap based on scale
+            padding: padY, // PSS: Scaled padding
           }
         ]}>
-          <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>NOTICE</Text>
+          <Text style={[
+            styles.inlineLabel, 
+            { 
+              color: timeGlow.labelColor,
+              fontSize: fsLabel,
+              lineHeight: Math.round(fsLabel * lhTight),
+              letterSpacing: 0.4, // Labels read better slightly expanded
+            }
+          ]}>NOTICE</Text>
           {isEditMode ? (
             <TextInput
               style={[
@@ -175,6 +232,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                 fontSize: noticeFontStyle.fontSize,
                 lineHeight: noticeFontStyle.lineHeight,
                 fontWeight: '600',
+                letterSpacing: lsTight, // PSS: Compression before wrap
               }
             ]}>
               {item.body_cue || 'No notice provided'}
@@ -190,10 +248,19 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
-            marginBottom: container === 'morning' ? 10 : container === 'afternoon' ? 10 : container === 'evening' ? 19 : 14,
+            marginBottom: gap, // PSS: Uniform gap based on scale
+            padding: padY, // PSS: Scaled padding
           }
         ]}>
-          <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>ACT</Text>
+          <Text style={[
+            styles.inlineLabel, 
+            { 
+              color: timeGlow.labelColor,
+              fontSize: fsLabel,
+              lineHeight: Math.round(fsLabel * lhTight),
+              letterSpacing: 0.4, // Labels read better slightly expanded
+            }
+          ]}>ACT</Text>
           {isEditMode ? (
             <TextInput
               style={[
@@ -220,6 +287,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                 fontSize: actFontStyle.fontSize,
                 lineHeight: actFontStyle.lineHeight,
                 fontWeight: '500',
+                letterSpacing: lsTight, // PSS: Compression before wrap
               }
             ]}>
               {item.micro || 'No action provided'}
@@ -236,10 +304,19 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
               backgroundColor: timeGlow.backgroundColor,
               borderColor: timeGlow.borderColor,
               shadowColor: timeGlow.shadowColor,
-              marginBottom: container === 'morning' ? 10 : container === 'afternoon' ? 10 : container === 'evening' ? 19 : 14,
+              marginBottom: gap, // PSS: Uniform gap based on scale
+              padding: padY, // PSS: Scaled padding
             }
           ]}>
-            <Text style={[styles.inlineLabel, { color: timeGlow.labelColor }]}>REFLECT</Text>
+            <Text style={[
+            styles.inlineLabel, 
+            { 
+              color: timeGlow.labelColor,
+              fontSize: fsLabel,
+              lineHeight: Math.round(fsLabel * lhTight),
+              letterSpacing: 0.4, // Labels read better slightly expanded
+            }
+          ]}>REFLECT</Text>
             {isEditMode ? (
               <TextInput
                 style={[
@@ -266,6 +343,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                   fontSize: reflectFontStyle.fontSize,
                   lineHeight: reflectFontStyle.lineHeight,
                   fontWeight: '500',
+                  letterSpacing: lsTight, // PSS: Compression before wrap
                 }
               ]}>
                 {item.desire}
@@ -282,6 +360,13 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
               backgroundColor: timeGlow.backgroundColor,
               color: colors.text,
               borderColor: timeGlow.borderColor,
+              minHeight: scaleValue(32, cardScale), // PSS
+              padding: scaleValue(8, cardScale), // PSS
+              marginTop: gap, // PSS
+              marginBottom: gap, // PSS
+              fontSize: fsBody - 2,
+              lineHeight: Math.round((fsBody - 2) * lhBody),
+              letterSpacing: lsTight,
             },
           ]}
           placeholder="Sprawl text if the moment drives you..."
@@ -312,13 +397,28 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             <Text style={[styles.didItText, { color: colors.bg }]}>SAVE CHANGES</Text>
           </TouchableOpacity>
         ) : (
-          <View style={styles.actionGrid}>
+          <View style={[styles.actionGrid, { gap: btnGap }]}>
             {/* Did It Button - full width, prominent */}
             <TouchableOpacity
-              style={[styles.actionButton, styles.didItButton, { backgroundColor: colors.accent }]}
+              style={[
+                styles.actionButton, 
+                styles.didItButton, 
+                { 
+                  backgroundColor: colors.accent,
+                  height: btnHeight, // PSS
+                  marginBottom: gap, // PSS
+                }
+              ]}
               onPress={() => onComplete('did it', note)}
             >
-              <Text style={[styles.didItText, { color: colors.bg }]}>DID IT</Text>
+              <Text style={[
+                styles.didItText, 
+                { 
+                  color: colors.bg,
+                  fontSize: fsBody,
+                  letterSpacing: 0.5,
+                }
+              ]}>DID IT</Text>
             </TouchableOpacity>
 
             {actionButtons.map((action) => (
@@ -339,11 +439,19 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                       borderWidth: 1,
                       opacity: action === 'not relevant' ? 0.7 : 1,
                       width: '100%',
+                      height: btnHeight, // PSS
                     },
                   ]}
                   onPress={() => onComplete(action as any, note)}
                 >
-                  <Text style={[styles.actionText, { color: colors.text }]}>{action}</Text>
+                  <Text style={[
+                    styles.actionText, 
+                    { 
+                      color: colors.text,
+                      fontSize: fsBody - 2,
+                      letterSpacing: lsTight,
+                    }
+                  ]}>{action}</Text>
                 </TouchableOpacity>
               </Animated.View>
             ))}
@@ -388,9 +496,9 @@ const styles = StyleSheet.create({
   },
   // Organic glow blocks
   glowBlock: {
-    borderRadius: 16,
-    padding: 14, // Reduced for morning/afternoon
-    marginBottom: 12, // Base margin (overridden per container)
+    borderRadius: 18, // PSS: card-radius
+    padding: 14, // PSS base (overridden inline with padY)
+    marginBottom: 12, // PSS base (overridden inline with gap)
     borderWidth: 1,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.28,
