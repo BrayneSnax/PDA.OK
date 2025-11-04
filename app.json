@@ -27,7 +27,8 @@
       "bundleIdentifier": "com.michaelmistree.pdataskapp"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-web-browser"
     ],
     "updates": {
       "enabled": false
