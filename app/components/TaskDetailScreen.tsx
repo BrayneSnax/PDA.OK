@@ -452,7 +452,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                   }
                 ]}
               >
-                Flow Aligned
+                Align Flow
               </Text>
             </TouchableOpacity>
 
