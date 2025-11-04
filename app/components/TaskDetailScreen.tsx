@@ -80,7 +80,13 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   const [editedNotice, setEditedNotice] = useState(item.body_cue || '');
   const [editedAct, setEditedAct] = useState(item.micro || '');
   const [editedReflect, setEditedReflect] = useState(item.desire || '');
-  const allActionButtons = ['Skipped', 'Forgot', 'Couldn\'t', 'Not Relevant'];
+  const allActionButtons = ['skipped', 'forgot', 'couldn\'t', 'not relevant'];
+  const actionButtonLabels: Record<string, string> = {
+    'skipped': 'Skipped',
+    'forgot': 'Forgot',
+    'couldn\'t': 'Couldn\'t',
+    'not relevant': 'Not Relevant',
+  };
   const actionButtons = allActionButtons.slice(0, item.actionButtons || 4);
   
   // Breathing animation for action buttons
@@ -449,7 +455,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                       backgroundColor: colors.accent + '15',
                       borderColor: colors.accent + '30',
                       borderWidth: 1,
-                      opacity: action === 'Not Relevant' ? 0.7 : 1,
+                      opacity: action === 'not relevant' ? 0.7 : 1,
                       width: '100%',
                       height: btnHeight, // PSS
                     },
@@ -468,7 +474,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                         textAlignVertical: 'center', // Android-only
                         ...(Platform.OS === 'android' ? { lineHeight: Math.round((fsBody - 2) * 1.2) } : {}),
                       }
-                    ]}>{action}</Text>
+                    ]}>{actionButtonLabels[action] || action}</Text>
                 </TouchableOpacity>
               </Animated.View>
             ))}
