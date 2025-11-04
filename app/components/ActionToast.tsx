@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 import { ColorScheme, ContainerId } from '../constants/Types';
 
@@ -108,11 +108,13 @@ export const ActionToast: React.FC<ActionToastProps> = ({
   const shimmerAnim = useRef(new Animated.Value(0)).current;
   
   // Store config in ref to avoid calling getActionConfig on every render
-  const configRef = useRef<{ message: string; duration: number; animation: string } | null>(null);
+  // Initialize with first message for the given actionType
+  const [initialConfig] = useState(() => actionType ? getActionConfig(actionType) : { message: '', duration: 2000, animation: 'ripple' });
+  const configRef = useRef<{ message: string; duration: number; animation: string }>(initialConfig);
 
   useEffect(() => {
     if (isVisible && actionType) {
-      // Get config only when toast becomes visible
+      // Get fresh config for current actionType when toast becomes visible
       configRef.current = getActionConfig(actionType);
       // Reset animations
       fadeAnim.setValue(0);
@@ -171,7 +173,7 @@ export const ActionToast: React.FC<ActionToastProps> = ({
 
       return () => clearTimeout(timer);
     }
-  }, [isVisible, actionType]);
+  }, [isVisible]); // Only depend on isVisible, not actionType
 
   const dismissToast = () => {
     Animated.parallel([
