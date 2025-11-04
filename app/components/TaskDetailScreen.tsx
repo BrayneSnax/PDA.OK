@@ -137,12 +137,13 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   const lhBody = 1.35;
   const lsTight = -0.2;
   
-  // PSS: Spacing tokens (compressed to eliminate bottom space)
-  const padY = scaleValue(10, cardScale);  // Reduced from 14 to 10
-  const padX = scaleValue(10, cardScale);  // Reduced from 12 to 10
-  const gap = scaleValue(6, cardScale);    // Reduced from 10 to 6
-  const btnHeight = scaleValue(38, cardScale); // Reduced from 42 to 38
-  const btnGap = scaleValue(6, cardScale); // Reduced from 8 to 6
+  // PSS: Spacing tokens with breathing room
+  const padY = scaleValue(14, cardScale);  // Increased for softer feel
+  const padX = scaleValue(12, cardScale);
+  const gap = scaleValue(12, cardScale);    // Increased for vertical breathing room
+  const btnHeight = scaleValue(38, cardScale);
+  const btnGap = scaleValue(8, cardScale);
+  const alignFlowHeight = scaleValue(46, cardScale); // 20% taller than btnHeight for prominence
 
   // Get dynamic font sizes for each text field (still using dynamic sizing for long text)
   const noticeFontStyle = getDynamicFontSize(item.body_cue || '', fsBody, Math.round(fsBody * lhBody));
@@ -359,10 +360,11 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
               backgroundColor: timeGlow.backgroundColor,
               color: colors.text,
               borderColor: timeGlow.borderColor,
-              minHeight: scaleValue(28, cardScale), // PSS: Reduced from 32
-              padding: scaleValue(6, cardScale), // PSS: Reduced from 8
-              marginTop: gap, // PSS
-              marginBottom: gap, // PSS
+              minHeight: scaleValue(40, cardScale),
+              paddingVertical: scaleValue(14, cardScale),
+              paddingHorizontal: scaleValue(12, cardScale),
+              marginTop: gap,
+              marginBottom: gap,
               fontSize: fsBody - 2,
               lineHeight: Math.round((fsBody - 2) * lhBody),
               letterSpacing: lsTight,
@@ -405,7 +407,8 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                   backgroundColor: timeGlow.shadowColor + '50',
                   borderColor: timeGlow.shadowColor + 'AA',
                   borderWidth: 1.5,
-                  height: btnHeight,
+                  height: alignFlowHeight,
+                  marginTop: gap,
                   marginBottom: gap,
                   width: '100%',
                 }
@@ -533,7 +536,7 @@ const styles = StyleSheet.create({
   },
   // Organic glow blocks
   glowBlock: {
-    borderRadius: 18, // PSS: card-radius
+    borderRadius: 20, // Softer, more pebble-like
     padding: 14, // PSS base (overridden inline with padY)
     marginBottom: 12, // PSS base (overridden inline with gap)
     borderWidth: 1,
@@ -557,8 +560,8 @@ const styles = StyleSheet.create({
   didItButton: {
     width: '100%',
     paddingVertical: 12,
-    marginBottom: 8, // Reduced to remove extra space
-    borderRadius: 14,
+    marginBottom: 8,
+    borderRadius: 20,
   },
   didItText: {
     fontSize: 17,
@@ -576,7 +579,7 @@ const styles = StyleSheet.create({
     height: 'auto' as any,
   },
   actionButton: {
-    borderRadius: 12,
+    borderRadius: 20,
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -586,8 +589,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   noteInput: {
-    minHeight: 32, // Reduced for morning/afternoon
-    borderRadius: 14,
+    minHeight: 32,
+    borderRadius: 20,
     padding: 8, // Reduced for morning/afternoon
     marginTop: 8, // Reduced for morning/afternoon
     marginBottom: 8, // Reduced for morning/afternoon
