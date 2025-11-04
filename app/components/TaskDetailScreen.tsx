@@ -536,7 +536,7 @@ const styles = StyleSheet.create({
   },
   // Organic glow blocks
   glowBlock: {
-    borderRadius: 20, // Softer, more pebble-like
+    borderRadius: 24, // Even softer, more organic
     padding: 14, // PSS base (overridden inline with padY)
     marginBottom: 12, // PSS base (overridden inline with gap)
     borderWidth: 1,
@@ -561,7 +561,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingVertical: 12,
     marginBottom: 8,
-    borderRadius: 20,
+    borderRadius: 24,
   },
   didItText: {
     fontSize: 17,
@@ -579,7 +579,7 @@ const styles = StyleSheet.create({
     height: 'auto' as any,
   },
   actionButton: {
-    borderRadius: 20,
+    borderRadius: 24,
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -590,7 +590,7 @@ const styles = StyleSheet.create({
   },
   noteInput: {
     minHeight: 32,
-    borderRadius: 20,
+    borderRadius: 24,
     padding: 8, // Reduced for morning/afternoon
     marginTop: 8, // Reduced for morning/afternoon
     marginBottom: 8, // Reduced for morning/afternoon
