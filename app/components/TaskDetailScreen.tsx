@@ -418,10 +418,11 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                   { 
                     color: colors.bg,
                     fontSize: fsBody,
-                    letterSpacing: -0.1, // Reduced from 0.5 to avoid Android clipping
-                    includeFontPadding: false, // Android-only: remove extra padding
-                    textAlignVertical: 'center', // Android-only: center text
-                    ...(Platform.OS === 'android' ? { lineHeight: Math.round(fsBody * 1.2) } : {}),
+                    letterSpacing: -0.1,
+                    includeFontPadding: false,
+                    textAlignVertical: 'center',
+                    paddingVertical: Platform.OS === 'android' ? 2 : 0,
+                    ...(Platform.OS === 'android' ? { lineHeight: Math.round(fsBody * 1.35) } : {}),
                   }
               ]}>DID IT</Text>
             </TouchableOpacity>
