@@ -48,8 +48,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: '90%', // Set a width to the modal
-    maxHeight: '80%', // Set a max height
-    flex: 1, // Allow the modal to expand and contain the content
+    maxWidth: 640, // Max width for larger screens
+    maxHeight: '88%', // Guard on very long content
+    alignSelf: 'center', // Center the card
+    // NO flex: 1 - allow content-driven height
+    flexGrow: 0,
+    flexShrink: 1,
   },
 });
 

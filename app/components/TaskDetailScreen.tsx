@@ -147,7 +147,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   const reflectFontStyle = getDynamicFontSize(item.desire || '', fsBody - 2, Math.round((fsBody - 2) * lhBody));
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.bg, paddingBottom: 0 }]}>
+    <View style={[styles.container, { backgroundColor: colors.bg }]}>
       <TouchableOpacity style={styles.backButton} onPress={onClose}>
         <Text style={[styles.backText, { color: colors.text }]}>← back</Text>
       </TouchableOpacity>
@@ -411,13 +411,17 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
               ]}
               onPress={() => onComplete('did it', note)}
             >
-              <Text style={[
-                styles.didItText, 
-                { 
-                  color: colors.bg,
-                  fontSize: fsBody,
-                  letterSpacing: 0.5,
-                }
+              <Text 
+                allowFontScaling={false}
+                style={[
+                  styles.didItText, 
+                  { 
+                    color: colors.bg,
+                    fontSize: fsBody,
+                    letterSpacing: -0.1, // Reduced from 0.5 to avoid Android clipping
+                    includeFontPadding: false, // Android-only: remove extra padding
+                    textAlignVertical: 'center', // Android-only: center text
+                  }
               ]}>DID IT</Text>
             </TouchableOpacity>
 
@@ -444,14 +448,18 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                   ]}
                   onPress={() => onComplete(action as any, note)}
                 >
-                  <Text style={[
-                    styles.actionText, 
-                    { 
-                      color: colors.text,
-                      fontSize: fsBody - 2,
-                      letterSpacing: lsTight,
-                    }
-                  ]}>{action}</Text>
+                  <Text 
+                    allowFontScaling={false}
+                    style={[
+                      styles.actionText, 
+                      { 
+                        color: colors.text,
+                        fontSize: fsBody - 2,
+                        letterSpacing: -0.1, // Reduced from lsTight (-0.2) to avoid clipping
+                        includeFontPadding: false, // Android-only
+                        textAlignVertical: 'center', // Android-only
+                      }
+                    ]}>{action}</Text>
                 </TouchableOpacity>
               </Animated.View>
             ))}
@@ -464,9 +472,12 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // NO flex: 1 - allow content-driven height
+    flexGrow: 0,
+    flexShrink: 1,
     paddingHorizontal: 16,
     paddingTop: 0, // Reduced from 6 to shift content up
+    paddingBottom: 16, // Add bottom padding for breathing room
   },
   backButton: {
     paddingVertical: 0, // PSS: Eliminated padding
@@ -492,7 +503,9 @@ const styles = StyleSheet.create({
     opacity: 0.6, // Slightly dimmed but same color
   },
   content: {
-    flex: 1,
+    // NO flex: 1 - allow content-driven height
+    flexGrow: 0,
+    flexShrink: 1,
   },
   // Organic glow blocks
   glowBlock: {
