@@ -53,8 +53,10 @@ export const ShiftToast: React.FC<ShiftToastProps> = ({
 
   useEffect(() => {
     if (isVisible) {
+      console.log('[DEBUG ShiftToast] useEffect fired, isVisible=true at', Date.now());
       // Get message only when toast becomes visible
       messageRef.current = getWarmExhaleMessage();
+      console.log('[DEBUG ShiftToast] Selected message:', messageRef.current);
       // Reset animations
       fadeAnim.setValue(0);
       slideAnim.setValue(20);

@@ -174,6 +174,7 @@ export default function HomeScreen() {
 
   // Handle completion with somatic feedback
   const handleCompletion = (itemId: string) => {
+    console.log('[DEBUG] handleCompletion called, setting showCompletionPulse=true');
     toggleCompletion(itemId);
     // Show pulse animation
     setShowCompletionPulse(true);
@@ -181,6 +182,7 @@ export default function HomeScreen() {
 
   // When pulse completes, show shift toast
   const handlePulseComplete = () => {
+    console.log('[DEBUG] handlePulseComplete called, setting showShiftToast=true at', Date.now());
     setShowCompletionPulse(false);
     setShowShiftToast(true);
   };
@@ -516,8 +518,10 @@ export default function HomeScreen() {
                 setIsEditMode(false);
               }}
               onComplete={(status, note) => {
+                console.log('[DEBUG] onComplete called:', status, 'at', Date.now());
                 if (status === 'did it') {
                   // Update existing item with checkmark (handleCompletion does this)
+                  console.log('[DEBUG] Calling handleCompletion for:', selectedItem.id);
                   handleCompletion(selectedItem.id);
                 } else {
                   // For other actions (skipped, forgot, couldn't, not relevant),
@@ -527,6 +531,7 @@ export default function HomeScreen() {
                   
                   // Delay the toast slightly so ring pulse is visible first
                   setTimeout(() => {
+                    console.log('[DEBUG] Setting showActionToast=true for:', status);
                     setShowActionToast(true);
                   }, 400);
                   
