@@ -134,12 +134,12 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   const lhBody = 1.35;
   const lsTight = -0.2;
   
-  // PSS: Spacing tokens
-  const padY = scaleValue(14, cardScale);
-  const padX = scaleValue(12, cardScale);
-  const gap = scaleValue(10, cardScale);
-  const btnHeight = scaleValue(42, cardScale);
-  const btnGap = scaleValue(8, cardScale);
+  // PSS: Spacing tokens (compressed to eliminate bottom space)
+  const padY = scaleValue(10, cardScale);  // Reduced from 14 to 10
+  const padX = scaleValue(10, cardScale);  // Reduced from 12 to 10
+  const gap = scaleValue(6, cardScale);    // Reduced from 10 to 6
+  const btnHeight = scaleValue(38, cardScale); // Reduced from 42 to 38
+  const btnGap = scaleValue(6, cardScale); // Reduced from 8 to 6
 
   // Get dynamic font sizes for each text field (still using dynamic sizing for long text)
   const noticeFontStyle = getDynamicFontSize(item.body_cue || '', fsBody, Math.round(fsBody * lhBody));
@@ -360,8 +360,8 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
               backgroundColor: timeGlow.backgroundColor,
               color: colors.text,
               borderColor: timeGlow.borderColor,
-              minHeight: scaleValue(32, cardScale), // PSS
-              padding: scaleValue(8, cardScale), // PSS
+              minHeight: scaleValue(28, cardScale), // PSS: Reduced from 32
+              padding: scaleValue(6, cardScale), // PSS: Reduced from 8
               marginTop: gap, // PSS
               marginBottom: gap, // PSS
               fontSize: fsBody - 2,
@@ -469,8 +469,8 @@ const styles = StyleSheet.create({
     paddingTop: 0, // Reduced from 6 to shift content up
   },
   backButton: {
-    paddingVertical: 2, // Reduced from 4
-    marginBottom: 2, // Reduced from 4
+    paddingVertical: 0, // PSS: Eliminated padding
+    marginBottom: 0, // PSS: Eliminated margin
   },
   backText: {
     fontSize: 16,
@@ -479,7 +479,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20, // Reduced from 22
     fontWeight: '700',
-    marginBottom: 2, // Reduced from 4
+    marginBottom: 0, // PSS: Eliminated margin
   },
   // Label inside the bubble - centered, same color as text
   inlineLabel: {
@@ -488,7 +488,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 1.2,
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 6, // PSS: Reduced from 10
     opacity: 0.6, // Slightly dimmed but same color
   },
   content: {
@@ -506,13 +506,13 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   largeBlock: {
-    minHeight: 75, // Reduced to fit all buttons
+    minHeight: 65, // PSS: Further reduced for compression
   },
   mediumBlock: {
-    minHeight: 80, // Reduced to fit all buttons
+    minHeight: 70, // PSS: Further reduced for compression
   },
   smallBlock: {
-    minHeight: 70, // Reduced to fit all buttons
+    minHeight: 60, // PSS: Further reduced for compression
   },
   glowText: {
     textAlign: 'center',
