@@ -23,6 +23,7 @@ import { ANALYSIS_URL, REQUEST_TIMEOUT_MS, TEST_MODE } from '../constants/Config
 import { ContainerId } from '../constants/Types';
 import { TemporalIntelligenceCard } from '../components/TemporalIntelligenceCard';
 import { DailySynthesisCard } from '../components/DailySynthesisCard';
+import { DailySynthesisModal } from '../modal/DailySynthesisModal';
 import { SynthesisHistoryModal } from '../components/SynthesisHistoryModal';
 import { ConversationCard } from '../components/ConversationCard';
 import { CompletionPulse } from '../components/CompletionPulse';
@@ -122,6 +123,7 @@ export default function HomeScreen() {
   const [analysisResult, setAnalysisResult] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isAddPatternModalVisible, setIsAddPatternModalVisible] = useState(false);
+  const [isDailySynthesisModalVisible, setIsDailySynthesisModalVisible] = useState(false);
   const [isAddFoodModalVisible, setIsAddFoodModalVisible] = useState(false);
   const [selectedArchetype, setSelectedArchetype] = useState<Archetype | null>(null);
   const [isArchetypeModalVisible, setIsArchetypeModalVisible] = useState(false);
@@ -1051,13 +1053,22 @@ export default function HomeScreen() {
             <Text style={[styles.addButtonText, { color: colors.card }]}>📸 Record a Pattern</Text>
           </TouchableOpacity>
 
-          {/* Daily Synthesis - Evening Reflection */}
-          <View style={{ marginTop: 20 }}>
-            <DailySynthesisCard 
-              colors={colors} 
-              onViewHistory={() => setIsSynthesisHistoryVisible(true)}
-            />
+          {/* Daily Synthesis Card */}
+          <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 20 }]}>
+            <Text style={[styles.sectionHeader, { color: colors.dim, marginBottom: 12 }]}>
+              DAILY SYNTHESIS
+            </Text>
+            <Text style={[styles.placeholderText, { color: colors.text }]}>
+              Gather the fragments of today. Let movement and stillness weave into meaning.
+            </Text>
           </View>
+
+          <TouchableOpacity
+            style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
+            onPress={() => setIsDailySynthesisModalVisible(true)}
+          >
+            <Text style={[styles.addButtonText, { color: colors.card }]}>🌙 Reflect on Today</Text>
+          </TouchableOpacity>
 
           <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 12 }]}>
             <Text style={[styles.sectionHeader, { color: colors.dim, marginBottom: 12 }]}>
@@ -1091,6 +1102,12 @@ export default function HomeScreen() {
           onSave={(text, category) => {
             addPattern({ text, category });
           }}
+          colors={colors}
+        />
+
+        <DailySynthesisModal
+          visible={isDailySynthesisModalVisible}
+          onClose={() => setIsDailySynthesisModalVisible(false)}
           colors={colors}
         />
         
