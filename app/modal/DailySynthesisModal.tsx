@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, ScrollView
 import { ColorScheme } from '../constants/Types';
 import { useApp } from '../context/AppContext';
 import { generateDailySynthesis, getTodaySynthesis, DailySynthesis } from '../services/dailySynthesis';
-import Modal from '../components/Modal';
+import { Modal } from '../components/Modal';
 
 interface Props {
   visible: boolean;
@@ -47,7 +47,7 @@ export const DailySynthesisModal = ({ visible, onClose, colors }: Props) => {
   };
 
   return (
-    <Modal visible={visible} onClose={onClose}>
+    <Modal isVisible={visible} onClose={onClose}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.header}>
           <Text style={[styles.title, { color: colors.text }]}>Daily Synthesis</Text>
