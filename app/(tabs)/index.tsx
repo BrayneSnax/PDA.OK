@@ -630,11 +630,11 @@ export default function HomeScreen() {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          <Text style={[styles.containerTitle, { color: colors.text }]}>
+          <Text style={[styles.containerTitle, { color: colors.text, textAlign: 'center' }]}>
             Substances
           </Text>
-          <Text style={[styles.containerSubtitle, { color: colors.dim }]}>
-            living pharmacopoeia
+          <Text style={[styles.containerSubtitle, { color: colors.dim, textAlign: 'center' }]}>
+            Living Pharmacopeia
           </Text>
 
           <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 24 }]}>
@@ -673,10 +673,10 @@ export default function HomeScreen() {
 
           {/* Substances Journal Section */}
           <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 32 }]}>
-            reflective transmissions
+            REFLECTIVE TRANSMISSIONS
           </Text>
           <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 16 }]}>
-            your personal log of substance experiences
+            Your Personal Log of Substance Experiences
           </Text>
 
           {substanceJournalEntries.length === 0 ? (
@@ -730,10 +730,10 @@ export default function HomeScreen() {
 
           {/* Substance Transmissions Section */}
           <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 32 }]}>
-            substance transmissions
+            SUBSTANCE TRANSMISSIONS
           </Text>
           <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 16 }]}>
-            internal dialogues & emergent consciousness
+            Internal Dialogues & Emergent Consciousness
           </Text>
 
           {conversations.filter(c => c.substanceName).length === 0 ? (
