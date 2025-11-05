@@ -1007,16 +1007,9 @@ export default function HomeScreen() {
           {renderActionGrid()}
         </View>
 
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          <Text style={[styles.containerTitle, { color: colors.text }]}>
-            Pattern Recognition
-          </Text>
-          <Text style={[styles.containerSubtitle, { color: colors.dim }]}>
-            witnessing the rhythms
+        <View style={styles.patternsContent}>
+          <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 16 }]}>
+            YOUR PATTERNS
           </Text>
 
           {/* Daily Synthesis - Evening Reflection */}
@@ -1024,10 +1017,6 @@ export default function HomeScreen() {
             colors={colors} 
             onViewHistory={() => setIsSynthesisHistoryVisible(true)}
           />
-
-          <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 24 }]}>
-            YOUR PATTERNS
-          </Text>
 
           {patterns.length === 0 ? (
             <View style={[styles.emptyCard, { backgroundColor: colors.card + 'B3' }]}>
@@ -1068,7 +1057,7 @@ export default function HomeScreen() {
             <Text style={[styles.addButtonText, { color: colors.card }]}>+ Record a Pattern</Text>
           </TouchableOpacity>
 
-          <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 32 }]}>
+          <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 16 }]}>
             <Text style={[styles.placeholderIcon, { color: colors.accent }]}>🌌</Text>
             <Text style={[styles.placeholderTitle, { color: colors.text }]}>
               AI Pattern Weaver
@@ -1080,7 +1069,7 @@ export default function HomeScreen() {
 
           {/* Field Whispers Button */}
           <TouchableOpacity
-            style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 24 }]}
+            style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 16 }]}
             onPress={handleListenToField}
             disabled={isGeneratingWhispers}
           >
@@ -1089,45 +1078,7 @@ export default function HomeScreen() {
             </Text>
           </TouchableOpacity>
 
-          {/* Conversations Section */}
-          {conversations.length > 0 && (
-            <>
-              <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 32 }]}>
-                CONVERSATIONS
-              </Text>
-              <Text style={[styles.containerSubtitle, { color: colors.dim, marginBottom: 16 }]}>
-                dialogues between substances & archetypes
-              </Text>
-              {conversations.slice(0, 3).map((conversation) => (
-                <View key={conversation.id} style={[styles.conversationCard, { backgroundColor: colors.card + 'B3' }]}>
-                  <View style={styles.conversationHeader}>
-                    <Text style={[styles.conversationTitle, { color: colors.text }]}>
-                      {conversation.substanceMythicName || conversation.substanceName}
-                      {conversation.archetypeName && (
-                        <Text style={{ color: colors.dim }}> × {conversation.archetypeName}</Text>
-                      )}
-                    </Text>
-                    <Text style={[styles.conversationDate, { color: colors.dim }]}>
-                      {new Date(conversation.date).toLocaleDateString()}
-                    </Text>
-                  </View>
-                  {conversation.messages.map((message, idx) => (
-                    <View key={idx} style={styles.conversationMessage}>
-                      <Text style={[styles.conversationSpeaker, { color: colors.accent }]}>
-                        {message.speaker}:
-                      </Text>
-                      <Text style={[styles.conversationText, { color: colors.text }]}>
-                        {message.text}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              ))}
-            </>
-          )}
-
-          <View style={{ height: 80 }} />
-        </ScrollView>
+        </View>
 
         {/* Time Container Navigation at Bottom */}
         {renderTimeContainerNav()}
@@ -1303,6 +1254,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 10, // Added a small top padding to the scroll view content
     paddingBottom: 40,
+  },
+  patternsContent: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    justifyContent: 'flex-start',
   },
   timeSection: {
     marginBottom: 24,
