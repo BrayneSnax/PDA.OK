@@ -727,7 +727,11 @@ export default function HomeScreen() {
           <JournalList
             title="RECENT DIALOGUES"
             entries={conversations.filter(c => c.substanceName).map(conversation => {
-              const preview = `${conversation.archetypeName || 'Dialogue'}${conversation.substanceMythicName ? ' × ' + conversation.substanceMythicName : ''}`;
+              // Build preview: show substance and archetype if both exist, otherwise just substance
+              let preview = conversation.substanceMythicName || conversation.substanceName;
+              if (conversation.archetypeName) {
+                preview = `${preview} × ${conversation.archetypeName}`;
+              }
               const fullContent = conversation.messages.map(msg => `${msg.speaker}:\n${msg.text}`).join('\n\n');
               return {
                 id: conversation.id,
