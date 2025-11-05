@@ -1066,7 +1066,7 @@ export default function HomeScreen() {
             style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
             onPress={() => setIsDailySynthesisModalVisible(true)}
           >
-            <Text style={[styles.addButtonText, { color: colors.card }]}>🌙 Reflect on the Day</Text>
+            <Text style={[styles.addButtonText, { color: colors.card }]}>🌙 Reflect on Today</Text>
           </TouchableOpacity>
 
           <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 12 }]}>

@@ -26,6 +26,7 @@ export default function SubstancesScreen() {
     updateAlly,
     addAlly,
     substanceJournalEntries,
+    conversations,
     loading,
   } = useApp();
 
@@ -95,16 +96,16 @@ export default function SubstancesScreen() {
           <Text style={[styles.addAllyText, { color: colors.card }]}>+ Add New Companion</Text>
         </TouchableOpacity>
 
-        {/* Substances Journal Section */}
+        {/* Reflective Transmissions - Personal Log */}
         <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 32 }]}>
-          SUBSTANCE TRANSMISSIONS
+          REFLECTIVE TRANSMISSIONS
         </Text>
         <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 16 }]}>
-          Your personal log of substance experiences
+          Your Personal Log of Substance Experiences
         </Text>
 
         <JournalList
-          title="RECENT TRANSMISSIONS"
+          title="PERSONAL LOG"
           entries={substanceJournalEntries.map(entry => {
             const fullContent = `${entry.allyName || 'Substance Moment'}\n\nIntention: ${entry.tone || 'Not specified'}\nSensation: ${entry.frequency || 'Not specified'}\nReflection: ${entry.presence || 'Not specified'}\n\nSynthesis & Invocation:\n${entry.context || 'None'}`;
             return {
@@ -115,7 +116,39 @@ export default function SubstancesScreen() {
             };
           })}
           colors={colors}
-          emptyMessage="No substance transmissions yet. Log your first interaction to begin."
+          emptyMessage="No personal substance logs yet. Log your first interaction to begin."
+          onEntryPress={(entry) => {
+            setSelectedJournalEntry({
+              title: 'Substance Reflection',
+              date: entry.date,
+              content: entry.fullContent,
+            });
+            setIsJournalEntryModalVisible(true);
+          }}
+        />
+
+        {/* Substance Transmissions - Archetype Dialogues */}
+        <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 32 }]}>
+          SUBSTANCE TRANSMISSIONS
+        </Text>
+        <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 16 }]}>
+          Internal Dialogues & Emergent Consciousness
+        </Text>
+
+        <JournalList
+          title="RECENT DIALOGUES"
+          entries={conversations.filter(c => c.substanceName).map(conversation => {
+            const preview = `${conversation.archetypeName || 'Dialogue'}${conversation.substanceMythicName ? ' × ' + conversation.substanceMythicName : ''}`;
+            const fullContent = conversation.messages.map(msg => `${msg.speaker}:\n${msg.text}`).join('\n\n');
+            return {
+              id: conversation.id,
+              preview,
+              fullContent,
+              date: new Date(conversation.timestamp).toLocaleDateString(),
+            };
+          })}
+          colors={colors}
+          emptyMessage="No substance dialogues yet. Invoke an archetype and log a substance moment to begin."
           onEntryPress={(entry) => {
             setSelectedJournalEntry({
               title: 'Substance Transmission',
