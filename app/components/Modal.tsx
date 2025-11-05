@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Modal as ReactNativeModal, View, StyleSheet, TouchableWithoutFeedback, useWindowDimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Modal as ReactNativeModal, View, StyleSheet, TouchableWithoutFeedback, useWindowDimensions, Platform } from 'react-native';
+import * as NavigationBar from 'expo-navigation-bar';
 
 interface Props {
   isVisible: boolean;
@@ -15,6 +16,26 @@ export const Modal = ({ isVisible, onClose, children }: Props) => {
   const MAX_HEIGHT = Math.floor(windowHeight * 0.86);
   // Measure real content height, NO pre-reserved space
   const targetHeight = contentHeight ? Math.min(contentHeight, MAX_HEIGHT) : null;
+  
+  // Hide navigation bar when modal is visible (Android)
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      if (isVisible) {
+        // Hide navigation bar for immersive experience
+        NavigationBar.setVisibilityAsync('hidden');
+      } else {
+        // Restore navigation bar
+        NavigationBar.setVisibilityAsync('visible');
+      }
+    }
+    
+    // Cleanup: restore navigation bar when component unmounts
+    return () => {
+      if (Platform.OS === 'android') {
+        NavigationBar.setVisibilityAsync('visible');
+      }
+    };
+  }, [isVisible]);
   
   return (
     <ReactNativeModal
