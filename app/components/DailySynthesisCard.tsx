@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 18,
     padding: 16,
-    marginBottom: 24,
+    marginBottom: 12,
   },
   header: {
     flexDirection: 'row',
