@@ -6,13 +6,17 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import useColors from '../hooks/useColors';
+import { JournalList } from '../components/JournalList';
+import { JournalEntryModal } from '../components/JournalEntryModal';
 
 export default function JournalScreen() {
   const { activeContainer, journalEntries } = useApp();
   const colors = useColors(activeContainer, true);
+  const [selectedJournalEntry, setSelectedJournalEntry] = useState<any>(null);
+  const [isJournalEntryModalVisible, setIsJournalEntryModalVisible] = useState(false);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
@@ -49,64 +53,46 @@ export default function JournalScreen() {
           RECENT TRANSMISSIONS
         </Text>
 
-        {journalEntries.length === 0 ? (
-          <View style={[styles.emptyCard, { backgroundColor: colors.card }]}>
-            <Text style={[styles.emptyText, { color: colors.dim }]}>
-              No transmissions yet. Log your first interaction with an anchor or ally to begin.
-            </Text>
-          </View>
-        ) : (
-          journalEntries.slice(0, 10).map((entry) => (
-            <View key={entry.id} style={[styles.entryCard, { backgroundColor: colors.card }]}>
-              <View style={styles.entryHeader}>
-                <Text style={[styles.entryTitle, { color: colors.text }]}>
-                  {entry.allyName || entry.anchorTitle || 'Moment'}
-                </Text>
-                <Text style={[styles.entryDate, { color: colors.dim }]}>
-                  {new Date(entry.date).toLocaleDateString()}
-                </Text>
-              </View>
-              
-              {entry.tone && (
-                <View style={styles.checkInRow}>
-                  <Text style={[styles.checkInLabel, { color: colors.dim }]}>Tone:</Text>
-                  <Text style={[styles.checkInValue, { color: colors.text }]}>{entry.tone}</Text>
-                </View>
-              )}
-              
-              {entry.frequency && (
-                <View style={styles.checkInRow}>
-                  <Text style={[styles.checkInLabel, { color: colors.dim }]}>Frequency:</Text>
-                  <Text style={[styles.checkInValue, { color: colors.text }]}>{entry.frequency}</Text>
-                </View>
-              )}
-              
-              {entry.presence && (
-                <View style={styles.checkInRow}>
-                  <Text style={[styles.checkInLabel, { color: colors.dim }]}>Presence:</Text>
-                  <Text style={[styles.checkInValue, { color: colors.text }]}>{entry.presence}</Text>
-                </View>
-              )}
-
-              {entry.context && (
-                <View style={styles.reflectionSection}>
-                  <Text style={[styles.reflectionLabel, { color: colors.accent }]}>The Setting:</Text>
-                  <Text style={[styles.reflectionText, { color: colors.text }]}>{entry.context}</Text>
-                </View>
-              )}
-
-              {entry.result_shift && (
-                <View style={styles.reflectionSection}>
-                  <Text style={[styles.reflectionLabel, { color: colors.accent }]}>The Shift:</Text>
-                  <Text style={[styles.reflectionText, { color: colors.text }]}>{entry.result_shift}</Text>
-                </View>
-              )}
-            </View>
-          ))
-        )}
+        <JournalList
+          title="FIELD TRANSMISSIONS"
+          entries={journalEntries.map(entry => {
+            const fullContent = `${entry.allyName || entry.anchorTitle || 'Moment'}\n\nTone: ${entry.tone || 'Not specified'}\nFrequency: ${entry.frequency || 'Not specified'}\nPresence: ${entry.presence || 'Not specified'}\n\nThe Setting:\n${entry.context || 'None'}\n\nThe Shift:\n${entry.result_shift || 'None'}`;
+            return {
+              id: entry.id,
+              preview: entry.allyName || entry.anchorTitle || 'Moment',
+              fullContent,
+              date: new Date(entry.date).toLocaleDateString(),
+            };
+          })}
+          colors={colors}
+          emptyMessage="No transmissions yet. Log your first interaction with an anchor or ally to begin."
+          onEntryPress={(entry) => {
+            setSelectedJournalEntry({
+              title: 'Field Transmission',
+              date: entry.date,
+              content: entry.fullContent,
+            });
+            setIsJournalEntryModalVisible(true);
+          }}
+        />
 
         <View style={{ height: 100 }} />
       </ScrollView>
+
+      {/* Journal Entry Detail Modal */}
+      {selectedJournalEntry && (
+        <JournalEntryModal
+          visible={isJournalEntryModalVisible}
+          onClose={() => {
+            setIsJournalEntryModalVisible(false);
+            setSelectedJournalEntry(null);
+          }}
+          title={selectedJournalEntry.title}
+          date={selectedJournalEntry.date}
+          content={selectedJournalEntry.content}
+          colors={colors}
+        />
+      )}
     </View>
   );
 }

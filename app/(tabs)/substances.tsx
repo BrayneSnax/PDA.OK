@@ -14,6 +14,8 @@ import { AllyCard } from '../components/AllyCard';
 // ⧈replace-start:imports
 import { AddAllyModal, EditAllyModal } from '../modal';
 import { SubstanceSynthesisModal } from '../modal/SubstanceSynthesisModal';
+import { JournalList } from '../components/JournalList';
+import { JournalEntryModal } from '../components/JournalEntryModal';
 // ⧈replace-end:imports
 
 export default function SubstancesScreen() {
@@ -33,6 +35,8 @@ export default function SubstancesScreen() {
   const [isSynthesisModalVisible, setIsSynthesisModalVisible] = useState(false);
   const [allyToEdit, setAllyToEdit] = useState(null);
   const [momentToSynthesize, setMomentToSynthesize] = useState<any>({});
+  const [selectedJournalEntry, setSelectedJournalEntry] = useState<any>(null);
+  const [isJournalEntryModalVisible, setIsJournalEntryModalVisible] = useState(false);
 
   if (loading) {
     return (
@@ -99,54 +103,28 @@ export default function SubstancesScreen() {
           Your personal log of substance experiences
         </Text>
 
-        {substanceJournalEntries.length === 0 ? (
-          <View style={[styles.emptyCard, { backgroundColor: colors.card }]}>
-            <Text style={[styles.emptyText, { color: colors.dim }]}>
-              No substance transmissions yet. Log your first interaction to begin.
-            </Text>
-          </View>
-        ) : (
-          substanceJournalEntries.slice(0, 10).map((entry) => (
-            <View key={entry.id} style={[styles.entryCard, { backgroundColor: colors.card }]}>
-              <View style={styles.entryHeader}>
-                <Text style={[styles.entryTitle, { color: colors.text }]}>
-                  {entry.allyName || 'Substance Moment'}
-                </Text>
-                <Text style={[styles.entryDate, { color: colors.dim }]}>
-                  {new Date(entry.date).toLocaleDateString()}
-                </Text>
-              </View>
-              
-              {entry.tone && (
-                <View style={styles.checkInRow}>
-                  <Text style={[styles.checkInLabel, { color: colors.dim }]}>Intention:</Text>
-                  <Text style={[styles.checkInValue, { color: colors.text }]}>{entry.tone}</Text>
-                </View>
-              )}
-              
-              {entry.frequency && (
-                <View style={styles.checkInRow}>
-                  <Text style={[styles.checkInLabel, { color: colors.dim }]}>Sensation:</Text>
-                  <Text style={[styles.checkInValue, { color: colors.text }]}>{entry.frequency}</Text>
-                </View>
-              )}
-              
-              {entry.presence && (
-                <View style={styles.checkInRow}>
-                  <Text style={[styles.checkInLabel, { color: colors.dim }]}>Reflection:</Text>
-                  <Text style={[styles.checkInValue, { color: colors.text }]}>{entry.presence}</Text>
-                </View>
-              )}
-
-              {entry.context && (
-                <View style={styles.reflectionSection}>
-                  <Text style={[styles.reflectionLabel, { color: colors.accent }]}>Synthesis & Invocation:</Text>
-                  <Text style={[styles.reflectionText, { color: colors.text }]}>{entry.context}</Text>
-                </View>
-              )}
-            </View>
-          ))
-        )}
+        <JournalList
+          title="RECENT TRANSMISSIONS"
+          entries={substanceJournalEntries.map(entry => {
+            const fullContent = `${entry.allyName || 'Substance Moment'}\n\nIntention: ${entry.tone || 'Not specified'}\nSensation: ${entry.frequency || 'Not specified'}\nReflection: ${entry.presence || 'Not specified'}\n\nSynthesis & Invocation:\n${entry.context || 'None'}`;
+            return {
+              id: entry.id,
+              preview: entry.allyName || 'Substance Moment',
+              fullContent,
+              date: new Date(entry.date).toLocaleDateString(),
+            };
+          })}
+          colors={colors}
+          emptyMessage="No substance transmissions yet. Log your first interaction to begin."
+          onEntryPress={(entry) => {
+            setSelectedJournalEntry({
+              title: 'Substance Transmission',
+              date: entry.date,
+              content: entry.fullContent,
+            });
+            setIsJournalEntryModalVisible(true);
+          }}
+        />
 
         <View style={{ height: 100 }} />
       </ScrollView>
@@ -191,6 +169,21 @@ export default function SubstancesScreen() {
         momentData={momentToSynthesize}
         colors={colors}
       />
+
+      {/* Journal Entry Detail Modal */}
+      {selectedJournalEntry && (
+        <JournalEntryModal
+          visible={isJournalEntryModalVisible}
+          onClose={() => {
+            setIsJournalEntryModalVisible(false);
+            setSelectedJournalEntry(null);
+          }}
+          title={selectedJournalEntry.title}
+          date={selectedJournalEntry.date}
+          content={selectedJournalEntry.content}
+          colors={colors}
+        />
+      )}
     </View>
   );
 }

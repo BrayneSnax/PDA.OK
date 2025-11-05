@@ -51,6 +51,8 @@ import { EditArchetypeModal } from '../modal/EditArchetypeModal';
 import { ReturnNode } from '../components/ReturnNode';
 import { FieldWhisperSequence } from '../components/FieldWhisperSequence';
 import { generateFieldWhispers } from '../services/fieldWhisper';
+import { JournalList } from '../components/JournalList';
+import { JournalEntryModal } from '../components/JournalEntryModal';
 
 type Screen = 'home' | 'substances' | 'archetypes' | 'patterns' | 'nourish';
 
@@ -144,6 +146,8 @@ export default function HomeScreen() {
   
   // Field Whisper state
   const [isGeneratingWhispers, setIsGeneratingWhispers] = useState(false);
+  const [selectedJournalEntry, setSelectedJournalEntry] = useState<any>(null);
+  const [isJournalEntryModalVisible, setIsJournalEntryModalVisible] = useState(false);
   const [activeWhispers, setActiveWhispers] = useState<string[]>([]);
   const [showWhispers, setShowWhispers] = useState(false);
 
@@ -1010,41 +1014,25 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.patternsContent}>
-          <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 8, marginBottom: 12 }]}>
-            YOUR PATTERNS
-          </Text>
-
-          {patterns.length === 0 ? (
-            <View style={[styles.emptyCard, { backgroundColor: colors.card + 'B3' }]}>
-              <Text style={[styles.emptyText, { color: colors.text }]}>
-                No patterns recorded yet. Tap below to add your first observation.
-              </Text>
-            </View>
-          ) : (
-            patterns.map((pattern) => (
-              <View key={pattern.id} style={[styles.patternCard, { backgroundColor: colors.card + 'B3' }]}>
-                <View style={styles.patternHeader}>
-                  <View style={styles.patternHeaderLeft}>
-                    {pattern.category && (
-                      <Text style={[styles.patternCategory, { color: colors.accent }]}>
-                        {pattern.category === 'anchor' && '⚓'}
-                        {pattern.category === 'substance' && '🍃'}
-                        {pattern.category === 'time' && '⏰'}
-                        {pattern.category === 'general' && '🌌'}
-                      </Text>
-                    )}
-                    <Text style={[styles.patternDate, { color: colors.dim }]}>
-                      {new Date(pattern.date).toLocaleDateString()}
-                    </Text>
-                  </View>
-                  <TouchableOpacity onPress={() => removePattern(pattern.id)}>
-                    <Text style={[styles.deleteButton, { color: colors.dim }]}>×</Text>
-                  </TouchableOpacity>
-                </View>
-                <Text style={[styles.patternText, { color: colors.text }]}>{pattern.text}</Text>
-              </View>
-            ))
-          )}
+          <JournalList
+            title="YOUR PATTERNS"
+            entries={patterns.map(p => ({
+              id: p.id,
+              preview: p.text.substring(0, 100),
+              fullContent: p.text,
+              date: new Date(p.date).toLocaleDateString(),
+            }))}
+            colors={colors}
+            emptyMessage="No patterns recorded yet. Tap below to add your first observation."
+            onEntryPress={(entry) => {
+              setSelectedJournalEntry({
+                title: 'Pattern Observation',
+                date: entry.date,
+                content: entry.fullContent,
+              });
+              setIsJournalEntryModalVisible(true);
+            }}
+          />
 
           <TouchableOpacity
             style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
@@ -1122,6 +1110,21 @@ export default function HomeScreen() {
             }}
           />
         )}
+
+        {/* Journal Entry Detail Modal */}
+        {selectedJournalEntry && (
+          <JournalEntryModal
+            visible={isJournalEntryModalVisible}
+            onClose={() => {
+              setIsJournalEntryModalVisible(false);
+              setSelectedJournalEntry(null);
+            }}
+            title={selectedJournalEntry.title}
+            date={selectedJournalEntry.date}
+            content={selectedJournalEntry.content}
+            colors={colors}
+          />
+        )}
       </View>
     );
   }
@@ -1150,56 +1153,29 @@ export default function HomeScreen() {
             tracking fuel & feeling
           </Text>
 
-          <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 24 }]}>
-            RECENT MEALS
-          </Text>
-
-          {foodEntries.length === 0 ? (
-            <View style={[styles.emptyCard, { backgroundColor: colors.card + 'B3' }]}>
-              <Text style={[styles.emptyText, { color: colors.dim }]}>
-                No meals logged yet. Tap below to record your first nourishment.
-              </Text>
-            </View>
-          ) : (
-            foodEntries.map((entry) => (
-              <View key={entry.id} style={[styles.foodCard, { backgroundColor: colors.card + 'B3' }]}>
-                <View style={styles.foodHeader}>
-                  <View style={styles.foodHeaderLeft}>
-                    <Text style={[styles.foodName, { color: colors.text }]}>{entry.name}</Text>
-                  </View>
-                  <TouchableOpacity onPress={() => removeFoodEntry(entry.id)}>
-                    <Text style={[styles.deleteButton, { color: colors.dim }]}>×</Text>
-                  </TouchableOpacity>
-                </View>
-                
-                <Text style={[styles.foodDate, { color: colors.dim }]}>
-                  {new Date(entry.date).toLocaleString()}
-                </Text>
-
-                {entry.energy_level && (
-                  <View style={styles.foodDetail}>
-                    <Text style={[styles.foodDetailLabel, { color: colors.dim }]}>Energy:</Text>
-                    <Text style={[styles.foodDetailValue, { color: colors.text }]}>
-                      {entry.energy_level === 'low' && '🔋 Low'}
-                      {entry.energy_level === 'medium' && '⚡ Medium'}
-                      {entry.energy_level === 'high' && '✨ High'}
-                    </Text>
-                  </View>
-                )}
-
-                {entry.feeling && (
-                  <View style={styles.foodDetail}>
-                    <Text style={[styles.foodDetailLabel, { color: colors.dim }]}>Feeling:</Text>
-                    <Text style={[styles.foodDetailValue, { color: colors.text }]}>{entry.feeling}</Text>
-                  </View>
-                )}
-
-                {entry.notes && (
-                  <Text style={[styles.foodNotes, { color: colors.dim }]}>{entry.notes}</Text>
-                )}
-              </View>
-            ))
-          )}
+          <JournalList
+            title="RECENT MEALS"
+            entries={foodEntries.map(entry => {
+              const energyLabel = entry.energy_level === 'low' ? '🔋 Low' : entry.energy_level === 'medium' ? '⚡ Medium' : entry.energy_level === 'high' ? '✨ High' : '';
+              const fullContent = `${entry.name}\n\nEnergy: ${energyLabel}\nFeeling: ${entry.feeling || 'Not specified'}\n\nNotes: ${entry.notes || 'None'}`;
+              return {
+                id: entry.id,
+                preview: entry.name,
+                fullContent,
+                date: new Date(entry.date).toLocaleString(),
+              };
+            })}
+            colors={colors}
+            emptyMessage="No meals logged yet. Tap below to record your first nourishment."
+            onEntryPress={(entry) => {
+              setSelectedJournalEntry({
+                title: 'Nourishment Entry',
+                date: entry.date,
+                content: entry.fullContent,
+              });
+              setIsJournalEntryModalVisible(true);
+            }}
+          />
 
           <TouchableOpacity
             style={[styles.addButton, { backgroundColor: colors.accent }]}
@@ -1223,6 +1199,21 @@ export default function HomeScreen() {
           }}
           colors={colors}
         />
+
+        {/* Journal Entry Detail Modal */}
+        {selectedJournalEntry && (
+          <JournalEntryModal
+            visible={isJournalEntryModalVisible}
+            onClose={() => {
+              setIsJournalEntryModalVisible(false);
+              setSelectedJournalEntry(null);
+            }}
+            title={selectedJournalEntry.title}
+            date={selectedJournalEntry.date}
+            content={selectedJournalEntry.content}
+            colors={colors}
+          />
+        )}
       </View>
     );
   }
