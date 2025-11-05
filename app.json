@@ -17,6 +17,7 @@
     "android": {
       "package": "com.michaelmistree.pdataskapp",
       "versionCode": 1,
+      "gradleVersion": "8.10",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#0f0f23"
