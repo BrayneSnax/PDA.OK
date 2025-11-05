@@ -419,14 +419,14 @@ export default function HomeScreen() {
             ))}
           </CollapsibleSection>
 
-	          {/* Situational Resonance */}
-	          <CollapsibleSection
-	            title="SITUATIONAL RESONANCE"
-            icon="⚡"
+          {/* Uplift & Expansion */}
+          <CollapsibleSection
+            title="UPLIFT & EXPANSION"
+            icon="✨"
             colors={colors}
             defaultExpanded={false}
           >
-            {situationalAnchors.map(item => (
+            {upliftAnchors.map(item => (
               <AnchorCard
                 key={item.id}
                 item={item}
@@ -444,14 +444,14 @@ export default function HomeScreen() {
             ))}
           </CollapsibleSection>
 
-          {/* Uplift & Expansion */}
-          <CollapsibleSection
-            title="UPLIFT & EXPANSION"
-            icon="✨"
+	          {/* Situational Resonance */}
+	          <CollapsibleSection
+	            title="SITUATIONAL RESONANCE"
+            icon="⚡"
             colors={colors}
             defaultExpanded={false}
           >
-            {upliftAnchors.map(item => (
+            {situationalAnchors.map(item => (
               <AnchorCard
                 key={item.id}
                 item={item}
