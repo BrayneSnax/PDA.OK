@@ -55,11 +55,11 @@ export default function SubstancesScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={[styles.containerTitle, { color: colors.text }]}>
+        <Text style={[styles.containerTitle, { color: colors.text, textAlign: 'center' }]}>
           Substances
         </Text>
-        <Text style={[styles.containerSubtitle, { color: colors.dim }]}>
-          your living pharmacopoeia
+        <Text style={[styles.containerSubtitle, { color: colors.dim, textAlign: 'center' }]}>
+          Living Pharmacopeia
         </Text>
 
         <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 24 }]}>

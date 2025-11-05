@@ -843,11 +843,11 @@ export default function HomeScreen() {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          <Text style={[styles.containerTitle, { color: colors.text }]}>
+          <Text style={[styles.containerTitle, { color: colors.text, textAlign: 'center' }]}>
             Archetypes
           </Text>
-          <Text style={[styles.containerSubtitle, { color: colors.dim }]}>
-            inner modes & invocations
+          <Text style={[styles.containerSubtitle, { color: colors.dim, textAlign: 'center' }]}>
+            Inner Modes & Invocations
           </Text>
 
           <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 24 }]}>
@@ -909,45 +909,35 @@ export default function HomeScreen() {
 
           {/* Archetype Reflections Section */}
           <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 32 }]}>
-            archetype reflections
+            ARCHETYPE REFLECTIONS
           </Text>
           <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 16 }]}>
-            personal & collective journals
+            Personal & Collective Journals
           </Text>
 
-          {conversations.filter(c => c.archetypeName).length === 0 ? (
-            <View style={[styles.emptyCard, { backgroundColor: colors.card + 'B3' }]}>
-              <Text style={[styles.emptyText, { color: colors.dim }]}>
-                No archetype dialogues yet. Invoke an archetype and log a substance moment to begin.
-              </Text>
-            </View>
-          ) : (
-            conversations.filter(c => c.archetypeName).slice(0, 5).map((conversation) => (
-              <View key={conversation.id} style={[styles.conversationCard, { backgroundColor: colors.card + 'B3' }]}>
-                <View style={styles.conversationHeader}>
-                  <Text style={[styles.conversationTitle, { color: colors.text }]}>
-                    {conversation.archetypeName}
-                    {conversation.substanceMythicName && (
-                      <Text style={{ color: colors.dim }}> × {conversation.substanceMythicName || conversation.substanceName}</Text>
-                    )}
-                  </Text>
-                  <Text style={[styles.conversationDate, { color: colors.dim }]}>
-                    {new Date(conversation.timestamp).toLocaleDateString()}
-                  </Text>
-                </View>
-                {conversation.messages.map((msg, idx) => (
-                  <View key={idx} style={styles.messageBlock}>
-                    <Text style={[styles.messageSpeaker, { color: colors.accent }]}>
-                      {msg.speaker}:
-                    </Text>
-                    <Text style={[styles.messageText, { color: colors.text }]}>
-                      {msg.text}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-            ))
-          )}
+          <JournalList
+            title="RECENT DIALOGUES"
+            entries={conversations.filter(c => c.archetypeName).map(conversation => {
+              const preview = `${conversation.archetypeName}${conversation.substanceMythicName ? ' × ' + conversation.substanceMythicName : ''}`;
+              const fullContent = conversation.messages.map(msg => `${msg.speaker}:\n${msg.text}`).join('\n\n');
+              return {
+                id: conversation.id,
+                preview,
+                fullContent,
+                date: new Date(conversation.timestamp).toLocaleDateString(),
+              };
+            })}
+            colors={colors}
+            emptyMessage="No archetype dialogues yet. Invoke an archetype and log a substance moment to begin."
+            onEntryPress={(entry) => {
+              setSelectedJournalEntry({
+                title: 'Archetype Dialogue',
+                date: entry.date,
+                content: entry.fullContent,
+              });
+              setIsJournalEntryModalVisible(true);
+            }}
+          />
 
           <View style={{ height: 80 }} />
         </ScrollView>
@@ -996,6 +986,21 @@ export default function HomeScreen() {
           }}
           colors={colors}
         />
+
+        {/* Journal Entry Detail Modal */}
+        {selectedJournalEntry && (
+          <JournalEntryModal
+            visible={isJournalEntryModalVisible}
+            onClose={() => {
+              setIsJournalEntryModalVisible(false);
+              setSelectedJournalEntry(null);
+            }}
+            title={selectedJournalEntry.title}
+            date={selectedJournalEntry.date}
+            content={selectedJournalEntry.content}
+            colors={colors}
+          />
+        )}
       </View>
     );
   }
@@ -1013,6 +1018,13 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.patternsContent}>
+          <Text style={[styles.containerTitle, { color: colors.text, textAlign: 'center', marginTop: 8 }]}>
+            Patterns
+          </Text>
+          <Text style={[styles.containerSubtitle, { color: colors.dim, textAlign: 'center', marginBottom: 16 }]}>
+            Paradox & Parallels
+          </Text>
+
           <JournalList
             title="YOUR PATTERNS"
             entries={patterns.map(p => ({
@@ -1054,7 +1066,7 @@ export default function HomeScreen() {
             style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
             onPress={() => setIsDailySynthesisModalVisible(true)}
           >
-            <Text style={[styles.addButtonText, { color: colors.card }]}>🌙 Reflect on Today</Text>
+            <Text style={[styles.addButtonText, { color: colors.card }]}>🌙 Reflect on the Day</Text>
           </TouchableOpacity>
 
           <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 12 }]}>
