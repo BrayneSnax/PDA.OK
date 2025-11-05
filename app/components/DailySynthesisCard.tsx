@@ -62,7 +62,7 @@ export const DailySynthesisCard = React.memo(({ colors, onViewHistory }: Props) 
   }
 
   return (
-    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.dim }]}>
+    <View style={[styles.card, { backgroundColor: colors.card + 'B3' }]}>
       <View style={styles.header}>
         <Text style={[styles.title, { color: colors.dim }]}>
           DAILY SYNTHESIS
@@ -126,7 +126,6 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     padding: 16,
     marginBottom: 24,
-    borderWidth: 1,
   },
   header: {
     flexDirection: 'row',
