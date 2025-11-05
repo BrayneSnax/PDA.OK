@@ -29,6 +29,7 @@ export const CollapsibleSection = React.memo(({
         <View style={styles.headerContent}>
           {icon && <Text style={styles.icon}>{icon}</Text>}
           <Text style={[styles.title, { color: colors.dim }]}>{title}</Text>
+          {icon && <Text style={styles.icon}>{icon}</Text>}
         </View>
         <Text style={[styles.chevron, { color: colors.dim }]}>
           {expanded ? '∧' : '∨'}
@@ -60,6 +61,7 @@ const styles = StyleSheet.create({
   headerContent: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     gap: 8,
     flex: 1,
   },
@@ -71,6 +73,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: 1,
+    textAlign: 'center',
   },
   chevron: {
     fontSize: 16,
