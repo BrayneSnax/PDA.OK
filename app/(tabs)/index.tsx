@@ -356,12 +356,6 @@ export default function HomeScreen() {
           {/* Temporal Intelligence - Adaptive Suggestions Card */}
           <TemporalIntelligenceCard colors={colors} />
 
-          {/* Daily Synthesis - Evening Reflection */}
-          <DailySynthesisCard 
-            colors={colors} 
-            onViewHistory={() => setIsSynthesisHistoryVisible(true)}
-          />
-
 	          {/* Personal Moments Section */}
 	          <Text style={[styles.sectionHeader, { color: colors.dim, fontSize: 14, fontWeight: '500' }]}>
 	            PERSONAL MOMENTS
@@ -1024,6 +1018,12 @@ export default function HomeScreen() {
           <Text style={[styles.containerSubtitle, { color: colors.dim }]}>
             witnessing the rhythms
           </Text>
+
+          {/* Daily Synthesis - Evening Reflection */}
+          <DailySynthesisCard 
+            colors={colors} 
+            onViewHistory={() => setIsSynthesisHistoryVisible(true)}
+          />
 
           <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 24 }]}>
             YOUR PATTERNS
