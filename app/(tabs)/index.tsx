@@ -1403,7 +1403,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 24,
     marginTop: 24,
-    alignItems: 'center',
   },
   placeholderIcon: {
     fontSize: 48,
@@ -1568,8 +1567,6 @@ const styles = StyleSheet.create({
   placeholderCard: {
     borderRadius: 12,
     padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
     borderWidth: 1,
     borderColor: 'transparent',
   },
