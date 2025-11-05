@@ -1060,11 +1060,10 @@ export default function HomeScreen() {
           </View>
 
           <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 12 }]}>
-            <Text style={[styles.placeholderIcon, { color: colors.accent }]}>🌌</Text>
-            <Text style={[styles.placeholderTitle, { color: colors.text }]}>
-              AI Pattern Weaver
+            <Text style={[styles.sectionHeader, { color: colors.dim, marginBottom: 12 }]}>
+              PATTERN WEAVER
             </Text>
-            <Text style={[styles.placeholderText, { color: colors.dim }]}>
+            <Text style={[styles.placeholderText, { color: colors.text }]}>
               Soon, this space will automatically reveal hidden rhythms — tracking how anchors, allies, and moments weave together across time.
             </Text>
           </View>
@@ -1406,6 +1405,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     textAlign: 'center',
+    fontStyle: 'italic',
   },
   patternCard: {
     borderRadius: 12,
