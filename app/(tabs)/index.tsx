@@ -1148,6 +1148,42 @@ export default function HomeScreen() {
             }}
           />
 
+          {/* The Compass Rose - Pattern Synthesis */}
+          <View style={[styles.compassRoseCard, { backgroundColor: colors.card + 'CC', borderColor: colors.accent + '40', marginTop: 20, marginBottom: 12 }]}>
+            <Text style={[styles.compassRoseTitle, { color: colors.accent }]}>
+              ⚓ The Compass Rose
+            </Text>
+            {foodEntries.length === 0 ? (
+              <Text style={[styles.compassRoseText, { color: colors.dim }]}>
+                The compass awaits your first entry. What fuels you today?
+              </Text>
+            ) : foodEntries.length < 6 ? (
+              <View>
+                <Text style={[styles.compassRoseLabel, { color: colors.dim }]}>Most Recent:</Text>
+                <Text style={[styles.compassRoseText, { color: colors.text }]}>
+                  {foodEntries[0].feeling || 'Observing'} after {foodEntries[0].name}
+                </Text>
+              </View>
+            ) : (
+              <View>
+                <Text style={[styles.compassRoseLabel, { color: colors.dim }]}>Pattern Emerging:</Text>
+                <Text style={[styles.compassRoseText, { color: colors.text }]}>
+                  {(() => {
+                    const recentEntries = foodEntries.slice(0, 7);
+                    const feelingCounts: { [key: string]: number } = {};
+                    recentEntries.forEach(entry => {
+                      if (entry.feeling) {
+                        feelingCounts[entry.feeling] = (feelingCounts[entry.feeling] || 0) + 1;
+                      }
+                    });
+                    const dominantFeeling = Object.entries(feelingCounts).sort((a, b) => b[1] - a[1])[0];
+                    return dominantFeeling ? `${dominantFeeling[0]} appears ${dominantFeeling[1]} times this week` : 'Tracking your fuel & feeling rhythm';
+                  })()}
+                </Text>
+              </View>
+            )}
+          </View>
+
           <TouchableOpacity
             style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
             onPress={() => setIsAddFoodModalVisible(true)}
@@ -1613,6 +1649,27 @@ const styles = StyleSheet.create({
   conversationText: {
     fontSize: 14,
     lineHeight: 20,
+  },
+  compassRoseCard: {
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+  },
+  compassRoseTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: 8,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  compassRoseLabel: {
+    fontSize: 12,
+    marginBottom: 4,
+    fontStyle: 'italic',
+  },
+  compassRoseText: {
+    fontSize: 15,
+    lineHeight: 22,
   },
 });
 
