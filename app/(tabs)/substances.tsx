@@ -62,6 +62,7 @@ export default function SubstancesScreen() {
         <Text style={[styles.containerSubtitle, { color: colors.dim, textAlign: 'center' }]}>
           Living Pharmacopeia
         </Text>
+        <Text style={{ color: colors.accent, fontSize: 10, textAlign: 'center', marginTop: 4 }}>v2.0-FIXED</Text>
 
         <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 24 }]}>
           YOUR SUBSTANCES
