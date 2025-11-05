@@ -105,7 +105,7 @@ export const DailySynthesisCard = React.memo(({ colors, onViewHistory }: Props) 
       ) : (
         <View style={styles.generateContainer}>
           <Text style={[styles.promptText, { color: colors.text }]}>
-            The day draws to a close. Reflect on what moved and what remained still.
+            Gather the fragments of today. Let movement and stillness weave into meaning.
           </Text>
           <TouchableOpacity
             style={[styles.generateButton, { backgroundColor: colors.accent }]}
