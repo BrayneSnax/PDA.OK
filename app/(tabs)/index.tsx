@@ -175,6 +175,7 @@ export default function HomeScreen() {
   // Handle completion with somatic feedback
   const handleCompletion = (itemId: string) => {
     setShowCompletionPulse(true);   // Show pulse animation
+    // Note: toggleCompletion is called before this in onComplete handler
   };
 
   // When pulse completes, show shift toast
@@ -515,11 +516,13 @@ export default function HomeScreen() {
               }}
               onComplete={(status, note) => {
                 if (status === 'did it') {
-                  // Update existing item with checkmark (handleCompletion does this)
+                  // Mark task as complete with checkmark
+                  toggleCompletion(selectedItem.id);
+                  // Show completion pulse and toast
                   handleCompletion(selectedItem.id);
                 } else {
                   // For other actions (skipped, forgot, couldn't, not relevant),
-                  // show ring pulse, then create a journal entry and show toast
+                  // show ring pulse and toast as acknowledgment
                   setShowRingPulse(true);
                   setCurrentActionType(status);
                   
@@ -528,18 +531,11 @@ export default function HomeScreen() {
                     setShowActionToast(true);
                   }, 400);
                   
-                  addItem({
-                    title: selectedItem.title,
-                    container: selectedItem.container,
-                    category: selectedItem.category,
-                    body_cue: selectedItem.body_cue,
-                    micro: selectedItem.micro,
-                    desire: selectedItem.desire,
-                    status: status,
-                    note: note,
-                  });
+                  // Note: We're just acknowledging the action, not creating a duplicate task
+                  // The note parameter could be logged to a journal system in the future
                 }
 
+                // Close the modal after any action
                 setSelectedItem(null);
               }}
             />

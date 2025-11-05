@@ -80,6 +80,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   const [editedNotice, setEditedNotice] = useState(item.body_cue || '');
   const [editedAct, setEditedAct] = useState(item.micro || '');
   const [editedReflect, setEditedReflect] = useState(item.desire || '');
+  const [showCheckmark, setShowCheckmark] = useState(false);
   const allActionButtons = ['skipped', 'forgot', 'couldn\'t', 'not relevant'];
   const actionButtonLabels: Record<string, string> = {
     'skipped': 'Skipped',
@@ -419,7 +420,11 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                 }
               ]}
               onPress={() => {
-                onComplete('did it', note);
+                setShowCheckmark(true);
+                // Brief delay to show checkmark before calling onComplete
+                setTimeout(() => {
+                  onComplete('did it', note);
+                }, 300);
               }}
             >
               <Text
@@ -435,7 +440,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                   }
                 ]}
               >
-                Align Flow
+                {showCheckmark ? '✓ Aligned' : 'Align Flow'}
               </Text>
             </TouchableOpacity>
 
