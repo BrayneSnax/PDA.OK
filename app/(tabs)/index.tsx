@@ -22,7 +22,6 @@ import { Alert } from 'react-native';
 import { ANALYSIS_URL, REQUEST_TIMEOUT_MS, TEST_MODE } from '../constants/Config';
 import { ContainerId } from '../constants/Types';
 import { TemporalIntelligenceCard } from '../components/TemporalIntelligenceCard';
-import { DailySynthesisCard } from '../components/DailySynthesisCard';
 import { DailySynthesisModal } from '../modal/DailySynthesisModal';
 import { SynthesisHistoryModal } from '../components/SynthesisHistoryModal';
 import { ConversationCard } from '../components/ConversationCard';
