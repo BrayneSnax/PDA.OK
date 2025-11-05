@@ -6,6 +6,18 @@
 const GEMINI_MODEL = 'gemini-2.0-flash-exp';
 const API_TIMEOUT = 10000; // 10 seconds
 
+/**
+ * Clean markdown formatting from AI responses
+ * Removes * and # characters that feel dissonant
+ */
+function cleanMarkdown(text: string): string {
+  return text
+    .replace(/\*\*/g, '') // Remove bold markers
+    .replace(/\*/g, '')   // Remove italic markers
+    .replace(/^#+\s*/gm, '') // Remove heading markers
+    .trim();
+}
+
 interface GeminiResponse {
   candidates: Array<{
     content: {
@@ -74,7 +86,8 @@ export async function generateInsight(prompt: string): Promise<string> {
       throw new Error('No insight generated');
     }
 
-    return insight;
+    // Clean markdown formatting
+    return cleanMarkdown(insight);
   } catch (error) {
     console.error('Error generating insight:', error);
     
