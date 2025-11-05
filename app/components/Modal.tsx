@@ -22,6 +22,7 @@ export const Modal = ({ isVisible, onClose, children }: Props) => {
       transparent={true}
       visible={isVisible}
       onRequestClose={onClose}
+      statusBarTranslucent={true}
     >
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.centeredView}>
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)', // Dim the background
+    backgroundColor: 'rgba(0,0,0,0.8)', // Darker background for full-screen feel
   },
   modalView: {
     margin: 20,
