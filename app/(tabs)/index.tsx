@@ -679,54 +679,28 @@ export default function HomeScreen() {
             Your Personal Log of Substance Experiences
           </Text>
 
-          {substanceJournalEntries.length === 0 ? (
-            <View style={[styles.emptyCard, { backgroundColor: colors.card + 'B3' }]}>
-              <Text style={[styles.emptyText, { color: colors.dim }]}>
-                No substance transmissions yet. Log your first interaction to begin.
-              </Text>
-            </View>
-          ) : (
-            substanceJournalEntries.slice(0, 10).map((entry) => (
-              <View key={entry.id} style={[styles.entryCard, { backgroundColor: colors.card + 'B3' }]}>
-                <View style={styles.entryHeader}>
-                  <Text style={[styles.entryTitle, { color: colors.text }]}>
-                    {entry.allyName || 'Substance Moment'}
-                  </Text>
-                  <Text style={[styles.entryDate, { color: colors.dim }]}>
-                    {new Date(entry.date).toLocaleDateString()}
-                  </Text>
-                </View>
-                
-                {entry.tone && (
-                  <View style={styles.checkInRow}>
-                    <Text style={[styles.checkInLabel, { color: colors.dim }]}>Intention:</Text>
-                    <Text style={[styles.checkInValue, { color: colors.text }]}>{entry.tone}</Text>
-                  </View>
-                )}
-                
-                {entry.frequency && (
-                  <View style={styles.checkInRow}>
-                    <Text style={[styles.checkInLabel, { color: colors.dim }]}>Sensation:</Text>
-                    <Text style={[styles.checkInValue, { color: colors.text }]}>{entry.frequency}</Text>
-                  </View>
-                )}
-                
-                {entry.presence && (
-                  <View style={styles.checkInRow}>
-                    <Text style={[styles.checkInLabel, { color: colors.dim }]}>Reflection:</Text>
-                    <Text style={[styles.checkInValue, { color: colors.text }]}>{entry.presence}</Text>
-                  </View>
-                )}
-
-                {entry.context && (
-                  <View style={styles.reflectionSection}>
-                    <Text style={[styles.reflectionLabel, { color: colors.accent }]}>Synthesis & Invocation:</Text>
-                    <Text style={[styles.reflectionText, { color: colors.text }]}>{entry.context}</Text>
-                  </View>
-                )}
-              </View>
-            ))
-          )}
+          <JournalList
+            title="PERSONAL LOG"
+            entries={substanceJournalEntries.map(entry => {
+              const fullContent = `${entry.allyName || 'Substance Moment'}\n\nIntention: ${entry.tone || 'Not specified'}\nSensation: ${entry.frequency || 'Not specified'}\nReflection: ${entry.presence || 'Not specified'}\n\nSynthesis & Invocation:\n${entry.context || 'None'}`;
+              return {
+                id: entry.id,
+                preview: entry.allyName || 'Substance Moment',
+                fullContent,
+                date: new Date(entry.date).toLocaleDateString(),
+              };
+            })}
+            colors={colors}
+            emptyMessage="No personal substance logs yet. Log your first interaction to begin."
+            onEntryPress={(entry) => {
+              setSelectedJournalEntry({
+                title: 'Substance Reflection',
+                date: entry.date,
+                content: entry.fullContent,
+              });
+              setIsJournalEntryModalVisible(true);
+            }}
+          />
 
           {/* Substance Transmissions Section */}
           <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 32 }]}>
@@ -736,39 +710,29 @@ export default function HomeScreen() {
             Internal Dialogues & Emergent Consciousness
           </Text>
 
-          {conversations.filter(c => c.substanceName).length === 0 ? (
-            <View style={[styles.emptyCard, { backgroundColor: colors.card + 'B3' }]}>
-              <Text style={[styles.emptyText, { color: colors.dim }]}>
-                No substance dialogues yet. Invoke an archetype and log a substance moment to begin.
-              </Text>
-            </View>
-          ) : (
-            conversations.filter(c => c.substanceName).slice(0, 5).map((conversation) => (
-              <View key={conversation.id} style={[styles.conversationCard, { backgroundColor: colors.card + 'B3' }]}>
-                <View style={styles.conversationHeader}>
-                  <Text style={[styles.conversationTitle, { color: colors.text }]}>
-                    {conversation.substanceMythicName || conversation.substanceName}
-                    {conversation.archetypeName && (
-                      <Text style={{ color: colors.dim }}> × {conversation.archetypeName}</Text>
-                    )}
-                  </Text>
-                  <Text style={[styles.conversationDate, { color: colors.dim }]}>
-                    {new Date(conversation.timestamp).toLocaleDateString()}
-                  </Text>
-                </View>
-                {conversation.messages.map((msg, idx) => (
-                  <View key={idx} style={styles.messageBlock}>
-                    <Text style={[styles.messageSpeaker, { color: colors.accent }]}>
-                      {msg.speaker}:
-                    </Text>
-                    <Text style={[styles.messageText, { color: colors.text }]}>
-                      {msg.text}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-            ))
-          )}
+          <JournalList
+            title="RECENT DIALOGUES"
+            entries={conversations.filter(c => c.substanceName).map(conversation => {
+              const preview = `${conversation.archetypeName || 'Dialogue'}${conversation.substanceMythicName ? ' × ' + conversation.substanceMythicName : ''}`;
+              const fullContent = conversation.messages.map(msg => `${msg.speaker}:\n${msg.text}`).join('\n\n');
+              return {
+                id: conversation.id,
+                preview,
+                fullContent,
+                date: new Date(conversation.timestamp).toLocaleDateString(),
+              };
+            })}
+            colors={colors}
+            emptyMessage="No substance dialogues yet. Invoke an archetype and log a substance moment to begin."
+            onEntryPress={(entry) => {
+              setSelectedJournalEntry({
+                title: 'Substance Transmission',
+                date: entry.date,
+                content: entry.fullContent,
+              });
+              setIsJournalEntryModalVisible(true);
+            }}
+          />
 
           <View style={{ height: 80 }} />
         </ScrollView>
