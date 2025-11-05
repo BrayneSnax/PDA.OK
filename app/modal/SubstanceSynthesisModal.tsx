@@ -38,8 +38,17 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
 
   useEffect(() => {
     if (isVisible && momentData) {
+      // Auto-populate time with current time in 12-hour format
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      const displayHours = hours % 12 || 12;
+      const displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
+      const currentTime = `${displayHours}:${displayMinutes} ${ampm}`;
+      
       setSynthesisState({
-        intention: '',
+        intention: currentTime, // Auto-populate Time field
         sensation: '',
         reflection: '',
         synthesis: '',
