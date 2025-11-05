@@ -1008,15 +1008,9 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.patternsContent}>
-          <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 16 }]}>
+          <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 8, marginBottom: 12 }]}>
             YOUR PATTERNS
           </Text>
-
-          {/* Daily Synthesis - Evening Reflection */}
-          <DailySynthesisCard 
-            colors={colors} 
-            onViewHistory={() => setIsSynthesisHistoryVisible(true)}
-          />
 
           {patterns.length === 0 ? (
             <View style={[styles.emptyCard, { backgroundColor: colors.card + 'B3' }]}>
@@ -1051,13 +1045,19 @@ export default function HomeScreen() {
           )}
 
           <TouchableOpacity
-            style={[styles.addButton, { backgroundColor: colors.accent }]}
+            style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
             onPress={() => setIsAddPatternModalVisible(true)}
           >
             <Text style={[styles.addButtonText, { color: colors.card }]}>+ Record a Pattern</Text>
           </TouchableOpacity>
 
-          <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 16 }]}>
+          {/* Daily Synthesis - Evening Reflection */}
+          <DailySynthesisCard 
+            colors={colors} 
+            onViewHistory={() => setIsSynthesisHistoryVisible(true)}
+          />
+
+          <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 12 }]}>
             <Text style={[styles.placeholderIcon, { color: colors.accent }]}>🌌</Text>
             <Text style={[styles.placeholderTitle, { color: colors.text }]}>
               AI Pattern Weaver
@@ -1069,7 +1069,7 @@ export default function HomeScreen() {
 
           {/* Field Whispers Button */}
           <TouchableOpacity
-            style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 16 }]}
+            style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
             onPress={handleListenToField}
             disabled={isGeneratingWhispers}
           >
