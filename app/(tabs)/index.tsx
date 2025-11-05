@@ -573,6 +573,7 @@ export default function HomeScreen() {
         />
         
         <ActionToast
+          key={currentActionType} // Force remount when action type changes
           isVisible={showActionToast}
           actionType={currentActionType}
           colors={colors}
