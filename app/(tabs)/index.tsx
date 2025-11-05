@@ -1052,10 +1052,12 @@ export default function HomeScreen() {
           </TouchableOpacity>
 
           {/* Daily Synthesis - Evening Reflection */}
-          <DailySynthesisCard 
-            colors={colors} 
-            onViewHistory={() => setIsSynthesisHistoryVisible(true)}
-          />
+          <View style={{ marginTop: 20 }}>
+            <DailySynthesisCard 
+              colors={colors} 
+              onViewHistory={() => setIsSynthesisHistoryVisible(true)}
+            />
+          </View>
 
           <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 12 }]}>
             <Text style={[styles.placeholderIcon, { color: colors.accent }]}>🌌</Text>
