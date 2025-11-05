@@ -6,3 +6,4 @@ export { DailyBlockSynthesisModal } from './DailyBlockSynthesisModal';
 export { PatternSynthesisModal } from './PatternSynthesisModal';
 export { AddFoodModal } from './AddFoodModal';
 export { AddPatternModal } from './AddPatternModal';
+export { DailySynthesisModal } from './DailySynthesisModal';
