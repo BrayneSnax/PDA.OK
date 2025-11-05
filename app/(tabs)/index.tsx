@@ -374,12 +374,13 @@ export default function HomeScreen() {
 	          <Text style={[styles.sectionHeader, { color: colors.dim, fontSize: 14, fontWeight: '500' }]}>
 	            PERSONAL MOMENTS
 	          </Text>
-	          <CollapsibleSection
-	            title="CRAFTED MOMENTS"
-	            icon="✨"
-	            colors={colors}
-	            defaultExpanded={false}
-	          >
+          <CollapsibleSection
+            key={`crafted-${activeContainer}`}
+            title="CRAFTED MOMENTS"
+            icon="✨"
+            colors={colors}
+            defaultExpanded={false}
+          >
 	            {items.filter(item => item.category === 'crafted').map(item => (
               <AnchorCard
                 key={item.id}
@@ -405,6 +406,7 @@ export default function HomeScreen() {
 
           {/* Time-based Anchors */}
           <CollapsibleSection
+            key={`time-${activeContainer}`}
             title={`${activeContainer.toUpperCase()} ANCHORS`}
             icon="☀️"
             colors={colors}
@@ -430,6 +432,7 @@ export default function HomeScreen() {
 
           {/* Uplift & Expansion */}
           <CollapsibleSection
+            key={`uplift-${activeContainer}`}
             title="UPLIFT & EXPANSION"
             icon="✨"
             colors={colors}
@@ -455,6 +458,7 @@ export default function HomeScreen() {
 
 	          {/* Situational Resonance */}
 	          <CollapsibleSection
+            key={`situational-${activeContainer}`}
 	            title="SITUATIONAL RESONANCE"
             icon="⚡"
             colors={colors}
