@@ -1418,7 +1418,7 @@ const styles = StyleSheet.create({
   placeholderText: {
     fontSize: 14,
     lineHeight: 20,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   patternCard: {
     borderRadius: 12,
@@ -1585,7 +1585,7 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     fontSize: 14,
-    textAlign: 'center',
+    textAlign: 'left',
     lineHeight: 20,
   },
   journalSubtitle: {
