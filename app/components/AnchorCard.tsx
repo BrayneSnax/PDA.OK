@@ -109,17 +109,11 @@ export const AnchorCard = React.memo(({ item, completed, onToggle, colors, onPre
           activeOpacity={0.7}
         >
           <View style={styles.row}>
-            <TouchableOpacity
-              onPress={handleToggle}
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-            >
-              <Text style={[styles.bullet, { color: completed ? colors.accent : colors.dim }]}>
-                {completed ? '✓' : '•'}
-              </Text>
-            </TouchableOpacity>
+            <Text style={[styles.emoji, { color: colors.dim }]}>
+              {item.category === 'time' ? '🌅' : item.category === 'situational' ? '⚡' : '✨'}
+            </Text>
             <Text style={[styles.title, { color: colors.text }]}>{item.title}</Text>
-            {/* Aesthetic elements for the new card look */}
-            <Text style={[styles.chevron, { color: colors.dim }]}>
+            <Text style={[styles.emoji, { color: colors.dim }]}>
               {item.category === 'time' ? '🌅' : item.category === 'situational' ? '⚡' : '✨'}
             </Text>
           </View>
@@ -190,6 +184,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     gap: 16,
     paddingVertical: 20,
     paddingHorizontal: 16,
@@ -199,15 +194,15 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   title: {
-    flex: 1,
     fontSize: 17,
     fontWeight: '500',
+    textAlign: 'center',
     // Text appears to float with subtle shadow
     textShadowColor: 'rgba(0, 0, 0, 0.05)',
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 2,
   },
-  chevron: {
+  emoji: {
     fontSize: 20,
     fontWeight: '300',
   },
