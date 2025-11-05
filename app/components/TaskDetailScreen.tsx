@@ -533,13 +533,13 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   largeBlock: {
-    minHeight: 65, // PSS: Further reduced for compression
+    minHeight: 80, // Increased to cover text better
   },
   mediumBlock: {
-    minHeight: 70, // PSS: Further reduced for compression
+    minHeight: 85, // Increased to cover text better
   },
   smallBlock: {
-    minHeight: 60, // PSS: Further reduced for compression
+    minHeight: 75, // Increased to cover text better
   },
   glowText: {
     textAlign: 'center',
