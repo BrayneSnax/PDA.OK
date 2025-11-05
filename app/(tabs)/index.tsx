@@ -1141,20 +1141,16 @@ export default function HomeScreen() {
           {renderActionGrid()}
         </View>
 
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          <Text style={[styles.containerTitle, { color: colors.text }]}>
+        <View style={styles.patternsContent}>
+          <Text style={[styles.containerTitle, { color: colors.text, textAlign: 'center', marginTop: 8 }]}>
             Nourish Map
           </Text>
-          <Text style={[styles.containerSubtitle, { color: colors.dim }]}>
-            tracking fuel & feeling
+          <Text style={[styles.containerSubtitle, { color: colors.dim, textAlign: 'center', marginBottom: 16 }]}>
+            Tracking Fuel & Feeling
           </Text>
 
           <JournalList
-            title="RECENT MEALS"
+            title="FOOD ENTRIES"
             entries={foodEntries.map(entry => {
               const energyLabel = entry.energy_level === 'low' ? '🔋 Low' : entry.energy_level === 'medium' ? '⚡ Medium' : entry.energy_level === 'high' ? '✨ High' : '';
               const fullContent = `${entry.name}\n\nEnergy: ${energyLabel}\nFeeling: ${entry.feeling || 'Not specified'}\n\nNotes: ${entry.notes || 'None'}`;
@@ -1178,14 +1174,12 @@ export default function HomeScreen() {
           />
 
           <TouchableOpacity
-            style={[styles.addButton, { backgroundColor: colors.accent }]}
+            style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
             onPress={() => setIsAddFoodModalVisible(true)}
           >
             <Text style={[styles.addButtonText, { color: colors.card }]}>+ Log Nourishment</Text>
           </TouchableOpacity>
-
-          <View style={{ height: 80 }} />
-        </ScrollView>
+        </View>
 
         {/* Time Container Navigation at Bottom */}
         {renderTimeContainerNav()}
