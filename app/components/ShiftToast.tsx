@@ -9,25 +9,8 @@ interface ShiftToastProps {
   onDismiss: () => void;
 }
 
-// Warm exhale messages for "did it" / Align Flow
-const warmExhaleMessages = [
-  'Completion hums softly through the weave.',
-  'The field takes notice; a small current turns.',
-  'You touched the thread and it remembered you.',
-  'The act lands; resonance thickens.',
-  'One quiet hinge opens a wider door.',
-  'Momentum gathers exactly where you are.',
-  'A simple Yes ripples the system.',
-  'Presence clicks into place; carry on.',
-];
-
-let messageIndex = 0;
-
-const getWarmExhaleMessage = () => {
-  const message = warmExhaleMessages[messageIndex];
-  messageIndex = (messageIndex + 1) % warmExhaleMessages.length;
-  return message;
-};
+// Single static message for "did it" / Align Flow
+const warmExhaleMessage = 'Completion hums softly through the weave.';
 
 // Get time-of-day background color for toast
 const getToastBackground = (container: ContainerId) => {
@@ -49,14 +32,8 @@ export const ShiftToast: React.FC<ShiftToastProps> = ({
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(20)).current; // Slide up from bottom
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
-  // Initialize with first message so it's never blank (lazy init)
-  const [initialMessage] = useState(() => getWarmExhaleMessage());
-  const messageRef = useRef<string>(initialMessage);
-
   useEffect(() => {
     if (isVisible) {
-      // Get message only when toast becomes visible
-      messageRef.current = getWarmExhaleMessage();
       // Reset animations
       fadeAnim.setValue(0);
       slideAnim.setValue(20);
@@ -134,7 +111,7 @@ export const ShiftToast: React.FC<ShiftToastProps> = ({
         ]}
       >
         <Text style={[styles.text, { color: colors.text }]}>
-          {messageRef.current}
+          {warmExhaleMessage}
         </Text>
       </TouchableOpacity>
     </Animated.View>

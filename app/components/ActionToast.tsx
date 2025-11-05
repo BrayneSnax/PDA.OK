@@ -12,55 +12,17 @@ interface ActionToastProps {
   onDismiss: () => void;
 }
 
-// Warm exhale messages for each action type
-const warmExhaleMessages: Record<ActionType, string[]> = {
-  'skipped': [
-    'Not this one; the cadence continues.',
-    'You stayed with what was real.',
-    'Skipping is also a rhythm.',
-    'The wave passed; another will rise.',
-    'You chose space over friction.',
-    'The field adjusts without judgment.',
-  ],
-  'forgot': [
-    'Memory blinked; the thread is still here.',
-    'No worry—attention will circle back.',
-    'The moment slid by; we can set a softer bell.',
-    'Forgetting is human; coherence remains.',
-    'A small lapse, not a verdict.',
-  ],
-  "couldn't": [
-    'Limits were true; the system listened.',
-    'Today asked too much—thanks for naming it.',
-    'The body said "not now"; we honor that.',
-    'Constraint acknowledged; no penalty.',
-    'A smaller step might fit next time.',
-  ],
-  'not relevant': [
-    'Right call; this one didn\'t belong.',
-    'Relevance is a form of care.',
-    'Alignment over obligation—good.',
-    'The field stays clean when you say no.',
-    'Clarity protects attention.',
-  ],
-};
-
-// Track message indices for rotation
-const messageIndices: Record<ActionType, number> = {
-  'skipped': 0,
-  'forgot': 0,
-  "couldn't": 0,
-  'not relevant': 0,
+// Single static message for each action type
+const actionMessages: Record<ActionType, string> = {
+  'skipped': 'Not this one; the cadence continues.',
+  'forgot': 'Memory blinked; the thread is still here.',
+  "couldn't": 'Limits were true; the system listened.',
+  'not relevant': 'Right call; this one didn\'t belong.',
 };
 
 // Get message and duration for each action type
 const getActionConfig = (actionType: ActionType) => {
-  const messages = warmExhaleMessages[actionType] || warmExhaleMessages['skipped'];
-  const currentIndex = messageIndices[actionType];
-  const message = messages[currentIndex];
-  
-  // Rotate to next message
-  messageIndices[actionType] = (currentIndex + 1) % messages.length;
+  const message = actionMessages[actionType] || actionMessages['skipped'];
   
   const configs: Record<ActionType, { duration: number; animation: string }> = {
     'skipped': {
@@ -107,15 +69,11 @@ export const ActionToast: React.FC<ActionToastProps> = ({
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
   const shimmerAnim = useRef(new Animated.Value(0)).current;
   
-  // Store config in ref to avoid calling getActionConfig on every render
-  // Initialize with first message for the given actionType
-  const [initialConfig] = useState(() => actionType ? getActionConfig(actionType) : { message: '', duration: 2000, animation: 'ripple' });
-  const configRef = useRef<{ message: string; duration: number; animation: string }>(initialConfig);
+  // Get config directly from actionType
+  const config = actionType ? getActionConfig(actionType) : { message: '', duration: 2000, animation: 'ripple' };
 
   useEffect(() => {
     if (isVisible && actionType) {
-      // Get fresh config for current actionType when toast becomes visible
-      configRef.current = getActionConfig(actionType);
       // Reset animations
       fadeAnim.setValue(0);
       slideAnim.setValue(20);
@@ -142,7 +100,7 @@ export const ActionToast: React.FC<ActionToastProps> = ({
       ]).start();
 
       // Shimmer effect for "forgot" action
-      if (configRef.current?.animation === 'shimmer') {
+      if (config.animation === 'shimmer') {
         Animated.sequence([
           Animated.timing(shimmerAnim, {
             toValue: 1,
@@ -158,7 +116,7 @@ export const ActionToast: React.FC<ActionToastProps> = ({
       }
 
       // Horizontal shimmer for "not relevant" - single pass
-      if (configRef.current?.animation === 'horizontal-shimmer') {
+      if (config.animation === 'horizontal-shimmer') {
         Animated.timing(shimmerAnim, {
           toValue: 1,
           duration: 800,
@@ -169,7 +127,7 @@ export const ActionToast: React.FC<ActionToastProps> = ({
       // Auto-dismiss based on action duration
       const timer = setTimeout(() => {
         dismissToast();
-      }, configRef.current?.duration || 2000);
+      }, config.duration);
 
       return () => clearTimeout(timer);
     }
@@ -201,13 +159,13 @@ export const ActionToast: React.FC<ActionToastProps> = ({
 
   // Apply different opacity based on animation type
   const getOpacityStyle = () => {
-    if (configRef.current?.animation === 'dim') {
+    if (config.animation === 'dim') {
       return fadeAnim.interpolate({
         inputRange: [0, 1],
         outputRange: [0, 0.85], // Slightly dimmed
       });
     }
-    if (configRef.current?.animation === 'fade-through') {
+    if (config.animation === 'fade-through') {
       return fadeAnim.interpolate({
         inputRange: [0, 0.5, 1],
         outputRange: [0, 1, 0], // Fade in then out
@@ -239,7 +197,7 @@ export const ActionToast: React.FC<ActionToastProps> = ({
         ]}
       >
         {/* Shimmer overlay for "forgot" */}
-        {configRef.current?.animation === 'shimmer' && (
+        {config.animation === 'shimmer' && (
           <Animated.View
             style={[
               styles.shimmerOverlay,
@@ -252,7 +210,7 @@ export const ActionToast: React.FC<ActionToastProps> = ({
         )}
 
         {/* Horizontal shimmer for "not relevant" */}
-        {configRef.current?.animation === 'horizontal-shimmer' && (
+        {config.animation === 'horizontal-shimmer' && (
           <Animated.View
             style={[
               styles.horizontalShimmer,
@@ -275,7 +233,7 @@ export const ActionToast: React.FC<ActionToastProps> = ({
         )}
         
         <Text style={[styles.text, { color: colors.text }]}>
-          {configRef.current?.message || ''}
+          {config.message}
         </Text>
       </View>
     </Animated.View>
