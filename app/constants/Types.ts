@@ -17,6 +17,8 @@ export interface ContainerItem {
   body_cue: string;
   micro: string;
   desire: string;
+  createdAt?: string; // ISO timestamp when task was created
+  createdTimestamp?: number; // Unix timestamp for easier sorting/filtering
 }
 
 export interface Ally {
@@ -29,6 +31,8 @@ export interface Ally {
   shadow: string;
   ritual: string;
   log: Moment[];
+  createdAt?: string; // ISO timestamp when ally was added
+  createdTimestamp?: number; // Unix timestamp for easier sorting/filtering
 }
 
 export interface Moment {
@@ -123,6 +127,8 @@ export interface Archetype {
     background: string;
   };
   isDefault?: boolean; // Mark default archetypes to protect from deletion
+  createdAt?: string; // ISO timestamp when archetype was created
+  createdTimestamp?: number; // Unix timestamp for easier sorting/filtering
 }
 
 export interface AppState {

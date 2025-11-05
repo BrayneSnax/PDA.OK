@@ -140,9 +140,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, conversations, fieldWhispers, archetypes, activeContainer]);
 
   const addItem = useCallback((item: Omit<ContainerItem, 'id'>) => {
+    const now = new Date();
     const newItem: ContainerItem = {
       ...item,
       id: generateId(),
+      createdAt: now.toISOString(),
+      createdTimestamp: now.getTime(),
     };
     setItems(prev => [...prev, newItem]);
   }, []);
@@ -184,9 +187,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [completions]);
 
   const addAlly = useCallback((ally: Omit<Ally, 'id'>) => {
+    const now = new Date();
     const newAlly: Ally = {
       ...ally,
       id: generateId(),
+      createdAt: now.toISOString(),
+      createdTimestamp: now.getTime(),
     };
     setAllies(prev => [...prev, newAlly]);
   }, []);
@@ -321,10 +327,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const addArchetype = useCallback((archetype: Omit<Archetype, 'id'>) => {
+    const now = new Date();
     const newArchetype: Archetype = {
       ...archetype,
       id: generateId(),
       isDefault: false,
+      createdAt: now.toISOString(),
+      createdTimestamp: now.getTime(),
     };
     setArchetypes(prev => [...prev, newArchetype]);
   }, []);
