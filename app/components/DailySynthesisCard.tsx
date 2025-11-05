@@ -158,7 +158,6 @@ const styles = StyleSheet.create({
   synthesisText: {
     fontSize: 15,
     lineHeight: 24,
-    fontStyle: 'italic',
   },
   statsContainer: {
     flexDirection: 'row',
@@ -185,7 +184,6 @@ const styles = StyleSheet.create({
   promptText: {
     fontSize: 14,
     lineHeight: 22,
-    fontStyle: 'italic',
     textAlign: 'center',
   },
   generateButton: {

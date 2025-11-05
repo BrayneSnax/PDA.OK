@@ -1014,7 +1014,7 @@ export default function HomeScreen() {
 
           {patterns.length === 0 ? (
             <View style={[styles.emptyCard, { backgroundColor: colors.card + 'B3' }]}>
-              <Text style={[styles.emptyText, { color: colors.dim }]}>
+              <Text style={[styles.emptyText, { color: colors.text }]}>
                 No patterns recorded yet. Tap below to add your first observation.
               </Text>
             </View>
@@ -1048,7 +1048,7 @@ export default function HomeScreen() {
             style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
             onPress={() => setIsAddPatternModalVisible(true)}
           >
-            <Text style={[styles.addButtonText, { color: colors.card }]}>+ Record a Pattern</Text>
+            <Text style={[styles.addButtonText, { color: colors.card }]}>📸 Record a Pattern</Text>
           </TouchableOpacity>
 
           {/* Daily Synthesis - Evening Reflection */}
@@ -1330,7 +1330,8 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   addButton: {
-    padding: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     borderRadius: 12,
     alignItems: 'center',
     marginTop: 16,
@@ -1405,7 +1406,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     textAlign: 'center',
-    fontStyle: 'italic',
   },
   patternCard: {
     borderRadius: 12,
