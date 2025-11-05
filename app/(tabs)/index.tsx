@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   LogBox, // Import LogBox
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import useColors from '../hooks/useColors';
 import { formatTime, formatLongDate } from '../utils/time';
@@ -148,7 +148,15 @@ export default function HomeScreen() {
   const [selectedJournalEntry, setSelectedJournalEntry] = useState<any>(null);
   const [isJournalEntryModalVisible, setIsJournalEntryModalVisible] = useState(false);
   const [activeWhispers, setActiveWhispers] = useState<string[]>([]);
+  
+  // ScrollView ref for scrolling to top
+  const scrollViewRef = useRef<ScrollView>(null);
   const [showWhispers, setShowWhispers] = useState(false);
+  
+  // Scroll to top when screen or time container changes
+  useEffect(() => {
+    scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+  }, [currentScreen, activeContainer]);
 
   // Update time every minute
   useEffect(() => {
@@ -335,6 +343,7 @@ export default function HomeScreen() {
         </View>
 
         <ScrollView
+          ref={scrollViewRef}
 	          style={[styles.scrollView, { marginBottom: 0 }]}
 	          contentContainerStyle={styles.scrollContent}
 	          showsVerticalScrollIndicator={false}
@@ -626,6 +635,7 @@ export default function HomeScreen() {
         </View>
 
         <ScrollView
+          ref={scrollViewRef}
           style={styles.scrollView}
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
@@ -803,6 +813,7 @@ export default function HomeScreen() {
         </View>
 
         <ScrollView
+          ref={scrollViewRef}
           style={styles.scrollView}
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
