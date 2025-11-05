@@ -171,7 +171,7 @@ export function AddFoodModal({ isVisible, onClose, onSave, colors }: AddFoodModa
 const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
