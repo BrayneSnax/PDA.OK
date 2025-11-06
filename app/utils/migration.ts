@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ContainerItem } from '../constants/Types';
 import { generateId } from './time';
+import { DefaultData } from '../constants/DefaultData';
 
 const MIGRATION_VERSION_KEY = '@migration_version';
-const CURRENT_MIGRATION_VERSION = 4;
+const CURRENT_MIGRATION_VERSION = 5;
 
 // Migration is now only for reordering - Dreamseed already replaces Stillness Signal in DefaultData
 // No new anchors to add
@@ -85,6 +86,29 @@ function addNewAnchors(existingItems: ContainerItem[]): ContainerItem[] {
 }
 
 /**
+ * Add ultra_micro field to existing anchors by matching with DefaultData
+ */
+function addUltraMicroField(items: ContainerItem[]): ContainerItem[] {
+  // Create a map of default anchors by ID for quick lookup
+  const defaultAnchorsMap = new Map<string, ContainerItem>();
+  for (const anchor of DefaultData) {
+    defaultAnchorsMap.set(anchor.id, anchor);
+  }
+  
+  // Update each item with ultra_micro if it exists in DefaultData
+  return items.map(item => {
+    const defaultAnchor = defaultAnchorsMap.get(item.id);
+    if (defaultAnchor && defaultAnchor.ultra_micro && !item.ultra_micro) {
+      return {
+        ...item,
+        ultra_micro: defaultAnchor.ultra_micro
+      };
+    }
+    return item;
+  });
+}
+
+/**
  * Reorder anchors based on ANCHOR_ORDER_MAP
  * Groups items by container+category, then sorts within each group
  */
@@ -145,17 +169,22 @@ export async function runMigration(): Promise<void> {
       return;
     }
 
-    console.log('Running migration v3: Adding new anchors and reordering...');
+    console.log('Running migration v5: Adding ultra_micro field, new anchors, and reordering...');
     
-    // Step 1: Add new anchors
-    let updatedItems = addNewAnchors(state.items);
+    // Step 1: Add ultra_micro field to existing anchors
+    let updatedItems = addUltraMicroField(state.items);
+    const itemsWithUltraMicro = updatedItems.filter(i => i.ultra_micro).length;
+    console.log(`Added ultra_micro to ${itemsWithUltraMicro} anchors`);
+    
+    // Step 2: Add new anchors
+    updatedItems = addNewAnchors(updatedItems);
     console.log(`Added ${updatedItems.length - state.items.length} new anchors`);
     
     // Log before reordering
     const lateSituational = updatedItems.filter(i => i.container === 'late' && i.category === 'situational');
     console.log('Late situational BEFORE reorder:', lateSituational.map(i => `${i.id}: ${i.title}`));
     
-    // Step 2: Reorder all anchors
+    // Step 3: Reorder all anchors
     updatedItems = reorderAnchors(updatedItems);
     
     // Log after reordering
