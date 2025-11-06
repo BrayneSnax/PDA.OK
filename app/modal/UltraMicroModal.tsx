@@ -11,26 +11,26 @@ interface UltraMicroModalProps {
   onClose: () => void;
 }
 
-// Time-of-day color theming for modal background - HIGHER OPACITY for readability
+// Time-of-day color theming for modal background - FULL OPACITY for maximum readability
 const getTimeGlowStyle = (container: ContainerId) => {
   const glowStyles = {
     morning: {
-      backgroundColor: 'rgba(212, 165, 116, 0.92)', // Increased to 92% for readability
+      backgroundColor: 'rgba(212, 165, 116, 1)', // 100% opacity
       borderColor: 'rgba(212, 165, 116, 1)',
       textColor: '#2A1810', // Dark brown for contrast
     },
     afternoon: {
-      backgroundColor: 'rgba(95, 168, 184, 0.92)', // Increased to 92%
+      backgroundColor: 'rgba(95, 168, 184, 1)', // 100% opacity
       borderColor: 'rgba(95, 168, 184, 1)',
       textColor: '#0F2A30', // Dark teal for contrast
     },
     evening: {
-      backgroundColor: 'rgba(232, 180, 168, 0.92)', // Lighter rose, 92%
+      backgroundColor: 'rgba(232, 180, 168, 1)', // 100% opacity
       borderColor: 'rgba(232, 180, 168, 1)',
       textColor: '#3A1810', // Dark for contrast
     },
     late: {
-      backgroundColor: 'rgba(139, 157, 195, 0.92)', // Lighter indigo, 92%
+      backgroundColor: 'rgba(139, 157, 195, 1)', // 100% opacity
       borderColor: 'rgba(139, 157, 195, 1)',
       textColor: '#1A1F2E', // Very dark blue for contrast
     },
@@ -47,12 +47,12 @@ export default function UltraMicroModal({
   container,
   onClose,
 }: UltraMicroModalProps) {
-  // Auto-dismiss after 3 seconds
+  // Auto-dismiss after 2 seconds
   useEffect(() => {
     if (visible) {
       const timer = setTimeout(() => {
         onClose();
-      }, 3000);
+      }, 2000);
       return () => clearTimeout(timer);
     }
   }, [visible, onClose]);
