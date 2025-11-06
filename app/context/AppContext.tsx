@@ -4,6 +4,7 @@ import { JournalEntry } from '../constants/Types'; // Keep JournalEntry for back
 import { DEFAULT_ALLIES, DEFAULT_GROUNDING_ITEMS, DEFAULT_ARCHETYPES } from '../constants/DefaultData';
 import { saveAppState, loadAppState } from '../utils/storage';
 import { formatDate, generateId, getCurrentContainer } from '../utils/time';
+import { needsMigration, runMigration } from '../utils/migration';
 
 interface AppContextType extends AppState {
 
@@ -24,6 +25,7 @@ interface AppContextType extends AppState {
   addFieldWhisper: (whisper: Omit<import('../constants/Types').FieldWhisper, 'id' | 'timestamp' | 'date'>) => void;
   addFoodEntry: (entry: Omit<FoodEntry, 'id' | 'timestamp' | 'date'>) => void;
   removeFoodEntry: (id: string) => void;
+  addDreamseed: (word: string) => void;
   addArchetype: (archetype: Omit<import('../constants/Types').Archetype, 'id'>) => void;
   updateArchetype: (archetype: import('../constants/Types').Archetype) => void;
   removeArchetype: (id: string) => void;
@@ -53,6 +55,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [completions, setCompletions] = useState<Completion[]>([]);
   const [patterns, setPatterns] = useState<Pattern[]>([]);
   const [foodEntries, setFoodEntries] = useState<FoodEntry[]>([]);
+  const [dreamseeds, setDreamseeds] = useState<import('../constants/Types').Dreamseed[]>([]);
   const [conversations, setConversations] = useState<import('../constants/Types').Conversation[]>([]);
   const [fieldWhispers, setFieldWhispers] = useState<import('../constants/Types').FieldWhisper[]>([]);
   const [archetypes, setArchetypes] = useState<Archetype[]>(DEFAULT_ARCHETYPES);
@@ -74,9 +77,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, conversations, fieldWhispers, archetypes, activeContainer, loading]);
+  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, dreamseeds, conversations, fieldWhispers, archetypes, activeContainer, loading]);
 
   const loadData = useCallback(async () => {
+    // Run migration if needed before loading data
+    if (await needsMigration()) {
+      console.log('Migration needed, running...');
+      await runMigration();
+    }
+    
     const savedState = await loadAppState();
     if (savedState) {
       // normalize incoming state for backward compatibility
@@ -100,6 +109,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         completions: Array.isArray(savedState.completions) ? savedState.completions : [],
         patterns: Array.isArray(savedState.patterns) ? savedState.patterns : [],
         foodEntries: Array.isArray(savedState.foodEntries) ? savedState.foodEntries : [],
+        dreamseeds: Array.isArray(savedState.dreamseeds) ? savedState.dreamseeds : [],
         conversations: Array.isArray(savedState.conversations) ? savedState.conversations : [],
         fieldWhispers: Array.isArray(savedState.fieldWhispers) ? savedState.fieldWhispers : [],
         archetypes: Array.isArray(savedState.archetypes) && savedState.archetypes.length > 0 ? savedState.archetypes : DEFAULT_ARCHETYPES,
@@ -113,6 +123,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setCompletions(normalized.completions);
       setPatterns(normalized.patterns);
       setFoodEntries(normalized.foodEntries);
+      setDreamseeds(normalized.dreamseeds);
       setConversations(normalized.conversations);
       setFieldWhispers(normalized.fieldWhispers);
       setArchetypes(normalized.archetypes);
@@ -131,13 +142,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
       completions,
       patterns,
       foodEntries,
+      dreamseeds,
       conversations,
       fieldWhispers,
       archetypes,
       activeContainer,
 
     });
-  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, conversations, fieldWhispers, archetypes, activeContainer]);
+  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, dreamseeds, conversations, fieldWhispers, archetypes, activeContainer]);
 
   const addItem = useCallback((item: Omit<ContainerItem, 'id'>) => {
     const now = new Date();
@@ -322,6 +334,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setFoodEntries(prev => [newEntry, ...prev]);
   }, []);
 
+  const addDreamseed = useCallback((word: string) => {
+    const now = new Date();
+    const newDreamseed: import('../constants/Types').Dreamseed = {
+      id: generateId(),
+      date: now.toISOString(),
+      timestamp: now.getTime(),
+      word,
+    };
+    setDreamseeds(prev => [newDreamseed, ...prev]);
+  }, []);
+
   const removeFoodEntry = useCallback((id: string) => {
     setFoodEntries(prev => prev.filter(e => e.id !== id));
   }, []);
@@ -358,6 +381,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     completions,
     patterns,
     foodEntries,
+    dreamseeds,
     conversations,
     fieldWhispers,
     archetypes,
@@ -381,6 +405,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     addFieldWhisper,
     addFoodEntry,
     removeFoodEntry,
+    addDreamseed,
     addArchetype,
     updateArchetype,
     removeArchetype,

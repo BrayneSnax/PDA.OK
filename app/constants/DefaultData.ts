@@ -96,6 +96,15 @@ export const DEFAULT_ALLIES: Ally[] = [
 export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
   // Morning Anchors
   {
+    id: 'morning-begin-flow',
+    title: 'Begin Flow',
+    body_cue: 'First light on skin.',
+    micro: 'One slow inhale.',
+    desire: 'Arrival is enough.',
+    container: 'morning',
+    category: 'time',
+  },
+  {
     id: 'morning-ground',
     title: 'Ground',
     body_cue: 'Breath enters through your nose; feel weight in your heels.',
@@ -105,20 +114,20 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
     category: 'time',
   },
   {
-    id: 'morning-light-intake',
-    title: 'Light Intake',
-    body_cue: 'The first light, natural or lamp glow.',
-    micro: 'Lift your gaze; open your chest.',
-    desire: 'Coherence grows toward brightness.',
-    container: 'morning',
-    category: 'time',
-  },
-  {
     id: 'morning-orientation',
     title: 'Orientation',
     body_cue: 'What day wants from you, not the other way.',
     micro: 'Name one micro-intention aloud.',
     desire: 'Direction without demand.',
+    container: 'morning',
+    category: 'time',
+  },
+  {
+    id: 'morning-light-intake',
+    title: 'Light Intake',
+    body_cue: 'The first light, natural or lamp glow.',
+    micro: 'Lift your gaze; open your chest.',
+    desire: 'Coherence grows toward brightness.',
     container: 'morning',
     category: 'time',
   },
@@ -139,6 +148,15 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
     body_cue: 'Where energy gathers.',
     micro: 'Move that area once; shake or tap lightly.',
     desire: 'Flow re-established.',
+    container: 'afternoon',
+    category: 'time',
+  },
+  {
+    id: 'afternoon-micro-motion',
+    title: 'Micro Motion',
+    body_cue: 'Energy pooling.',
+    micro: 'Stretch one limb.',
+    desire: 'Motion translates to meaning.',
     container: 'afternoon',
     category: 'time',
   },
@@ -190,6 +208,15 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
     category: 'time',
   },
   {
+    id: 'evening-field-resonance',
+    title: 'Field Resonance',
+    body_cue: 'What harmonized today?',
+    micro: 'Name one moment of alignment.',
+    desire: 'Coherence through recognition.',
+    container: 'evening',
+    category: 'time',
+  },
+  {
     id: 'evening-closure',
     title: 'Closure Phrase',
     body_cue: 'What you completed today.',
@@ -215,6 +242,15 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
     body_cue: 'The hum of devices or thought.',
     micro: 'Mute one source of sound.',
     desire: 'Quiet becomes friend.',
+    container: 'late',
+    category: 'time',
+  },
+  {
+    id: 'late-dreamseed',
+    title: 'Dreamseed',
+    body_cue: 'The day dissolves.',
+    micro: 'Write one word.',
+    desire: 'Release returns awareness to mystery.',
     container: 'late',
     category: 'time',
   },
@@ -286,24 +322,6 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
 
   // Afternoon Situational Resonance
   {
-    id: 'afternoon-sensory-overload',
-    title: 'Sensory Overload',
-    body_cue: 'Light, sound, texture—all at once.',
-    micro: 'Step outside or soften your gaze.',
-    desire: 'Breath thins noise into signal.',
-    container: 'afternoon',
-    category: 'situational',
-  },
-  {
-    id: 'afternoon-decision-fatigue',
-    title: 'Decision Fatigue',
-    body_cue: 'Choice feels heavy.',
-    micro: 'Flip a coin for one small thing.',
-    desire: 'Trust your body\'s first yes.',
-    container: 'afternoon',
-    category: 'situational',
-  },
-  {
     id: 'afternoon-tension-loop',
     title: 'Tension Loop',
     body_cue: 'The knot forming inside you.',
@@ -318,6 +336,24 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
     body_cue: 'You forgot the sky.',
     micro: 'Name its color; touch the ground.',
     desire: 'Aliveness re-enters.',
+    container: 'afternoon',
+    category: 'situational',
+  },
+  {
+    id: 'afternoon-sensory-overload',
+    title: 'Sensory Overload',
+    body_cue: 'Light, sound, texture—all at once.',
+    micro: 'Step outside or soften your gaze.',
+    desire: 'Breath thins noise into signal.',
+    container: 'afternoon',
+    category: 'situational',
+  },
+  {
+    id: 'afternoon-decision-fatigue',
+    title: 'Decision Fatigue',
+    body_cue: 'Choice feels heavy.',
+    micro: 'Flip a coin for one small thing.',
+    desire: 'Trust your body\'s first yes.',
     container: 'afternoon',
     category: 'situational',
   },
@@ -362,6 +398,15 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
 
   // Late Situational Resonance
   {
+    id: 'late-guilt-spiral',
+    title: 'Guilt Spiral',
+    body_cue: 'Thoughts replaying old scenes.',
+    micro: 'Place a note of thanks beside you.',
+    desire: 'Tomorrow is enough.',
+    container: 'late',
+    category: 'situational',
+  },
+  {
     id: 'late-restlessness',
     title: 'Restlessness',
     body_cue: 'Body alive, mind untamed.',
@@ -376,15 +421,6 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
     body_cue: 'Where the ache speaks loudest.',
     micro: 'Press that spot; name it "alive."',
     desire: 'Gratitude loosens the knot.',
-    container: 'late',
-    category: 'situational',
-  },
-  {
-    id: 'late-guilt-spiral',
-    title: 'Guilt Spiral',
-    body_cue: 'Thoughts replaying old scenes.',
-    micro: 'Place a note of thanks beside you.',
-    desire: 'Tomorrow is enough.',
     container: 'late',
     category: 'situational',
   },
@@ -437,6 +473,15 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
   },
 
   // Afternoon Uplift & Expansion
+  {
+    id: 'afternoon-creative-pulse',
+    title: 'Creative Pulse',
+    body_cue: 'A surge of focus.',
+    micro: 'Capture what sparked.',
+    desire: 'Creation flows through attention.',
+    container: 'afternoon',
+    category: 'uplift',
+  },
   {
     id: 'afternoon-focused',
     title: 'Focused',
@@ -514,6 +559,15 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
 
   // Late Uplift & Expansion
   {
+    id: 'late-infinite',
+    title: 'Infinite',
+    body_cue: 'The space around awareness itself.',
+    micro: 'Imagine dissolving into the wider breath.',
+    desire: 'You are part of the field.',
+    container: 'late',
+    category: 'uplift',
+  },
+  {
     id: 'late-peaceful',
     title: 'Peaceful',
     body_cue: 'Moonlight inside your lungs.',
@@ -528,15 +582,6 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
     body_cue: 'What your body accomplished today.',
     micro: 'Name one thing done well.',
     desire: 'Appreciation restores circuitry.',
-    container: 'late',
-    category: 'uplift',
-  },
-  {
-    id: 'late-infinite',
-    title: 'Infinite',
-    body_cue: 'The space around awareness itself.',
-    micro: 'Imagine dissolving into the wider breath.',
-    desire: 'You are part of the field.',
     container: 'late',
     category: 'uplift',
   },

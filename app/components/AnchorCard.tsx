@@ -110,11 +110,15 @@ export const AnchorCard = React.memo(({ item, completed, onToggle, colors, onPre
         >
           <View style={styles.row}>
             <Text style={[styles.emoji, { color: colors.dim }]}>
-              {item.category === 'time' ? '🌅' : item.category === 'situational' ? '⚡' : '✨'}
+              {item.category === 'time' 
+                ? (container === 'morning' ? '🌅' : container === 'afternoon' ? '☀️' : container === 'evening' ? '🌇' : '🌙')
+                : item.category === 'situational' ? '⚡' : '✨'}
             </Text>
             <Text style={[styles.title, { color: colors.text }]}>{item.title}</Text>
             <Text style={[styles.emoji, { color: colors.dim }]}>
-              {item.category === 'time' ? '🌅' : item.category === 'situational' ? '⚡' : '✨'}
+              {item.category === 'time' 
+                ? (container === 'morning' ? '🌅' : container === 'afternoon' ? '☀️' : container === 'evening' ? '🌇' : '🌙')
+                : item.category === 'situational' ? '⚡' : '✨'}
             </Text>
           </View>
         </TouchableOpacity>

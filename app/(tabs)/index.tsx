@@ -42,6 +42,7 @@ import { DailyBlockSynthesisModal } from '../modal/DailyBlockSynthesisModal';
 import { SubstanceSynthesisModal } from '../modal/SubstanceSynthesisModal';
 import { AddPatternModal } from '../modal/AddPatternModal';
 import { AddFoodModal } from '../modal/AddFoodModal';
+import { DreamseedModal } from '../modal/DreamseedModal';
 import { Archetype } from '../constants/Types';
 import { ArchetypeCard } from '../components/ArchetypeCard';
 import { ArchetypeDetailModal } from '../modal/ArchetypeDetailModal';
@@ -52,8 +53,9 @@ import { FieldWhisperSequence } from '../components/FieldWhisperSequence';
 import { generateFieldWhispers } from '../services/fieldWhisper';
 import { JournalList } from '../components/JournalList';
 import { JournalEntryModal } from '../components/JournalEntryModal';
+import FieldTransmissions from '../components/FieldTransmissions';
 
-type Screen = 'home' | 'substances' | 'archetypes' | 'patterns' | 'nourish';
+type Screen = 'home' | 'substances' | 'archetypes' | 'patterns' | 'nourish' | 'transmissions';
 
 export default function HomeScreen() {
   const {
@@ -85,6 +87,7 @@ export default function HomeScreen() {
     foodEntries,
     addFoodEntry,
     removeFoodEntry,
+    addDreamseed,
     archetypes,
     addArchetype,
     updateArchetype,
@@ -126,6 +129,7 @@ export default function HomeScreen() {
   const [isAddPatternModalVisible, setIsAddPatternModalVisible] = useState(false);
   const [isDailySynthesisModalVisible, setIsDailySynthesisModalVisible] = useState(false);
   const [isAddFoodModalVisible, setIsAddFoodModalVisible] = useState(false);
+  const [isDreamseedModalVisible, setIsDreamseedModalVisible] = useState(false);
   const [selectedArchetype, setSelectedArchetype] = useState<Archetype | null>(null);
   const [isArchetypeModalVisible, setIsArchetypeModalVisible] = useState(false);
   const [isAddArchetypeModalVisible, setIsAddArchetypeModalVisible] = useState(false);
@@ -245,7 +249,7 @@ export default function HomeScreen() {
     item => item.container === activeContainer && item.category === 'uplift'
   );
 
-  // Render 1x4 horizontal action buttons at top
+  // Render 1x5 horizontal action buttons at top
   const renderActionGrid = () => (
     <View style={styles.actionGrid}>
       <TouchableOpacity
@@ -279,13 +283,21 @@ export default function HomeScreen() {
         <Text style={[styles.actionIcon, { color: colors.accent }]}>🍽️</Text>
         <Text style={[styles.actionText, { color: colors.text }]}>Nourish</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.actionButton, { backgroundColor: 'transparent' }]}
+        onPress={() => setCurrentScreen('transmissions')}
+      >
+        <Text style={[styles.actionIcon, { color: colors.accent }]}>📡</Text>
+        <Text style={[styles.actionText, { color: colors.text }]}>Transmissions</Text>
+      </TouchableOpacity>
     </View>
   );
 
   // Render Time Container Navigation at bottom with Craft a Moment button
   const renderTimeContainerNav = (showCraftButton: boolean = false) => {
     const containers: ContainerId[] = ['morning', 'afternoon', 'evening', 'late'];
-    const icons = { morning: '🌅', afternoon: '🌞', evening: '🌇', late: '🌙' };
+    const icons = { morning: '🌅', afternoon: '☀️', evening: '🌇', late: '🌙' };
     
     return (
       <View>
@@ -408,7 +420,7 @@ export default function HomeScreen() {
           <CollapsibleSection
             key={`time-${activeContainer}`}
             title={`${activeContainer.toUpperCase()} ANCHORS`}
-            icon="☀️"
+            icon={activeContainer === 'morning' ? '🌅' : activeContainer === 'afternoon' ? '☀️' : activeContainer === 'evening' ? '🌇' : '🌙'}
             colors={colors}
             defaultExpanded={false}
           >
@@ -419,7 +431,14 @@ export default function HomeScreen() {
                 completed={isCompleted(item.id)}
                 onToggle={() => handleCompletion(item.id)}
                 colors={colors}
-                onPress={() => setSelectedItem(item)}
+                onPress={() => {
+                  // Special handling for Dreamseed tile
+                  if (item.id === 'late-dreamseed') {
+                    setIsDreamseedModalVisible(true);
+                  } else {
+                    setSelectedItem(item);
+                  }
+                }}
                 onDelete={() => removeItem(item.id)}
                 onEdit={() => {
                   setSelectedItem(item);
@@ -482,7 +501,35 @@ export default function HomeScreen() {
             ))}
           </CollapsibleSection>
 
-	          <View style={{ height: 40 }} />
+		          <View style={{ height: 40 }} />
+
+          {/* Listen to the Field Button */}
+          <TouchableOpacity
+            style={[
+              styles.listenToFieldButton,
+              { 
+                backgroundColor: colors.card,
+                borderColor: colors.border,
+              }
+            ]}
+            onPress={() => {
+              // Generate field whisper
+              addFieldWhisper(
+                activeContainer === 'morning' ? 'The field awakens with you.' :
+                activeContainer === 'afternoon' ? 'The field pulses with momentum.' :
+                activeContainer === 'evening' ? 'The field whispers integration.' :
+                'The field dissolves into mystery.'
+              );
+            }}
+            activeOpacity={0.7}
+          >
+            <Text style={[styles.listenToFieldText, { color: colors.text }]}>
+              {activeContainer === 'morning' ? '🌊 Tune In' :
+               activeContainer === 'afternoon' ? '⚡ Sync Pulse' :
+               activeContainer === 'evening' ? '🌙 Receive Whisper' :
+               '✨ Enter Silence'}
+            </Text>
+          </TouchableOpacity>
         </ScrollView>
 
         {/* Time Container Navigation at Bottom */}
@@ -503,6 +550,17 @@ export default function HomeScreen() {
             });
             // Trigger bloom effect
             setShowBloomEffect(true);
+          }}
+          colors={colors}
+        />
+
+        {/* Dreamseed Modal */}
+        <DreamseedModal
+          isVisible={isDreamseedModalVisible}
+          onClose={() => setIsDreamseedModalVisible(false)}
+          onSave={(word) => {
+            addDreamseed(word);
+            setIsDreamseedModalVisible(false);
           }}
           colors={colors}
         />
@@ -1242,6 +1300,25 @@ export default function HomeScreen() {
     );
   }
 
+  // TRANSMISSIONS SCREEN
+  if (currentScreen === 'transmissions') {
+    return (
+      <View style={[styles.container, { backgroundColor: colors.bg }]}>
+        <StatusBar barStyle="dark-content" backgroundColor={colors.bg} />
+        
+        {/* 1x5 Action Grid at Top */}
+        <View style={styles.topSection}>
+          {renderActionGrid()}
+        </View>
+
+        <FieldTransmissions />
+
+        {/* Time Container Navigation at Bottom */}
+        {renderTimeContainerNav()}
+      </View>
+    );
+  }
+
   return null;
 }
 
@@ -1371,6 +1448,20 @@ const styles = StyleSheet.create({
   addButtonText: {
     fontSize: 16,
     fontWeight: '600',
+  },
+  listenToFieldButton: {
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    borderRadius: 16,
+    alignItems: 'center',
+    marginHorizontal: 16,
+    marginBottom: 16,
+    borderWidth: 1,
+  },
+  listenToFieldText: {
+    fontSize: 15,
+    fontWeight: '600',
+    letterSpacing: 0.5,
   },
   emptyCard: {
     borderRadius: 12,

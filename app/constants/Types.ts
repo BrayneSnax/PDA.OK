@@ -106,6 +106,13 @@ export interface FoodEntry {
   energy_level?: string; // Optional: 'low', 'medium', 'high'
 }
 
+export interface Dreamseed {
+  id: string;
+  date: string; // YYYY-MM-DDTHH:mm:ss.sssZ
+  timestamp: number;
+  word: string; // The seed word/phrase to carry into sleep
+}
+
 export interface Archetype {
   id: string;
   name: string; // "Analyst"
@@ -139,6 +146,7 @@ export interface AppState {
   completions: Completion[];
   patterns: Pattern[];
   foodEntries: FoodEntry[];
+  dreamseeds: Dreamseed[]; // Words/phrases carried into sleep
   archetypes: Archetype[]; // User's archetypes (includes defaults + custom)
   conversations: Conversation[]; // Substance-archetype dialogues
   fieldWhispers: FieldWhisper[]; // Field pattern observations
