@@ -501,35 +501,7 @@ export default function HomeScreen() {
             ))}
           </CollapsibleSection>
 
-		          <View style={{ height: 40 }} />
 
-          {/* Listen to the Field Button */}
-          <TouchableOpacity
-            style={[
-              styles.listenToFieldButton,
-              { 
-                backgroundColor: colors.card,
-                borderColor: colors.border,
-              }
-            ]}
-            onPress={() => {
-              // Generate field whisper
-              addFieldWhisper(
-                activeContainer === 'morning' ? 'The field awakens with you.' :
-                activeContainer === 'afternoon' ? 'The field pulses with momentum.' :
-                activeContainer === 'evening' ? 'The field whispers integration.' :
-                'The field dissolves into mystery.'
-              );
-            }}
-            activeOpacity={0.7}
-          >
-            <Text style={[styles.listenToFieldText, { color: colors.text }]}>
-              {activeContainer === 'morning' ? '🌊 Tune In' :
-               activeContainer === 'afternoon' ? '⚡ Sync Pulse' :
-               activeContainer === 'evening' ? '🌙 Receive Whisper' :
-               '✨ Enter Silence'}
-            </Text>
-          </TouchableOpacity>
         </ScrollView>
 
         {/* Time Container Navigation at Bottom */}
@@ -1448,20 +1420,6 @@ const styles = StyleSheet.create({
   addButtonText: {
     fontSize: 16,
     fontWeight: '600',
-  },
-  listenToFieldButton: {
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    borderRadius: 16,
-    alignItems: 'center',
-    marginHorizontal: 16,
-    marginBottom: 16,
-    borderWidth: 1,
-  },
-  listenToFieldText: {
-    fontSize: 15,
-    fontWeight: '600',
-    letterSpacing: 0.5,
   },
   emptyCard: {
     borderRadius: 12,

@@ -3,60 +3,19 @@ import { ContainerItem } from '../constants/Types';
 import { generateId } from './time';
 
 const MIGRATION_VERSION_KEY = '@migration_version';
-const CURRENT_MIGRATION_VERSION = 3;
+const CURRENT_MIGRATION_VERSION = 4;
 
-// New anchor tiles to add
-const NEW_ANCHORS: Omit<ContainerItem, 'id'>[] = [
-  {
-    title: 'Begin Flow',
-    body_cue: 'First light on skin.',
-    micro: 'One slow inhale.',
-    desire: 'Arrival is enough.',
-    container: 'morning',
-    category: 'time',
-  },
-  {
-    title: 'Micro Motion',
-    body_cue: 'Energy pooling.',
-    micro: 'Stretch one limb.',
-    desire: 'Motion translates to meaning.',
-    container: 'afternoon',
-    category: 'time',
-  },
-  {
-    title: 'Field Resonance',
-    body_cue: 'What harmonized today?',
-    micro: 'One-line synthesis.',
-    desire: 'Integration reveals pattern.',
-    container: 'evening',
-    category: 'time',
-  },
-  {
-    title: 'Dreamseed',
-    body_cue: 'The day dissolves.',
-    micro: 'Write one word.',
-    desire: 'Release returns awareness to mystery.',
-    container: 'late',
-    category: 'time',
-  },
-  {
-    title: 'Creative Pulse',
-    body_cue: 'A surge of focus.',
-    micro: 'Capture what sparked.',
-    desire: 'Creation flows through attention.',
-    container: 'afternoon',
-    category: 'uplift',
-  },
-];
+// Migration is now only for reordering - Dreamseed already replaces Stillness Signal in DefaultData
+// No new anchors to add
+const NEW_ANCHORS: Omit<ContainerItem, 'id'>[] = [];
 
 // Define the desired order for anchors by their IDs
 const ANCHOR_ORDER_MAP: Record<string, number> = {
   // Evening anchors - Transition Field should be first
   'evening-transition': 1,
   'evening-warmth': 2,
-  'evening-field-resonance': 3, // New anchor
-  'evening-closure': 4,
-  'evening-decompression': 5,
+  'evening-closure': 3,
+  'evening-decompression': 4,
 
   // Afternoon Situational - Tension Loop and Disconnection before Sensory Overload
   'afternoon-tension-loop': 1,
@@ -65,11 +24,10 @@ const ANCHOR_ORDER_MAP: Record<string, number> = {
   'afternoon-decision-fatigue': 4,
 
   // Morning anchors - Orientation before Light Intake
-  'morning-begin-flow': 1, // New anchor
-  'morning-ground': 2,
-  'morning-orientation': 3,
-  'morning-light-intake': 4,
-  'morning-hydration': 5,
+  'morning-ground': 1,
+  'morning-orientation': 2,
+  'morning-light-intake': 3,
+  'morning-hydration': 4,
 
   // Late Situational - Guilt Spiral at top
   'late-guilt-spiral': 1,
@@ -83,12 +41,11 @@ const ANCHOR_ORDER_MAP: Record<string, number> = {
   'late-restored': 3,
   'late-dream-ready': 4,
 
-  // Afternoon Uplift - Creative Pulse first
-  'afternoon-creative-pulse': 1, // New anchor
-  'afternoon-focused': 2,
-  'afternoon-playful': 3,
-  'afternoon-curious': 4,
-  'afternoon-collaborative': 5,
+  // Afternoon Uplift
+  'afternoon-focused': 1,
+  'afternoon-playful': 2,
+  'afternoon-curious': 3,
+  'afternoon-collaborative': 4,
 };
 
 /**

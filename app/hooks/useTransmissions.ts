@@ -21,7 +21,7 @@ interface StoredTransmission extends Transmission {
 }
 
 export function useTransmissions() {
-  const context = useAppContext();
+  const context = useApp();
   const [transmissions, setTransmissions] = useState<StoredTransmission[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(true);

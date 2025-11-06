@@ -96,15 +96,6 @@ export const DEFAULT_ALLIES: Ally[] = [
 export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
   // Morning Anchors
   {
-    id: 'morning-begin-flow',
-    title: 'Begin Flow',
-    body_cue: 'First light on skin.',
-    micro: 'One slow inhale.',
-    desire: 'Arrival is enough.',
-    container: 'morning',
-    category: 'time',
-  },
-  {
     id: 'morning-ground',
     title: 'Ground',
     body_cue: 'Breath enters through your nose; feel weight in your heels.',
@@ -148,15 +139,6 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
     body_cue: 'Where energy gathers.',
     micro: 'Move that area once; shake or tap lightly.',
     desire: 'Flow re-established.',
-    container: 'afternoon',
-    category: 'time',
-  },
-  {
-    id: 'afternoon-micro-motion',
-    title: 'Micro Motion',
-    body_cue: 'Energy pooling.',
-    micro: 'Stretch one limb.',
-    desire: 'Motion translates to meaning.',
     container: 'afternoon',
     category: 'time',
   },
@@ -208,15 +190,6 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
     category: 'time',
   },
   {
-    id: 'evening-field-resonance',
-    title: 'Field Resonance',
-    body_cue: 'What harmonized today?',
-    micro: 'Name one moment of alignment.',
-    desire: 'Coherence through recognition.',
-    container: 'evening',
-    category: 'time',
-  },
-  {
     id: 'evening-closure',
     title: 'Closure Phrase',
     body_cue: 'What you completed today.',
@@ -236,15 +209,6 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
   },
 
   // Late Anchors
-  {
-    id: 'late-stillness',
-    title: 'Stillness Signal',
-    body_cue: 'The hum of devices or thought.',
-    micro: 'Mute one source of sound.',
-    desire: 'Quiet becomes friend.',
-    container: 'late',
-    category: 'time',
-  },
   {
     id: 'late-dreamseed',
     title: 'Dreamseed',
@@ -473,15 +437,6 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
   },
 
   // Afternoon Uplift & Expansion
-  {
-    id: 'afternoon-creative-pulse',
-    title: 'Creative Pulse',
-    body_cue: 'A surge of focus.',
-    micro: 'Capture what sparked.',
-    desire: 'Creation flows through attention.',
-    container: 'afternoon',
-    category: 'uplift',
-  },
   {
     id: 'afternoon-focused',
     title: 'Focused',
