@@ -1319,13 +1319,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   topSection: {
-    paddingTop: 10, // Reduced from 48 to 10
+    paddingTop: 4, // Tightened from 10 to 4
     paddingHorizontal: 20,
+    paddingBottom: 4, // Add small bottom padding
   },
   actionGrid: {
     flexDirection: 'row',
     gap: 6,
-    marginBottom: 12,
+    marginBottom: 8, // Reduced from 12 to 8
   },
   actionButton: {
     flex: 1,
@@ -1349,7 +1350,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 20,
-    paddingTop: 10, // Added a small top padding to the scroll view content
+    paddingTop: 4, // Reduced from 10 to 4 for tighter spacing
     paddingBottom: 40,
   },
   patternsContent: {
@@ -1359,8 +1360,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   timeSection: {
-    marginBottom: 24,
-    alignItems: 'center', // Center the content of the time section
+    marginBottom: 16, // Reduced from 24 to 16
+    alignItems: 'center',
   },
   timeRow: {
     flexDirection: 'row',

@@ -11,24 +11,28 @@ interface UltraMicroModalProps {
   onClose: () => void;
 }
 
-// Time-of-day color theming for modal background
+// Time-of-day color theming for modal background - HIGHER OPACITY for readability
 const getTimeGlowStyle = (container: ContainerId) => {
   const glowStyles = {
     morning: {
-      backgroundColor: 'rgba(212, 165, 116, 0.35)', // Honey/amber at 35%
-      borderColor: 'rgba(212, 165, 116, 0.5)',
+      backgroundColor: 'rgba(212, 165, 116, 0.92)', // Increased to 92% for readability
+      borderColor: 'rgba(212, 165, 116, 1)',
+      textColor: '#2A1810', // Dark brown for contrast
     },
     afternoon: {
-      backgroundColor: 'rgba(95, 168, 184, 0.35)', // Teal/aqua at 35%
-      borderColor: 'rgba(95, 168, 184, 0.5)',
+      backgroundColor: 'rgba(95, 168, 184, 0.92)', // Increased to 92%
+      borderColor: 'rgba(95, 168, 184, 1)',
+      textColor: '#0F2A30', // Dark teal for contrast
     },
     evening: {
-      backgroundColor: 'rgba(140, 75, 63, 0.35)', // Rose at 35%
-      borderColor: 'rgba(140, 75, 63, 0.5)',
+      backgroundColor: 'rgba(232, 180, 168, 0.92)', // Lighter rose, 92%
+      borderColor: 'rgba(232, 180, 168, 1)',
+      textColor: '#3A1810', // Dark for contrast
     },
     late: {
-      backgroundColor: 'rgba(58, 63, 69, 0.4)', // Indigo at 40%
-      borderColor: 'rgba(58, 63, 69, 0.6)',
+      backgroundColor: 'rgba(139, 157, 195, 0.92)', // Lighter indigo, 92%
+      borderColor: 'rgba(139, 157, 195, 1)',
+      textColor: '#1A1F2E', // Very dark blue for contrast
     },
   };
 
@@ -74,10 +78,10 @@ export default function UltraMicroModal({
             borderColor: timeGlow.borderColor,
           }
         ]}>
-          <Text style={[styles.title, { color: colors.text }]}>
+          <Text style={[styles.title, { color: timeGlow.textColor }]}>
             {anchorTitle}
           </Text>
-          <Text style={[styles.ultraMicro, { color: colors.text }]}>
+          <Text style={[styles.ultraMicro, { color: timeGlow.textColor }]}>
             {ultraMicro}
           </Text>
         </View>
@@ -89,36 +93,36 @@ export default function UltraMicroModal({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Lighter overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Darker overlay for better modal contrast
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   modalContainer: {
-    borderRadius: 12, // Slightly tighter radius
-    paddingVertical: 16, // Reduced from 24
-    paddingHorizontal: 20, // Reduced from 24
-    maxWidth: 280, // Reduced from 320
-    width: '85%', // Tighter width
-    borderWidth: 1,
+    borderRadius: 12,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    maxWidth: 280,
+    width: '85%',
+    borderWidth: 2, // Increased from 1 for stronger presence
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3, // Increased shadow
+    shadowRadius: 8,
+    elevation: 5,
   },
   title: {
-    fontSize: 17, // Reduced from 20
-    fontWeight: '600',
-    marginBottom: 8, // Reduced from 12
+    fontSize: 17,
+    fontWeight: '700', // Increased from 600 for better readability
+    marginBottom: 8,
     textAlign: 'center',
     letterSpacing: -0.2,
   },
   ultraMicro: {
-    fontSize: 14, // Reduced from 16
-    lineHeight: 20, // Reduced from 24
+    fontSize: 14,
+    lineHeight: 20,
     textAlign: 'center',
-    fontWeight: '400',
+    fontWeight: '500', // Increased from 400 for better readability
     letterSpacing: -0.1,
   },
 });
