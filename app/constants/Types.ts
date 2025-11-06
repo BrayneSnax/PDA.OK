@@ -16,6 +16,7 @@ export interface ContainerItem {
   category: 'time' | 'situational' | 'uplift' | 'crafted';
   body_cue: string;
   micro: string;
+  ultra_micro?: string;
   desire: string;
   createdAt?: string; // ISO timestamp when task was created
   createdTimestamp?: number; // Unix timestamp for easier sorting/filtering

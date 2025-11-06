@@ -28,6 +28,7 @@ import { ConversationCard } from '../components/ConversationCard';
 import { CompletionPulse } from '../components/CompletionPulse';
 import { ShiftToast } from '../components/ShiftToast';
 import { ActionToast } from '../components/ActionToast';
+import UltraMicroModal from '../modal/UltraMicroModal';
 import { ThresholdCard } from '../components/ThresholdCard';
 import { BloomEffect } from '../components/BloomEffect';
 import { RingPulse } from '../components/RingPulse';
@@ -142,6 +143,8 @@ export default function HomeScreen() {
   const [showActionToast, setShowActionToast] = useState(false);
   const [showRingPulse, setShowRingPulse] = useState(false);
   const [currentActionType, setCurrentActionType] = useState<'skipped' | 'forgot' | 'couldn\'t' | 'not relevant'>('skipped');
+  const [showUltraMicroModal, setShowUltraMicroModal] = useState(false);
+  const [ultraMicroData, setUltraMicroData] = useState<{ title: string; ultraMicro: string }>({ title: '', ultraMicro: '' });
   const [showThresholdCard, setShowThresholdCard] = useState(false);
   const [previousContainer, setPreviousContainer] = useState<ContainerId>(activeContainer);
   const [isManualTransition, setIsManualTransition] = useState(false);
@@ -564,14 +567,26 @@ export default function HomeScreen() {
                   handleCompletion(selectedItem.id);
                 } else {
                   // For other actions (skipped, forgot, couldn't, not relevant),
-                  // show ring pulse and toast as acknowledgment
+                  // show ring pulse and ultra-micro modal with random anchor
                   setShowRingPulse(true);
                   setCurrentActionType(status);
                   
-                  // Delay the toast slightly so ring pulse is visible first
-                  setTimeout(() => {
-                    setShowActionToast(true);
-                  }, 400);
+                  // Get all anchors with ultra_micro field
+                  const anchorsWithUltraMicro = items.filter(item => item.ultra_micro);
+                  
+                  if (anchorsWithUltraMicro.length > 0) {
+                    // Pick a random anchor
+                    const randomAnchor = anchorsWithUltraMicro[Math.floor(Math.random() * anchorsWithUltraMicro.length)];
+                    setUltraMicroData({
+                      title: randomAnchor.title,
+                      ultraMicro: randomAnchor.ultra_micro || ''
+                    });
+                    
+                    // Delay the modal slightly so ring pulse is visible first
+                    setTimeout(() => {
+                      setShowUltraMicroModal(true);
+                    }, 400);
+                  }
                   
                   // Note: We're just acknowledging the action, not creating a duplicate task
                   // The note parameter could be logged to a journal system in the future
@@ -610,13 +625,12 @@ export default function HomeScreen() {
           onDismiss={() => setShowShiftToast(false)}
         />
         
-        <ActionToast
-          key={currentActionType} // Force remount when action type changes
-          isVisible={showActionToast}
-          actionType={currentActionType}
+        <UltraMicroModal
+          visible={showUltraMicroModal}
+          anchorTitle={ultraMicroData.title}
+          ultraMicro={ultraMicroData.ultraMicro}
           colors={colors}
-          container={activeContainer}
-          onDismiss={() => setShowActionToast(false)}
+          onClose={() => setShowUltraMicroModal(false)}
         />
         
         <ThresholdCard
