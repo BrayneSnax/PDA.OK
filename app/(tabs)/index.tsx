@@ -630,6 +630,7 @@ export default function HomeScreen() {
           anchorTitle={ultraMicroData.title}
           ultraMicro={ultraMicroData.ultraMicro}
           colors={colors}
+          container={activeContainer}
           onClose={() => setShowUltraMicroModal(false)}
         />
         
