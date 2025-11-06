@@ -389,7 +389,7 @@ export default function HomeScreen() {
           <CollapsibleSection
             key={`crafted-${activeContainer}`}
             title="CRAFTED MOMENTS"
-            icon="✨"
+            icon="🖼️"
             colors={colors}
             defaultExpanded={false}
           >
