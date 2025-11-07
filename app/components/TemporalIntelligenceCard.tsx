@@ -44,7 +44,8 @@ export const TemporalIntelligenceCard = React.memo(({ colors }: Props) => {
       setMessage(insight);
       await cacheInsight(insight);
     } catch (error) {
-      console.error('Error loading insight:', error);
+      // Log as info to avoid error toast - already handled gracefully
+      console.log('Insight loading skipped (handled):', error);
       setMessage(DEFAULT_MESSAGE);
     } finally {
       setIsLoading(false);

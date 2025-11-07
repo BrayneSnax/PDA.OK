@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mythicName: {
-    fontSize: 19,
+    fontSize: 22,
     fontWeight: '700',
     letterSpacing: -0.3,
     textAlign: 'center',
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   name: {
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: '600',
     flex: 1,
     textAlign: 'center',

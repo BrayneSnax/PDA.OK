@@ -4,7 +4,7 @@ import { generateId } from './time';
 import { DefaultData } from '../constants/DefaultData';
 
 const MIGRATION_VERSION_KEY = '@migration_version';
-const CURRENT_MIGRATION_VERSION = 5;
+const CURRENT_MIGRATION_VERSION = 6;
 
 // Migration is now only for reordering - Dreamseed already replaces Stillness Signal in DefaultData
 // No new anchors to add
@@ -109,6 +109,26 @@ function addUltraMicroField(items: ContainerItem[]): ContainerItem[] {
 }
 
 /**
+ * Sync substance allies with DefaultData to ensure face emojis and mythicNames are up to date
+ */
+function syncSubstanceData(allies: any[]): any[] {
+  if (!allies || !Array.isArray(allies)) return allies;
+  
+  return allies.map(ally => {
+    // Find matching default ally by ID
+    const defaultAlly = DefaultData.allies.find(d => d.id === ally.id);
+    if (defaultAlly) {
+      return {
+        ...ally,
+        face: defaultAlly.face, // Update emoji
+        mythicName: defaultAlly.mythicName, // Update mythical name
+      };
+    }
+    return ally;
+  });
+}
+
+/**
  * Reorder anchors based on ANCHOR_ORDER_MAP
  * Groups items by container+category, then sorts within each group
  */
@@ -169,14 +189,20 @@ export async function runMigration(): Promise<void> {
       return;
     }
 
-    console.log('Running migration v5: Adding ultra_micro field, new anchors, and reordering...');
+    console.log('Running migration v6: Syncing substance data, adding ultra_micro field, and reordering...');
     
-    // Step 1: Add ultra_micro field to existing anchors
+    // Step 1: Sync substance data (face emojis and mythicNames)
+    if (state.allies && Array.isArray(state.allies)) {
+      state.allies = syncSubstanceData(state.allies);
+      console.log(`Synced ${state.allies.length} substances with DefaultData`);
+    }
+    
+    // Step 2: Add ultra_micro field to existing anchors
     let updatedItems = addUltraMicroField(state.items);
     const itemsWithUltraMicro = updatedItems.filter(i => i.ultra_micro).length;
     console.log(`Added ultra_micro to ${itemsWithUltraMicro} anchors`);
     
-    // Step 2: Add new anchors
+    // Step 3: Add new anchors
     updatedItems = addNewAnchors(updatedItems);
     console.log(`Added ${updatedItems.length - state.items.length} new anchors`);
     
@@ -184,7 +210,7 @@ export async function runMigration(): Promise<void> {
     const lateSituational = updatedItems.filter(i => i.container === 'late' && i.category === 'situational');
     console.log('Late situational BEFORE reorder:', lateSituational.map(i => `${i.id}: ${i.title}`));
     
-    // Step 3: Reorder all anchors
+    // Step 4: Reorder all anchors
     updatedItems = reorderAnchors(updatedItems);
     
     // Log after reordering

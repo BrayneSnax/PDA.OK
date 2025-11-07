@@ -75,7 +75,7 @@ export async function generateInsight(prompt: string): Promise<string> {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Gemini API error:', response.status, errorText);
+      console.log('Gemini API error (handled):', response.status, errorText);
       throw new Error(`API error: ${response.status}`);
     }
 
@@ -89,7 +89,8 @@ export async function generateInsight(prompt: string): Promise<string> {
     // Clean markdown formatting
     return cleanMarkdown(insight);
   } catch (error) {
-    console.error('Error generating insight:', error);
+    // Log as info instead of error to avoid toast notifications
+    console.log('Insight generation skipped (handled):', error);
     
     // Return a graceful fallback message
     return 'The system is listening. As patterns emerge, I will offer a quiet observation here.';
