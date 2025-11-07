@@ -11,7 +11,7 @@ import {
 import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import useColors from '../hooks/useColors';
-import { formatTime, formatLongDate } from '../utils/time';
+import { formatTime, formatLongDate, getCurrentContainer } from '../utils/time';
 import { ContainerThemes } from '../constants/Colors';
 import { AnchorCard } from '../components/AnchorCard';
 import { TaskDetailScreen } from '../components/TaskDetailScreen';
@@ -114,6 +114,10 @@ export default function HomeScreen() {
     undefined,
     activeArchetype
   );
+  
+  // Separate colors for top navigation buttons - always use current time
+  const currentTimeContainer = getCurrentContainer();
+  const topButtonColors = useColors(currentTimeContainer, true, undefined, activeArchetype);
   const [isCraftMomentModalVisible, setIsCraftMomentModalVisible] = useState(false);
   const [isAddAllyModalVisible, setIsAddAllyModalVisible] = useState(false);
   const [isEditAllyModalVisible, setIsEditAllyModalVisible] = useState(false);
@@ -261,40 +265,40 @@ export default function HomeScreen() {
         style={[styles.actionButton, { backgroundColor: 'transparent' }]}
         onPress={() => setCurrentScreen('substances')}
       >
-        <Text style={[styles.actionIcon, { color: colors.accent }]}>🍃</Text>
-        <Text style={[styles.actionText, { color: colors.text }]}>Substances</Text>
+        <Text style={[styles.actionIcon, { color: topButtonColors.accent }]}>🍃</Text>
+        <Text style={[styles.actionText, { color: topButtonColors.text }]}>Substances</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={[styles.actionButton, { backgroundColor: 'transparent' }]}
         onPress={() => setCurrentScreen('archetypes')}
       >
-        <Text style={[styles.actionIcon, { color: colors.accent }]}>🎭</Text>
-        <Text style={[styles.actionText, { color: colors.text }]}>Archetypes</Text>
+        <Text style={[styles.actionIcon, { color: topButtonColors.accent }]}>🎭</Text>
+        <Text style={[styles.actionText, { color: topButtonColors.text }]}>Archetypes</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={[styles.actionButton, { backgroundColor: 'transparent' }]}
         onPress={() => setCurrentScreen('patterns')}
       >
-        <Text style={[styles.actionIcon, { color: colors.accent }]}>🌌</Text>
-        <Text style={[styles.actionText, { color: colors.text }]}>Patterns</Text>
+        <Text style={[styles.actionIcon, { color: topButtonColors.accent }]}>🌌</Text>
+        <Text style={[styles.actionText, { color: topButtonColors.text }]}>Patterns</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={[styles.actionButton, { backgroundColor: 'transparent' }]}
         onPress={() => setCurrentScreen('nourish')}
       >
-        <Text style={[styles.actionIcon, { color: colors.accent }]}>🍽️</Text>
-        <Text style={[styles.actionText, { color: colors.text }]}>Nourish</Text>
+        <Text style={[styles.actionIcon, { color: topButtonColors.accent }]}>🍽️</Text>
+        <Text style={[styles.actionText, { color: topButtonColors.text }]}>Nourish</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={[styles.actionButton, { backgroundColor: 'transparent' }]}
         onPress={() => setCurrentScreen('transmissions')}
       >
-        <Text style={[styles.actionIcon, { color: colors.accent }]}>📡</Text>
-        <Text style={[styles.actionText, { color: colors.text }]}>Transmissions</Text>
+        <Text style={[styles.actionIcon, { color: topButtonColors.accent }]}>📡</Text>
+        <Text style={[styles.actionText, { color: topButtonColors.text }]}>Transmissions</Text>
       </TouchableOpacity>
     </View>
   );

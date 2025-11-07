@@ -101,3 +101,4 @@
 - [x] Move entire modal background down universally (increased title marginBottom to 24px)
 - [x] Add top margin to NOTICE and ACT boxes to push them down more (REFLECT stays as is)
 - [x] Increase width of background boxes so text doesn't hang off edges
+- [x] Make top navigation buttons (Substances, Archetypes, etc.) use current time-based colors automatically
