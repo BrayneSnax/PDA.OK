@@ -59,7 +59,7 @@ export default function SubstancesScreen() {
         showsVerticalScrollIndicator={false}
       >
         <Text style={[styles.containerTitle, { color: colors.text, textAlign: 'center' }]}>
-          Substances
+          🔥 SUBSTANCES v13.2 🔥
         </Text>
         <Text style={[styles.containerSubtitle, { color: colors.dim, textAlign: 'center' }]}>
           Living Pharmacopeia
