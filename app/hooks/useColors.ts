@@ -1,16 +1,12 @@
 import { useColorScheme as useRNColorScheme } from 'react-native';
 import { ColorScheme, ContainerId, Archetype } from '../constants/Types';
-import { CircadianPalette, ScreenPalettes } from '../constants/Colors';
+import { CircadianPalette } from '../constants/Colors';
 import { blendArchetypeColors } from '../utils/colorBlending';
-import { getInterpolatedCircadianColors } from '../utils/colorInterpolation';
-import { getCurrentTimeContainer } from '../utils/timeUtils';
-
-type ScreenType = 'home' | 'substances' | 'patterns' | 'nourish' | 'archetypes';
 
 export default function useColors(
   activeContainer?: ContainerId,
   useCircadian: boolean = true,
-  screenType?: ScreenType,
+  _screenType?: any, // Ignored - kept for compatibility
   activeArchetype?: Archetype | null
 ): ColorScheme {
   const systemTheme = useRNColorScheme();
@@ -33,30 +29,14 @@ export default function useColors(
     card: '#000' 
   };
 
-  // Determine base colors
+  // Determine base colors - simple discrete circadian palette
   let baseColors: ColorScheme;
   
-  console.log('[useColors] screenType:', screenType, 'activeContainer:', activeContainer);
-  console.log('[useColors] useCircadian:', useCircadian, 'screenType === home:', screenType === 'home');
-  
-  if (useCircadian && screenType === 'home') {
-    console.log('[useColors] Using INTERPOLATED colors for home');
-    // Interpolated circadian palette ONLY for home screen
-    // Get smooth color transition based on current time
-    baseColors = getInterpolatedCircadianColors(
-      CircadianPalette.morning,
-      CircadianPalette.afternoon,
-      CircadianPalette.evening,
-      CircadianPalette.late
-    );
-  } else if (useCircadian) {
-    // Discrete circadian palette for other screens
-    // Use the current time container's colors without interpolation
-    const currentContainer = getCurrentTimeContainer();
-    console.log('[useColors] Using DISCRETE colors for', screenType, '- time container:', currentContainer);
-    baseColors = CircadianPalette[currentContainer];
+  if (useCircadian && activeContainer) {
+    // Use the discrete circadian palette for the active container
+    baseColors = CircadianPalette[activeContainer];
   } else {
-    // Fallback
+    // Fallback to system theme
     baseColors = systemTheme === 'dark' ? DarkColorsFallback : LightColorsFallback;
   }
 

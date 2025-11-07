@@ -222,6 +222,16 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
 
   // Late Anchors
   {
+    id: 'late-dreamseed',
+    title: 'Dreamseed',
+    body_cue: 'One word to carry into sleep.',
+    micro: 'Write it down or whisper it.',
+    ultra_micro: 'Think it once.',
+    desire: 'The day dissolves.',
+    container: 'late',
+    category: 'time',
+  },
+  {
     id: 'late-hydration',
     title: 'Hydration Final',
     body_cue: 'One slow sip; eyes soft.',
@@ -238,16 +248,6 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
     micro: 'Invite it forward.',
     ultra_micro: 'Close eyes for one beat.',
     desire: 'Subconscious joins the field.',
-    container: 'late',
-    category: 'time',
-  },
-  {
-    id: 'late-temperature',
-    title: 'Temperature Ground',
-    body_cue: 'Air across your skin.',
-    micro: 'Adjust blanket or airflow.',
-    ultra_micro: 'Adjust blanket edge slightly.',
-    desire: 'Equilibrium, not effort.',
     container: 'late',
     category: 'time',
   },

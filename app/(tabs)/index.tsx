@@ -106,13 +106,12 @@ export default function HomeScreen() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('home');
   const [currentTime, setCurrentTime] = useState(formatTime());
 
-  // Use screen-specific colors or circadian colors based on current screen
+  // Use circadian colors based on active container
   // Blend with archetype colors if one is active
-  console.log('[index.tsx] Calling useColors with screenType:', currentScreen);
   const colors = useColors(
     activeContainer, 
     true, 
-    currentScreen as any,
+    undefined,
     activeArchetype
   );
   const [isCraftMomentModalVisible, setIsCraftMomentModalVisible] = useState(false);
@@ -1296,22 +1295,7 @@ export default function HomeScreen() {
           {renderActionGrid()}
         </View>
 
-        {/* Top Half: Field Transmissions */}
-        <View style={{ flex: 1 }}>
-          <FieldTransmissions />
-        </View>
-
-        {/* Bottom Half: Dreamseed */}
-        <View style={[styles.dreamseedContainer, { backgroundColor: colors.card, borderColor: colors.dim }]}>
-          <Text style={[styles.dreamseedTitle, { color: colors.text }]}>🌙 Dreamseed 🌙</Text>
-          <Text style={[styles.dreamseedSubtitle, { color: colors.dim }]}>The day dissolves.</Text>
-          <TouchableOpacity
-            style={[styles.dreamseedButton, { backgroundColor: colors.accent }]}
-            onPress={() => setIsDreamseedModalVisible(true)}
-          >
-            <Text style={[styles.dreamseedButtonText, { color: colors.bg }]}>Write One Word</Text>
-          </TouchableOpacity>
-        </View>
+        <FieldTransmissions />
 
         {/* Time Container Navigation at Bottom */}
         {renderTimeContainerNav()}
@@ -1765,35 +1749,6 @@ const styles = StyleSheet.create({
   compassRoseText: {
     fontSize: 15,
     lineHeight: 22,
-  },
-  dreamseedContainer: {
-    flex: 1,
-    margin: 20,
-    marginTop: 0,
-    padding: 24,
-    borderRadius: 24,
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  dreamseedTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
-  dreamseedSubtitle: {
-    fontSize: 16,
-    fontStyle: 'italic',
-    marginBottom: 24,
-  },
-  dreamseedButton: {
-    paddingVertical: 16,
-    paddingHorizontal: 32,
-    borderRadius: 12,
-  },
-  dreamseedButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
   },
 });
 

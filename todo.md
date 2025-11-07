@@ -67,6 +67,6 @@
 
 ## Correct Requirements
 
-- [ ] Revert Dreamseed - keep it at top of Late Anchors (undo Transmissions move)
-- [ ] Remove "Temperature Ground" anchor from late anchors
-- [ ] Diagnose and fix color interpolation issue (mixed colors across UI)
+- [x] Revert Dreamseed - keep it at top of Late Anchors (undo Transmissions move)
+- [x] Remove "Temperature Ground" anchor from late anchors (already removed)
+- [x] Diagnose and fix color interpolation issue (reverted to simple discrete circadian colors)
