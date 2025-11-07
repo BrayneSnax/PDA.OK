@@ -154,3 +154,9 @@
 - [x] Change title to "⚡ MOMENTUM MONITOR" with emoji prefix (all caps like Compass Rose)
 - [x] Use same card styling as Compass Rose
 - [x] Adjust text spacing inside box to match Compass Rose height
+
+## Add Nourishment Field Header
+
+- [x] Add "NOURISHMENT FIELD" section header above FOOD ENTRIES
+- [x] Add subtitle "Fuel, Feeling & Vitality" below header
+- [x] Match styling of MOVEMENT FIELD section

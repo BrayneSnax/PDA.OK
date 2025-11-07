@@ -1205,8 +1205,17 @@ export default function HomeScreen() {
             Tracking Fuel & Feeling
           </Text>
 
-          <JournalList
-            title="FOOD ENTRIES"
+          {/* Nourishment Field Section */}
+          <View style={{ marginTop: 8 }}>
+            <Text style={[styles.sectionHeader, { color: colors.dim, marginBottom: 4 }]}>
+              NOURISHMENT FIELD
+            </Text>
+            <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 10 }]}>
+              Fuel, Feeling & Vitality
+            </Text>
+
+            <JournalList
+              title="FOOD ENTRIES"
             entries={foodEntries.map(entry => {
               const energyLabel = entry.energy_level === 'low' ? '🔋 Low' : entry.energy_level === 'medium' ? '⚡ Medium' : entry.energy_level === 'high' ? '✨ High' : '';
               const fullContent = `${entry.name}\n\nEnergy: ${energyLabel}\nFeeling: ${entry.feeling || 'Not specified'}\n\nNotes: ${entry.notes || 'None'}`;
@@ -1229,15 +1238,15 @@ export default function HomeScreen() {
             }}
           />
 
-          <TouchableOpacity
-            style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
-            onPress={() => setIsAddFoodModalVisible(true)}
-          >
-            <Text style={[styles.addButtonText, { color: colors.card }]}>+ Log Nourishment</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
+              onPress={() => setIsAddFoodModalVisible(true)}
+            >
+              <Text style={[styles.addButtonText, { color: colors.card }]}>+ Log Nourishment</Text>
+            </TouchableOpacity>
 
-          {/* The Compass Rose - Pattern Synthesis */}
-          <View style={[styles.compassRoseCard, { backgroundColor: colors.card + 'CC', borderColor: colors.accent + '40', marginTop: 12, marginBottom: 12 }]}>
+            {/* The Compass Rose - Pattern Synthesis */}
+            <View style={[styles.compassRoseCard, { backgroundColor: colors.card + 'CC', borderColor: colors.accent + '40', marginTop: 12, marginBottom: 12 }]}>
             <Text style={[styles.compassRoseTitle, { color: colors.accent }]}>
               ⚓ The Compass Rose
             </Text>
@@ -1270,6 +1279,7 @@ export default function HomeScreen() {
                 </Text>
               </View>
             )}
+            </View>
           </View>
 
           {/* Movement Field Section */}
