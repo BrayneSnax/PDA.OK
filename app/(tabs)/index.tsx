@@ -364,7 +364,7 @@ export default function HomeScreen() {
         >
 	          {/* Time and Date Display - Reduced Prominence */}
 		          <View style={[styles.timeSection, { alignItems: 'center' }]}>
-		            <View style={styles.timeRow}>
+		            <View style={[styles.timeRow, { flexDirection: 'column', gap: 2 }]}>
 		              <Text style={[styles.date, { color: colors.dim, textAlign: 'center' }]}>{formatLongDate()}</Text>
 		              <Text style={[styles.time, { color: colors.text, fontSize: 14, fontWeight: '400', textAlign: 'center' }]}>{currentTime}</Text>
 		            </View>
@@ -1319,9 +1319,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   topSection: {
-    paddingTop: 4, // Tightened from 10 to 4
+    paddingTop: 0, // Moved up - no top padding
     paddingHorizontal: 20,
-    paddingBottom: 4, // Add small bottom padding
+    paddingBottom: 8, // Add padding between header and content
   },
   actionGrid: {
     flexDirection: 'row',
@@ -1350,7 +1350,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 20,
-    paddingTop: 4, // Reduced from 10 to 4 for tighter spacing
+    paddingTop: 0, // No top padding - content starts immediately
     paddingBottom: 40,
   },
   patternsContent: {
@@ -1360,7 +1360,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   timeSection: {
-    marginBottom: 16, // Reduced from 24 to 16
+    marginBottom: 12, // Tightened spacing
+    marginTop: 4, // Small top margin
     alignItems: 'center',
   },
   timeRow: {
