@@ -131,3 +131,8 @@
 - [x] Update MovementEntry type to match new structure (time, act, resistance)
 - [x] Add "Gaining Inertia" and "Goalposts & Reflections" journal sections
 - [x] Change "✨ Log Movement" button to "+ Log Movement"
+
+## Nourish Page Spacing
+
+- [x] Move "Nourish Map" title way up (reduce top padding from 8 to 0)
+- [x] Move Movement Field closer to Compass Rose (reduce gap from 32 to 16)

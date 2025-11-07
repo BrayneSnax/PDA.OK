@@ -1198,7 +1198,7 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.patternsContent}>
-          <Text style={[styles.containerTitle, { color: colors.text, textAlign: 'center', marginTop: 8 }]}>
+          <Text style={[styles.containerTitle, { color: colors.text, textAlign: 'center', marginTop: 0 }]}>
             Nourish Map
           </Text>
           <Text style={[styles.containerSubtitle, { color: colors.dim, textAlign: 'center', marginBottom: 16 }]}>
@@ -1273,7 +1273,7 @@ export default function HomeScreen() {
           </View>
 
           {/* Movement Field Section */}
-          <View style={{ marginTop: 32 }}>
+          <View style={{ marginTop: 16 }}>
             <Text style={[styles.sectionHeader, { color: colors.dim, marginBottom: 8 }]}>
               MOVEMENT FIELD
             </Text>
