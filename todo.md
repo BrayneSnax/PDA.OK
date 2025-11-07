@@ -39,3 +39,8 @@
 - [x] Move top header up (reduce top padding)
 - [x] Stack date directly on top of time (more compact)
 - [x] Add padding between top header and Field's Whisper
+
+## Color Interpolation Scope Fix
+
+- [x] Home screen: gradual color interpolation (smooth transitions)
+- [x] Other sections: discrete colors based on current time period (no interpolation)

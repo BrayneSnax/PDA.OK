@@ -3,6 +3,7 @@ import { ColorScheme, ContainerId, Archetype } from '../constants/Types';
 import { CircadianPalette, ScreenPalettes } from '../constants/Colors';
 import { blendArchetypeColors } from '../utils/colorBlending';
 import { getInterpolatedCircadianColors } from '../utils/colorInterpolation';
+import { getCurrentTimeContainer } from '../utils/timeUtils';
 
 type ScreenType = 'home' | 'substances' | 'patterns' | 'nourish' | 'archetypes';
 
@@ -39,12 +40,8 @@ export default function useColors(
   console.log('[useColors] ScreenPalettes keys:', Object.keys(ScreenPalettes));
   console.log('[useColors] Checking:', screenType && screenType !== 'home' && ScreenPalettes[screenType]);
   
-  if (screenType && screenType !== 'home' && ScreenPalettes[screenType]) {
-    // Screen-specific palette
-    console.log('[useColors] Using screen-specific palette for:', screenType);
-    baseColors = ScreenPalettes[screenType];
-  } else if (useCircadian) {
-    // Interpolated circadian palette for home screen
+  if (useCircadian && screenType === 'home') {
+    // Interpolated circadian palette ONLY for home screen
     // Get smooth color transition based on current time
     baseColors = getInterpolatedCircadianColors(
       CircadianPalette.morning,
@@ -52,6 +49,11 @@ export default function useColors(
       CircadianPalette.evening,
       CircadianPalette.late
     );
+  } else if (useCircadian) {
+    // Discrete circadian palette for other screens
+    // Use the current time container's colors without interpolation
+    const currentContainer = getCurrentTimeContainer();
+    baseColors = CircadianPalette[currentContainer];
   } else {
     // Fallback
     baseColors = systemTheme === 'dark' ? DarkColorsFallback : LightColorsFallback;
