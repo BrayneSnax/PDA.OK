@@ -6,26 +6,26 @@ import { ContainerId } from "./Types";
 export const CircadianPalette = {
   // --- Palette Refinement: Lower Contrast, Softer Glow ---
   morning: {
-    // Mood: calm, bright, optimistic but not loud. Feels like filtered sunlight through linen.
-    bg: "#F5E6CC", // Muted Pale Gold/Lemon Chiffon (Core background)
-    bgGradient: "linear-gradient(180deg, #F5E6CC 0%, #F8EDD6 100%)", // Pale gold bloom
+    // Mood: warm awakening, grounded. Feels like dawn earth and honey light.
+    bg: "#4A3F35", // Deep warm brown (like coffee grounds)
+    bgGradient: "linear-gradient(180deg, #4A3F35 0%, #5A4D40 100%)", // Warm earth gradient
     accent: "#A2B8A6", // Muted Sage (Accent background)
-    text: "#4D483B", // Deep brown-gray (Text)
-    dim: "#B3A698", // Warm taupe (Secondary text)
-    signal: "#F2A08E", // Gentle coral (Signal color)
-    card: "#FFFFFF",
-    cardOverlay: "rgba(162, 184, 166, 0.08)", // Subtle sage glow on cards
+    text: "#F0E5D8", // Light cream (High contrast)
+    dim: "#C4A57B", // Warm sand (Secondary text)
+    signal: "#E8B86D", // Honey gold (Signal color)
+    card: "#3A342C", // Darker warm card
+    cardOverlay: "rgba(212, 165, 116, 0.12)", // Honey glow on cards
   },
   afternoon: {
-    // Mood: hydrated, clear, open. Feels like light through water or sky reflection.
-    bg: "#E0FFFF", // Near Electric Blue (Core background - #7DF9FF is too bright)
-    bgGradient: "linear-gradient(180deg, #E0FFFF 0%, #E8FFFF 100%)", // Deeper coral drift
-    accent: "#B0E0E6", // Pale sand/desaturated turquoise (Accent background)
-    text: "#3B4D48", // Dark gray with faint green tint (Text)
-    dim: "#A9A9A9", // Cool stone (Secondary text)
-    signal: "#40E0D0", // Aqua/Teal (Signal color)
-    card: "#FFFFFF",
-    cardOverlay: "rgba(176, 224, 230, 0.10)", // Aqua shimmer on cards
+    // Mood: cool clarity, focused. Feels like deep water and slate stone.
+    bg: "#3A4550", // Deep cool slate
+    bgGradient: "linear-gradient(180deg, #3A4550 0%, #455560 100%)", // Cool stone gradient
+    accent: "#6B8CAE", // Steel blue (Accent background)
+    text: "#E8F0F5", // Pale blue-white (High contrast)
+    dim: "#8FA8B8", // Cool mist (Secondary text)
+    signal: "#7BC4C4", // Soft aqua (Signal color)
+    card: "#2C3840", // Darker cool card
+    cardOverlay: "rgba(95, 168, 184, 0.12)", // Aqua shimmer on cards
   },
   evening: {
     // Mood: warm descent; the body exhales. Feels like candlelight on clay walls.
@@ -88,13 +88,13 @@ export const ContainerThemes: Record<ContainerId, string> = {
 // Screen-specific color palettes (not time-bound)
 export const ScreenPalettes = {
   substances: {
-    // Earthy greens/browns - pharmacopoeia vibes
-    bg: "#E8E5D8", // Warm cream
-    accent: "#7A9B76", // Sage green
-    text: "#3D3D2E", // Deep olive
-    dim: "#9B9B88", // Muted sage
-    signal: "#B8956A", // Warm tan
-    card: "#F5F3EB", // Off-white
+    // Earthy greens/browns - pharmacopoeia vibes (softer, more resonant)
+    bg: "#3A4A3C", // Deep forest green
+    accent: "#A8C69F", // Soft sage
+    text: "#E8EFE6", // Pale mint
+    dim: "#8FA888", // Muted sage
+    signal: "#D4C5A0", // Warm sand
+    card: "#4A5A4C", // Slightly lighter forest
   },
   patterns: {
     // Cool blues/grays - analytical, observational
@@ -115,12 +115,12 @@ export const ScreenPalettes = {
     card: "#FFFBF5", // Warm white
   },
   archetypes: {
-    // Soft purples/indigos - inner modes, consciousness
-    bg: "#E8E6F0", // Soft lavender-gray
-    accent: "#8B7FA8", // Muted purple
-    text: "#3A3545", // Deep indigo
-    dim: "#A399B8", // Soft purple-gray
-    signal: "#9B8FB5", // Lavender
-    card: "#F5F3FA", // Very light lavender
+    // Soft purples/indigos - inner modes, consciousness (softer, more resonant)
+    bg: "#3A3550", // Deep indigo
+    accent: "#A89FBD", // Soft lavender
+    text: "#E8E6F5", // Pale lavender
+    dim: "#9B92B5", // Muted purple
+    signal: "#C5B8D4", // Light lavender
+    card: "#4A4560", // Slightly lighter indigo
   },
 };
