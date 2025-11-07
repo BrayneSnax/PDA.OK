@@ -174,3 +174,8 @@
 - [x] Add "GOALPOSTS & REFLECTIONS" large text field (replaces Synthesis & Reflection)
 - [x] Update MovementEntry type to match new structure
 - [x] Style Cancel/Log Movement buttons like Substance modal
+
+## Fix Mirror & Mystery MythicName
+
+- [x] Remove emojis from mythicName field (let UI add them like other substances)
+- [x] Update migration to v11
