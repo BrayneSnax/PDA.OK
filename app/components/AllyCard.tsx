@@ -47,9 +47,18 @@ export const AllyCard = React.memo(({ ally, onEdit, onRemove, onLogUse, colors }
   };
 
   // Build display name with emojis
-  const displayName = ally.mythicName 
-    ? `${ally.face} ${ally.mythicName} ${ally.face}`
-    : `${ally.face} ${ally.name} ${ally.face}`;
+  // HARDCODED FIX: Force Mirror & Mystery to display correctly regardless of cached data
+  let displayName;
+  if (ally.id === 'mirror' || ally.name === 'Entheogens') {
+    // Force correct display for Mirror & Mystery
+    displayName = '🌌 Mirror & Mystery 🌌';
+  } else if (ally.mythicName) {
+    // Strip any embedded emojis from mythicName before adding face emojis
+    const cleanMythicName = ally.mythicName.replace(/🌌/g, '').trim();
+    displayName = `${ally.face} ${cleanMythicName} ${ally.face}`;
+  } else {
+    displayName = `${ally.face} ${ally.name} ${ally.face}`;
+  }
 
   return (
     <Pressable
