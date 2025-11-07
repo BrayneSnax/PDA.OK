@@ -504,7 +504,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20, // Reduced from 22
     fontWeight: '700',
-    marginBottom: 16, // Added spacing between title and content boxes
+    marginBottom: 24, // Increased spacing between title and content boxes
   },
   // Label inside the bubble - centered, same color as text
   inlineLabel: {

@@ -98,3 +98,4 @@
 ## Final Polish
 
 - [x] Add more padding between title and content boxes in anchor detail modal
+- [x] Move entire modal background down universally (increased title marginBottom to 24px)
