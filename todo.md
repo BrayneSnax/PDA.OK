@@ -64,3 +64,9 @@
 - [ ] Remove timeUtils.ts utility
 - [ ] Restore useColors to simple discrete circadian logic
 - [ ] Remove debug console logs
+
+## Correct Requirements
+
+- [ ] Revert Dreamseed - keep it at top of Late Anchors (undo Transmissions move)
+- [ ] Remove "Temperature Ground" anchor from late anchors
+- [ ] Diagnose and fix color interpolation issue (mixed colors across UI)
