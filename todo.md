@@ -94,3 +94,7 @@
 ## Migration v9
 
 - [x] Update migration to v9 to add Stillness Signal for existing users
+
+## Final Polish
+
+- [x] Add more padding between title and content boxes in anchor detail modal
