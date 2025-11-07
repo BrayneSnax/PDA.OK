@@ -16,6 +16,7 @@ LogBox.ignoreLogs([
 ]);
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { Alert } from 'react-native';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
@@ -37,8 +38,17 @@ export default function RootLayout() {
         await Font.loadAsync({
           'OleoScript-Bold': OleoScript_700Bold,
         });
+        
+        // DEBUG: Show alert to confirm new code is loading
+        Alert.alert('CODE LOADED', 'New code v13.1 is running! Migration will start now.');
+        
+        // Force run migration
+        const { forceMigration } = require('./utils/migration');
+        await forceMigration();
+        Alert.alert('Migration Complete', 'Mirror & Mystery should now be fixed!');
       } catch (e) {
         console.warn(e);
+        Alert.alert('Error', `Migration failed: ${e}`);
       } finally {
         setAppIsReady(true);
       }
