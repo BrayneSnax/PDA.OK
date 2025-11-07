@@ -80,3 +80,7 @@
 
 - [x] Increase spacing between NOTICE/ACT/REFLECT labels and content text in anchor detail modal
 - [x] Restore original Dreamseed content ("The day dissolves. Write one word to carry into sleep.")
+
+## Migration v8
+
+- [x] Create migration v8 to update Dreamseed body_cue for existing users

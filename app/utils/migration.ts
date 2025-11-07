@@ -4,7 +4,7 @@ import { generateId } from './time';
 import { DEFAULT_GROUNDING_ITEMS, DEFAULT_ALLIES } from '../constants/DefaultData';
 
 const MIGRATION_VERSION_KEY = '@migration_version';
-const CURRENT_MIGRATION_VERSION = 7;
+const CURRENT_MIGRATION_VERSION = 8;
 
 // Migration is now only for reordering - Dreamseed already replaces Stillness Signal in DefaultData
 // No new anchors to add
@@ -129,6 +129,32 @@ function syncSubstanceData(allies: any[]): any[] {
 }
 
 /**
+ * Sync anchor content with DefaultData to update body_cue, micro, ultra_micro, desire
+ */
+function syncAnchorContent(items: ContainerItem[]): ContainerItem[] {
+  // Create a map of default anchors by ID for quick lookup
+  const defaultAnchorsMap = new Map<string, ContainerItem>();
+  for (const anchor of DEFAULT_GROUNDING_ITEMS) {
+    defaultAnchorsMap.set(anchor.id, anchor);
+  }
+  
+  // Update each item with content from DefaultData if it exists
+  return items.map(item => {
+    const defaultAnchor = defaultAnchorsMap.get(item.id);
+    if (defaultAnchor) {
+      return {
+        ...item,
+        body_cue: defaultAnchor.body_cue,
+        micro: defaultAnchor.micro,
+        ultra_micro: defaultAnchor.ultra_micro,
+        desire: defaultAnchor.desire,
+      };
+    }
+    return item;
+  });
+}
+
+/**
  * Reorder anchors based on ANCHOR_ORDER_MAP
  * Groups items by container+category, then sorts within each group
  */
@@ -189,7 +215,7 @@ export async function runMigration(): Promise<void> {
       return;
     }
 
-    console.log('Running migration v6: Syncing substance data, adding ultra_micro field, and reordering...');
+    console.log('Running migration v8: Syncing substance data, anchor content, and reordering...');
     
     // Step 1: Sync substance data (face emojis and mythicNames)
     if (state.allies && Array.isArray(state.allies)) {
@@ -197,10 +223,9 @@ export async function runMigration(): Promise<void> {
       console.log(`Synced ${state.allies.length} substances with DefaultData`);
     }
     
-    // Step 2: Add ultra_micro field to existing anchors
-    let updatedItems = addUltraMicroField(state.items);
-    const itemsWithUltraMicro = updatedItems.filter(i => i.ultra_micro).length;
-    console.log(`Added ultra_micro to ${itemsWithUltraMicro} anchors`);
+    // Step 2: Sync anchor content from DefaultData (updates Dreamseed and other anchors)
+    let updatedItems = syncAnchorContent(state.items);
+    console.log(`Synced content for ${updatedItems.length} anchors with DefaultData`);
     
     // Step 3: Add new anchors
     updatedItems = addNewAnchors(updatedItems);
