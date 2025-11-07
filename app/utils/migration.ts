@@ -127,16 +127,27 @@ function addUltraMicroField(items: ContainerItem[]): ContainerItem[] {
 function syncSubstanceData(allies: any[]): any[] {
   if (!allies || !Array.isArray(allies)) return allies;
   
+  console.log('=== SYNCING SUBSTANCE DATA ===');
+  console.log('Total allies to sync:', allies.length);
+  
   return allies.map(ally => {
+    console.log(`Checking ally: ${ally.name} (ID: ${ally.id})`);
+    console.log(`  Current mythicName: ${ally.mythicName}`);
+    console.log(`  Current face: ${ally.face}`);
+    
     // Find matching default ally by ID
     const defaultAlly = DEFAULT_ALLIES.find(d => d.id === ally.id);
     if (defaultAlly) {
+      console.log(`  ✓ MATCH FOUND in DefaultData`);
+      console.log(`  New mythicName: ${defaultAlly.mythicName}`);
+      console.log(`  New face: ${defaultAlly.face}`);
       return {
         ...ally,
         face: defaultAlly.face, // Update emoji
         mythicName: defaultAlly.mythicName, // Update mythical name
       };
     }
+    console.log(`  ✗ NO MATCH in DefaultData - keeping original`);
     return ally;
   });
 }
