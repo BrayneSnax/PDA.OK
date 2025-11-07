@@ -37,10 +37,10 @@ export default function useColors(
   let baseColors: ColorScheme;
   
   console.log('[useColors] screenType:', screenType, 'activeContainer:', activeContainer);
-  console.log('[useColors] ScreenPalettes keys:', Object.keys(ScreenPalettes));
-  console.log('[useColors] Checking:', screenType && screenType !== 'home' && ScreenPalettes[screenType]);
+  console.log('[useColors] useCircadian:', useCircadian, 'screenType === home:', screenType === 'home');
   
   if (useCircadian && screenType === 'home') {
+    console.log('[useColors] Using INTERPOLATED colors for home');
     // Interpolated circadian palette ONLY for home screen
     // Get smooth color transition based on current time
     baseColors = getInterpolatedCircadianColors(
@@ -53,6 +53,7 @@ export default function useColors(
     // Discrete circadian palette for other screens
     // Use the current time container's colors without interpolation
     const currentContainer = getCurrentTimeContainer();
+    console.log('[useColors] Using DISCRETE colors for', screenType, '- time container:', currentContainer);
     baseColors = CircadianPalette[currentContainer];
   } else {
     // Fallback

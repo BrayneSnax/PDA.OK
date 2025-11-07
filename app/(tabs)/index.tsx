@@ -102,16 +102,19 @@ export default function HomeScreen() {
     ? archetypes.find(a => a.id === activeArchetypeId) || null
     : null;
 
+  // State declarations
+  const [currentScreen, setCurrentScreen] = useState<Screen>('home');
+  const [currentTime, setCurrentTime] = useState(formatTime());
+
   // Use screen-specific colors or circadian colors based on current screen
   // Blend with archetype colors if one is active
+  console.log('[index.tsx] Calling useColors with screenType:', currentScreen);
   const colors = useColors(
     activeContainer, 
     true, 
     currentScreen as any,
     activeArchetype
   );
-  const [currentTime, setCurrentTime] = useState(formatTime());
-  const [currentScreen, setCurrentScreen] = useState<Screen>('home');
   const [isCraftMomentModalVisible, setIsCraftMomentModalVisible] = useState(false);
   const [isAddAllyModalVisible, setIsAddAllyModalVisible] = useState(false);
   const [isEditAllyModalVisible, setIsEditAllyModalVisible] = useState(false);
