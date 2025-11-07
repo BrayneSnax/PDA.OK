@@ -57,3 +57,10 @@
 
 - [x] Remove Dreamseed button from late anchors section
 - [x] Add Dreamseed box to transmissions screen (bottom half)
+
+## Revert Color Interpolation
+
+- [ ] Remove colorInterpolation.ts utility
+- [ ] Remove timeUtils.ts utility
+- [ ] Restore useColors to simple discrete circadian logic
+- [ ] Remove debug console logs
