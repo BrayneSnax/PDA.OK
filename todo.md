@@ -24,3 +24,5 @@
 - [x] Round bottom edges of nourish modal
 
 - [x] Round bottom edges of Record a Pattern modal
+
+- [x] Round bottom edges of archetype detail modal

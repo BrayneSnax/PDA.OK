@@ -121,6 +121,8 @@ const styles = StyleSheet.create({
     height: '85%',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
     paddingTop: 20,
   },
   header: {
