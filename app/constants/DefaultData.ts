@@ -6,7 +6,7 @@ export const DEFAULT_ALLIES: Ally[] = [
     id: 'firestarter',
     name: 'Stimulants',
     mythicName: 'Firestarter',
-    face: '⚙️',
+    face: '🔥',
     invocation: 'May this flame light what matters, not what merely demands.',
     function: 'Ignites focus, momentum, motion — reminds the nervous system of possibility.',
     shadow: 'Mistakes speed for progress; burns through rest, not toward it.',

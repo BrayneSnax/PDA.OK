@@ -807,7 +807,7 @@ export default function HomeScreen() {
         <AddAllyModal
           isVisible={isAddAllyModalVisible}
           onClose={() => setIsAddAllyModalVisible(false)}
-          onSave={(name: string, face: string, invocation: string, func: string, shadow: string, ritual: string) => {
+          onSave={(name: string, face: string, invocation: string, func: string, shadow: string, ritual: string, mythicalName?: string) => {
             addAlly({
               name,
               face,
@@ -815,6 +815,7 @@ export default function HomeScreen() {
               function: func,
               shadow,
               ritual,
+              mythicName: mythicalName,
               log: [],
             });
           }}

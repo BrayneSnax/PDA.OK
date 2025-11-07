@@ -8,11 +8,12 @@ import { Ally, ColorScheme, ContainerId } from '../constants/Types';
 interface AddAllyModalProps {
   isVisible: boolean;
   onClose: () => void;
-  onSave: (name: string, face: string, invocation: string, func: string, shadow: string, ritual: string) => void;
+  onSave: (name: string, face: string, invocation: string, func: string, shadow: string, ritual: string, mythicalName?: string) => void;
   colors: ColorScheme;
 }
 
 export const AddAllyModal: React.FC<AddAllyModalProps> = ({ isVisible, onClose, onSave, colors }) => {
+  const [mythicalName, setMythicalName] = React.useState('');
   const [name, setName] = React.useState('');
   const [face, setFace] = React.useState('');
   const [invocation, setInvocation] = React.useState('');
@@ -22,8 +23,9 @@ export const AddAllyModal: React.FC<AddAllyModalProps> = ({ isVisible, onClose, 
 
   const handleSave = () => {
     if (name.trim()) {
-      onSave(name, face || '✨', invocation, func, shadow, ritual);
+      onSave(name, face || '✨', invocation, func, shadow, ritual, mythicalName);
       // Reset form
+      setMythicalName('');
       setName('');
       setFace('');
       setInvocation('');
@@ -45,6 +47,16 @@ export const AddAllyModal: React.FC<AddAllyModalProps> = ({ isVisible, onClose, 
         <View style={[styles.modalView, { backgroundColor: colors.bg }]}>
           <Text style={[styles.modalTitle, { color: colors.text }]}>Add New Ally</Text>
           <ScrollView style={styles.scrollView}>
+            <View style={styles.inputGroup}>
+              <Text style={[styles.label, { color: colors.dim }]}>Mythological Name (e.g., The Awakener, Liquid Focus)</Text>
+              <TextInput
+                style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
+                onChangeText={setMythicalName}
+                value={mythicalName}
+                placeholder="Optional poetic name"
+                placeholderTextColor={colors.dim}
+              />
+            </View>
             <View style={styles.inputGroup}>
               <Text style={[styles.label, { color: colors.dim }]}>Name* (e.g., Caffeine, Sunlight)</Text>
               <TextInput

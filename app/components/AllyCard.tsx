@@ -54,9 +54,22 @@ export const AllyCard = React.memo(({ ally, onEdit, onRemove, onLogUse, colors }
       style={[styles.card, { backgroundColor: colors.card }]}
     >
       <View style={styles.header}>
-        <Text style={[styles.name, { color: colors.text }]}>
-          {ally.face} {ally.mythicName ? `${ally.mythicName} — ${ally.name}` : ally.name}
-        </Text>
+        <View style={styles.nameContainer}>
+          {ally.mythicName ? (
+            <>
+              <Text style={[styles.mythicName, { color: colors.text }]}>
+                {ally.face} {ally.mythicName} {ally.face}
+              </Text>
+              <Text style={[styles.realName, { color: colors.dim }]}>
+                {ally.name}
+              </Text>
+            </>
+          ) : (
+            <Text style={[styles.name, { color: colors.text }]}>
+              {ally.face} {ally.name} {ally.face}
+            </Text>
+          )}
+        </View>
         <Text style={[styles.expandIcon, { color: colors.dim }]}>
           {expanded ? '∧' : '∨'}
         </Text>
@@ -105,6 +118,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  nameContainer: {
+    flex: 1,
+    gap: 4,
+  },
+  mythicName: {
+    fontSize: 19,
+    fontWeight: '700',
+    letterSpacing: -0.3,
+  },
+  realName: {
+    fontSize: 13,
+    fontWeight: '400',
+    fontStyle: 'italic',
   },
   name: {
     fontSize: 17,
