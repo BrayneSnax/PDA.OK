@@ -160,3 +160,8 @@
 - [x] Add "NOURISHMENT FIELD" section header above FOOD ENTRIES
 - [x] Add subtitle "Fuel, Feeling & Vitality" below header
 - [x] Match styling of MOVEMENT FIELD section
+
+## Mystery & Mirror Second Emoji
+
+- [x] Add second emoji to Mystery & Mirror substance name
+- [x] Create migration v10 to update existing user data
