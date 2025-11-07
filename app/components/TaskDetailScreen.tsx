@@ -533,7 +533,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.28,
     shadowRadius: 14,
     elevation: 6,
-    marginHorizontal: -8, // Extend width beyond normal bounds
+    marginHorizontal: -12, // Extend width beyond normal bounds for wider boxes
   },
   largeBlock: {
     minHeight: 95, // Increased from 80 for better text coverage

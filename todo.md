@@ -100,3 +100,4 @@
 - [x] Add more padding between title and content boxes in anchor detail modal
 - [x] Move entire modal background down universally (increased title marginBottom to 24px)
 - [x] Add top margin to NOTICE and ACT boxes to push them down more (REFLECT stays as is)
+- [x] Increase width of background boxes so text doesn't hang off edges
