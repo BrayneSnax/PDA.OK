@@ -122,21 +122,25 @@ const styles = StyleSheet.create({
   nameContainer: {
     flex: 1,
     gap: 4,
+    alignItems: 'center',
   },
   mythicName: {
     fontSize: 19,
     fontWeight: '700',
     letterSpacing: -0.3,
+    textAlign: 'center',
   },
   realName: {
     fontSize: 13,
     fontWeight: '400',
     fontStyle: 'italic',
+    textAlign: 'center',
   },
   name: {
     fontSize: 17,
     fontWeight: '600',
     flex: 1,
+    textAlign: 'center',
   },
   expandIcon: {
     fontSize: 16,

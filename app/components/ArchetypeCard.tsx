@@ -43,9 +43,10 @@ export function ArchetypeCard({ archetype, onPress, onEdit, onDelete, colors, is
         activeOpacity={0.7}
       >
         <View style={styles.header}>
-          <Text style={styles.icon}>{archetype.icon}</Text>
           <View style={styles.titleContainer}>
-            <Text style={[styles.name, { color: colors.text }]}>{archetype.name}</Text>
+            <Text style={[styles.name, { color: colors.text }]}>
+              {archetype.icon} {archetype.name} {archetype.icon}
+            </Text>
             <Text style={[styles.subtitle, { color: colors.dim }]}>"{archetype.subtitle}"</Text>
           </View>
         </View>
@@ -123,22 +124,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 8,
-  },
-  icon: {
-    fontSize: 32,
-    marginRight: 12,
+    justifyContent: 'center',
   },
   titleContainer: {
     flex: 1,
+    alignItems: 'center',
   },
   name: {
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 2,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 14,
     fontStyle: 'italic',
+    textAlign: 'center',
   },
   bio: {
     fontSize: 14,
