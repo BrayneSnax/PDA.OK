@@ -59,6 +59,7 @@ import FieldTransmissions from '../components/FieldTransmissions';
 
 type Screen = 'home' | 'substances' | 'archetypes' | 'patterns' | 'nourish' | 'transmissions';
 
+export default function HomeScreen() {
   const {
     items,
     ambientRhythmEnabled,
