@@ -1310,8 +1310,24 @@ export default function HomeScreen() {
               style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12, marginBottom: 20 }]}
               onPress={() => setIsAddMovementModalVisible(true)}
             >
-              <Text style={[styles.addButtonText, { color: colors.card }]}>✨ Log Movement</Text>
+              <Text style={[styles.addButtonText, { color: colors.card }]}>+ Log Movement</Text>
             </TouchableOpacity>
+          </View>
+
+          {/* Momentum Monitor */}
+          <View style={styles.nourishment}>
+            <Text style={[styles.journalTitle, { color: colors.text }]}>
+              MOMENTUM MONITOR
+            </Text>
+            <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 16 }]}>
+              Tracking Energy & Vitality
+            </Text>
+
+            <View style={[styles.compassRoseCard, { backgroundColor: colors.card + 'CC', borderColor: colors.accent + '40', marginBottom: 12 }]}>
+              <Text style={[styles.compassRoseText, { color: colors.dim, textAlign: 'center' }]}>
+                ⚡ The monitor awaits your first entry. How does your energy flow?
+              </Text>
+            </View>
           </View>
         </View>
 

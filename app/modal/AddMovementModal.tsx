@@ -4,234 +4,295 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Modal,
   StyleSheet,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
-import { Modal } from '../components/Modal';
 import { ColorScheme } from '../constants/Types';
 
-interface AddMovementModalProps {
+interface Props {
   isVisible: boolean;
   onClose: () => void;
-  onAdd: (movement: {
-    type: string;
-    beforeState: string;
-    afterState: string;
-    somaticNotes: string;
-    duration?: number;
+  onAdd: (entry: {
+    act: string;
+    resistance: string;
+    gainingInertia: string;
+    goalposts: string;
   }) => void;
   colors: ColorScheme;
 }
 
-const MOVEMENT_TYPES = [
-  { label: 'Walk', icon: '🚶' },
-  { label: 'Stretch', icon: '🧘' },
-  { label: 'Dance', icon: '💃' },
-  { label: 'Flow', icon: '🌊' },
-  { label: 'Run', icon: '🏃' },
-  { label: 'Yoga', icon: '🕉️' },
-  { label: 'Rest', icon: '🛌' },
-  { label: 'Play', icon: '⚽' },
-  { label: 'Other', icon: '✨' },
+const RESISTANCE_LEVELS = [
+  'Minimal',
+  'Noticeable',
+  'Overwhelming',
+  'Paralyzing',
 ];
 
-export function AddMovementModal({ isVisible, onClose, onAdd, colors }: AddMovementModalProps) {
-  const [selectedType, setSelectedType] = useState('');
-  const [beforeState, setBeforeState] = useState('');
-  const [afterState, setAfterState] = useState('');
-  const [somaticNotes, setSomaticNotes] = useState('');
-  const [duration, setDuration] = useState('');
+export function AddMovementModal({ isVisible, onClose, onAdd, colors }: Props) {
+  const [time] = useState(new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }));
+  const [act, setAct] = useState('');
+  const [resistance, setResistance] = useState('');
+  const [gainingInertia, setGainingInertia] = useState('');
+  const [goalposts, setGoalposts] = useState('');
+  const [showResistanceDropdown, setShowResistanceDropdown] = useState(false);
 
-  const handleAdd = () => {
-    if (!selectedType) {
-      return;
+  const handleSave = () => {
+    if (act.trim() && resistance) {
+      onAdd({
+        act: act.trim(),
+        resistance,
+        gainingInertia: gainingInertia.trim(),
+        goalposts: goalposts.trim(),
+      });
+      // Reset
+      setAct('');
+      setResistance('');
+      setGainingInertia('');
+      setGoalposts('');
+      onClose();
     }
-
-    onAdd({
-      type: selectedType,
-      beforeState,
-      afterState,
-      somaticNotes,
-      duration: duration ? parseInt(duration) : undefined,
-    });
-
-    // Reset form
-    setSelectedType('');
-    setBeforeState('');
-    setAfterState('');
-    setSomaticNotes('');
-    setDuration('');
-    onClose();
   };
 
   return (
-    <Modal isVisible={isVisible} onClose={onClose}>
-      <View style={[styles.container, { backgroundColor: colors.card }]}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Text style={[styles.title, { color: colors.text }]}>✨ Log Movement</Text>
-          <Text style={[styles.subtitle, { color: colors.dim }]}>
-            Embodied presence & physical states
-          </Text>
+    <Modal
+      visible={isVisible}
+      transparent
+      animationType="slide"
+      onRequestClose={onClose}
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.overlay}
+      >
+        <View style={[styles.container, { backgroundColor: colors.bg }]}>
+          <ScrollView
+            style={styles.scrollView}
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false}
+          >
+            {/* Header */}
+            <Text style={[styles.title, { color: colors.text }]}>
+              Log Physical Interaction
+            </Text>
 
-          {/* Movement Type Selection */}
-          <Text style={[styles.label, { color: colors.dim }]}>Movement Type</Text>
-          <View style={styles.typeGrid}>
-            {MOVEMENT_TYPES.map((type) => (
+            {/* THE 3-PART CHECK-IN */}
+            <Text style={[styles.sectionLabel, { color: colors.dim }]}>
+              THE 3-PART CHECK-IN
+            </Text>
+
+            <View style={styles.checkInRow}>
+              {/* Time */}
+              <View style={styles.checkInField}>
+                <Text style={[styles.fieldLabel, { color: colors.text }]}>Time</Text>
+                <View style={[styles.timeDisplay, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}>
+                  <Text style={[styles.timeText, { color: colors.text }]}>{time}</Text>
+                </View>
+              </View>
+
+              {/* Act */}
+              <View style={[styles.checkInField, { flex: 1 }]}>
+                <Text style={[styles.fieldLabel, { color: colors.text }]}>Act</Text>
+                <TextInput
+                  style={[styles.input, { backgroundColor: colors.card, borderColor: colors.accent + '40', color: colors.text }]}
+                  value={act}
+                  onChangeText={setAct}
+                  placeholder="..."
+                  placeholderTextColor={colors.dim}
+                />
+              </View>
+
+              {/* Resistance */}
+              <View style={[styles.checkInField, { flex: 1 }]}>
+                <Text style={[styles.fieldLabel, { color: colors.text }]}>Resistance</Text>
+                <TouchableOpacity
+                  style={[styles.dropdown, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}
+                  onPress={() => setShowResistanceDropdown(!showResistanceDropdown)}
+                >
+                  <Text style={[styles.dropdownText, { color: resistance ? colors.text : colors.dim }]}>
+                    {resistance || '▼'}
+                  </Text>
+                </TouchableOpacity>
+                {showResistanceDropdown && (
+                  <View style={[styles.dropdownMenu, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}>
+                    {RESISTANCE_LEVELS.map((level) => (
+                      <TouchableOpacity
+                        key={level}
+                        style={styles.dropdownItem}
+                        onPress={() => {
+                          setResistance(level);
+                          setShowResistanceDropdown(false);
+                        }}
+                      >
+                        <Text style={[styles.dropdownItemText, { color: colors.text }]}>{level}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                )}
+              </View>
+            </View>
+
+            {/* GUIDED INVOCATION */}
+            <Text style={[styles.sectionLabel, { color: colors.dim, marginTop: 24 }]}>
+              GUIDED INVOCATION
+            </Text>
+
+            {/* Gaining Inertia */}
+            <Text style={[styles.journalHeader, { color: colors.text }]}>
+              Gaining Inertia
+            </Text>
+            <TextInput
+              style={[styles.textArea, { backgroundColor: colors.card, borderColor: colors.accent + '40', color: colors.text }]}
+              value={gainingInertia}
+              onChangeText={setGainingInertia}
+              placeholder="What small momentum did you gather? Notice the first step, the shift from stillness..."
+              placeholderTextColor={colors.dim}
+              multiline
+              numberOfLines={4}
+              textAlignVertical="top"
+            />
+
+            {/* Goalposts & Reflections */}
+            <Text style={[styles.journalHeader, { color: colors.text, marginTop: 16 }]}>
+              Goalposts & Reflections
+            </Text>
+            <TextInput
+              style={[styles.textArea, { backgroundColor: colors.card, borderColor: colors.accent + '40', color: colors.text }]}
+              value={goalposts}
+              onChangeText={setGoalposts}
+              placeholder="Where did you aim? What markers did you pass? Trace the path from intention to completion..."
+              placeholderTextColor={colors.dim}
+              multiline
+              numberOfLines={4}
+              textAlignVertical="top"
+            />
+
+            {/* Buttons */}
+            <View style={styles.buttonRow}>
               <TouchableOpacity
-                key={type.label}
-                style={[
-                  styles.typeButton,
-                  { 
-                    backgroundColor: colors.bg,
-                    borderColor: selectedType === type.label ? colors.accent : colors.dim + '40',
-                    borderWidth: selectedType === type.label ? 2 : 1,
-                  }
-                ]}
-                onPress={() => setSelectedType(type.label)}
+                style={[styles.button, styles.cancelButton, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}
+                onPress={onClose}
               >
-                <Text style={styles.typeIcon}>{type.icon}</Text>
-                <Text style={[
-                  styles.typeLabel,
-                  { color: selectedType === type.label ? colors.accent : colors.dim }
-                ]}>{type.label}</Text>
+                <Text style={[styles.buttonText, { color: colors.dim }]}>Cancel</Text>
               </TouchableOpacity>
-            ))}
-          </View>
 
-          {/* Before State */}
-          <Text style={[styles.label, { color: colors.dim, marginTop: 20 }]}>
-            Before (How did your body feel?)
-          </Text>
-          <TextInput
-            style={[styles.input, { backgroundColor: colors.bg, color: colors.text, borderColor: colors.dim + '40' }]}
-            value={beforeState}
-            onChangeText={setBeforeState}
-            placeholder="Tense, energized, tired, grounded..."
-            placeholderTextColor={colors.dim}
-            multiline
-          />
-
-          {/* Somatic Notes */}
-          <Text style={[styles.label, { color: colors.dim, marginTop: 16 }]}>
-            Somatic Notes (What did you notice?)
-          </Text>
-          <TextInput
-            style={[styles.textArea, { backgroundColor: colors.bg, color: colors.text, borderColor: colors.dim + '40' }]}
-            value={somaticNotes}
-            onChangeText={setSomaticNotes}
-            placeholder="Tension in shoulders, breath deepened, energy shifted..."
-            placeholderTextColor={colors.dim}
-            multiline
-            numberOfLines={4}
-          />
-
-          {/* After State */}
-          <Text style={[styles.label, { color: colors.dim, marginTop: 16 }]}>
-            After (How does your body feel now?)
-          </Text>
-          <TextInput
-            style={[styles.input, { backgroundColor: colors.bg, color: colors.text, borderColor: colors.dim + '40' }]}
-            value={afterState}
-            onChangeText={setAfterState}
-            placeholder="Relaxed, alive, centered, flowing..."
-            placeholderTextColor={colors.dim}
-            multiline
-          />
-
-          {/* Duration (Optional) */}
-          <Text style={[styles.label, { color: colors.dim, marginTop: 16 }]}>
-            Duration (minutes, optional)
-          </Text>
-          <TextInput
-            style={[styles.input, { backgroundColor: colors.bg, color: colors.text, borderColor: colors.dim + '40' }]}
-            value={duration}
-            onChangeText={setDuration}
-            placeholder="15"
-            placeholderTextColor={colors.dim}
-            keyboardType="numeric"
-          />
-
-          {/* Action Buttons */}
-          <View style={styles.buttonRow}>
-            <TouchableOpacity
-              style={[styles.button, styles.cancelButton, { backgroundColor: colors.bg }]}
-              onPress={onClose}
-            >
-              <Text style={[styles.buttonText, { color: colors.dim }]}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.addButton, { backgroundColor: colors.accent }]}
-              onPress={handleAdd}
-            >
-              <Text style={[styles.buttonText, { color: colors.card }]}>Log Movement</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </View>
+              <TouchableOpacity
+                style={[styles.button, styles.saveButton, { backgroundColor: colors.accent }]}
+                onPress={handleSave}
+                disabled={!act.trim() || !resistance}
+              >
+                <Text style={[styles.buttonText, { color: colors.card }]}>
+                  Log Movement
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
   container: {
-    padding: 20,
-    borderRadius: 16,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     maxHeight: '90%',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    padding: 20,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8,
+    fontWeight: '700',
+    marginBottom: 20,
     textAlign: 'center',
   },
-  subtitle: {
-    fontSize: 14,
-    marginBottom: 24,
-    textAlign: 'center',
-    fontStyle: 'italic',
-  },
-  label: {
+  sectionLabel: {
     fontSize: 12,
     fontWeight: '600',
-    marginBottom: 8,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
+    letterSpacing: 1,
+    marginBottom: 12,
   },
-  typeGrid: {
+  checkInRow: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-    marginTop: 8,
+    gap: 12,
   },
-  typeButton: {
-    width: '30%',
+  checkInField: {
+    minWidth: 80,
+  },
+  fieldLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: 6,
+  },
+  timeDisplay: {
+    borderWidth: 1,
+    borderRadius: 8,
     padding: 12,
-    borderRadius: 12,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  typeIcon: {
-    fontSize: 24,
-    marginBottom: 4,
-  },
-  typeLabel: {
-    fontSize: 12,
-    fontWeight: '500',
+  timeText: {
+    fontSize: 14,
+    fontWeight: '600',
   },
   input: {
     borderWidth: 1,
     borderRadius: 8,
     padding: 12,
+    fontSize: 14,
+  },
+  dropdown: {
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dropdownText: {
+    fontSize: 14,
+  },
+  dropdownMenu: {
+    position: 'absolute',
+    top: 70,
+    left: 0,
+    right: 0,
+    borderWidth: 1,
+    borderRadius: 8,
+    zIndex: 1000,
+    elevation: 5,
+  },
+  dropdownItem: {
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  dropdownItemText: {
+    fontSize: 14,
+    textAlign: 'center',
+  },
+  journalHeader: {
     fontSize: 16,
-    minHeight: 44,
+    fontWeight: '600',
+    marginBottom: 8,
   },
   textArea: {
     borderWidth: 1,
     borderRadius: 8,
     padding: 12,
-    fontSize: 16,
+    fontSize: 14,
     minHeight: 100,
-    textAlignVertical: 'top',
   },
   buttonRow: {
     flexDirection: 'row',
@@ -241,11 +302,13 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     padding: 16,
-    borderRadius: 12,
+    borderRadius: 8,
     alignItems: 'center',
   },
-  cancelButton: {},
-  addButton: {},
+  cancelButton: {
+    borderWidth: 1,
+  },
+  saveButton: {},
   buttonText: {
     fontSize: 16,
     fontWeight: '600',

@@ -111,11 +111,10 @@ export interface MovementEntry {
   id: string;
   date: string; // YYYY-MM-DDTHH:mm:ss.sssZ
   timestamp: number;
-  type: string; // Walk, Stretch, Dance, Flow, etc.
-  beforeState: string; // How body felt before
-  afterState: string; // How body feels after
-  somaticNotes: string; // Observations during movement
-  duration?: number; // Optional: minutes
+  act: string; // What physical action was taken
+  resistance: string; // Minimal, Noticeable, Overwhelming, Paralyzing
+  gainingInertia: string; // What momentum was gathered
+  goalposts: string; // Markers and reflections on the path
 }
 
 export interface Dreamseed {

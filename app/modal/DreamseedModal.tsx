@@ -56,7 +56,7 @@ export function DreamseedModal({ isVisible, onClose, onSave, colors }: Props) {
                 style={styles.input}
                 value={word}
                 onChangeText={setWord}
-                placeholder="mystery..."
+                placeholder="Mystery..."
                 placeholderTextColor="rgba(255, 255, 255, 0.3)"
                 autoFocus
                 maxLength={50}

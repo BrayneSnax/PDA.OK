@@ -122,3 +122,12 @@
 - [x] Display movement entries in Movement Field section
 - [x] Fix syntax error at line 251 in index.tsx (return outside function)
 - [x] Fix syntax error in FieldTransmissions.tsx line 120 (unexpected token)
+
+## Nourish Page Enhancements
+
+- [x] Capitalize "Mystery" in Dreamseed placeholder
+- [x] Add Momentum Monitor section for energy tracking (at very bottom of Nourish page)
+- [x] Redesign Movement logging modal with Time/Act/Resistance structure
+- [x] Update MovementEntry type to match new structure (time, act, resistance)
+- [x] Add "Gaining Inertia" and "Goalposts & Reflections" journal sections
+- [x] Change "✨ Log Movement" button to "+ Log Movement"
