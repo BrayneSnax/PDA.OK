@@ -134,14 +134,9 @@ export function AddMovementModal({ isVisible, onClose, onAdd, colors }: Props) {
               </View>
             </View>
 
-            {/* GUIDED INVOCATION */}
+            {/* GAINING INERTIA */}
             <Text style={[styles.sectionLabel, { color: colors.dim, marginTop: 24 }]}>
-              GUIDED INVOCATION
-            </Text>
-
-            {/* Gaining Inertia */}
-            <Text style={[styles.journalHeader, { color: colors.text }]}>
-              Gaining Inertia
+              GAINING INERTIA
             </Text>
             <TextInput
               style={[styles.textArea, { backgroundColor: colors.card, borderColor: colors.accent + '40', color: colors.text }]}
@@ -154,9 +149,9 @@ export function AddMovementModal({ isVisible, onClose, onAdd, colors }: Props) {
               textAlignVertical="top"
             />
 
-            {/* Goalposts & Reflections */}
-            <Text style={[styles.journalHeader, { color: colors.text, marginTop: 16 }]}>
-              Goalposts & Reflections
+            {/* GOALPOSTS & REFLECTIONS */}
+            <Text style={[styles.sectionLabel, { color: colors.dim, marginTop: 24 }]}>
+              GOALPOSTS & REFLECTIONS
             </Text>
             <TextInput
               style={[styles.textArea, { backgroundColor: colors.card, borderColor: colors.accent + '40', color: colors.text }]}

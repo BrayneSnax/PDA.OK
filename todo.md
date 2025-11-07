@@ -165,3 +165,12 @@
 
 - [x] Add second emoji to Mystery & Mirror substance name
 - [x] Create migration v10 to update existing user data
+
+## Movement Modal Redesign (Match Substance Journal)
+
+- [x] Redesign MovementModal with Substance Journal structure
+- [x] Add "THE 3-PART CHECK-IN" section (Time, Act, Resistance)
+- [x] Add "GAINING INERTIA" large text field (replaces Guided Invocation)
+- [x] Add "GOALPOSTS & REFLECTIONS" large text field (replaces Synthesis & Reflection)
+- [x] Update MovementEntry type to match new structure
+- [x] Style Cancel/Log Movement buttons like Substance modal
