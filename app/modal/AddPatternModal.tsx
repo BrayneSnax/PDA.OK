@@ -130,6 +130,8 @@ const styles = StyleSheet.create({
   modalContent: {
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
     paddingTop: 20,
     paddingBottom: 40,
     paddingHorizontal: 20,

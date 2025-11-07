@@ -22,3 +22,5 @@
 
 - [x] Center archetype modal content (icon and title) like nourish modal
 - [x] Round bottom edges of nourish modal
+
+- [x] Round bottom edges of Record a Pattern modal
