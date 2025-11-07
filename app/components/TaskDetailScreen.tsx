@@ -199,6 +199,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
+            marginTop: 8, // Push NOTICE box down from title
             marginBottom: gap, // PSS: Uniform gap based on scale
             padding: padY, // PSS: Scaled padding
           }
@@ -254,6 +255,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
             backgroundColor: timeGlow.backgroundColor,
             borderColor: timeGlow.borderColor,
             shadowColor: timeGlow.shadowColor,
+            marginTop: 8, // Push ACT box down
             marginBottom: gap, // PSS: Uniform gap based on scale
             padding: padY, // PSS: Scaled padding
           }
