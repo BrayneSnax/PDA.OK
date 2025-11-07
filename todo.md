@@ -179,3 +179,16 @@
 
 - [x] Remove emojis from mythicName field (let UI add them like other substances)
 - [x] Update migration to v11
+
+## Fix Movement Modal Crash
+
+- [ ] Diagnose why modal shows black overlay but no content
+- [ ] Fix rendering issue in AddMovementModal
+- [ ] Test modal opens and functions correctly
+
+## Debug Mirror & Mystery Emoji Issue
+
+- [x] Add console.log to see what mythicName value is loading
+- [x] Verify DefaultData is being used correctly
+- [x] Fix any data loading/caching issues
+- [x] Bump migration to v12 to force data sync

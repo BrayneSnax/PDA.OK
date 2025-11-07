@@ -4,8 +4,9 @@ import { generateId } from './time';
 import { DEFAULT_GROUNDING_ITEMS, DEFAULT_ALLIES } from '../constants/DefaultData';
 
 const MIGRATION_VERSION_KEY = '@migration_version';
-const CURRENT_MIGRATION_VERSION = 11;
+const CURRENT_MIGRATION_VERSION = 12;
 
+// Migration v12: Force-fix Mirror & Mystery mythicName
 // Migration v11: Fix Mirror & Mystery mythicName (remove embedded emojis)
 // Migration v10: Fix Mirror & Mystery emoji (sync substance data)
 // Migration v9: Add Stillness Signal back as 4th late anchor
@@ -226,7 +227,7 @@ export async function runMigration(): Promise<void> {
       return;
     }
 
-    console.log('Running migration v11: Syncing substance data (Mirror & Mystery mythicName fix), anchor content, and reordering...');
+    console.log('Running migration v12: Force-syncing all substance data including Mirror & Mystery fix...');
     
     // Step 1: Sync substance data (face emojis and mythicNames)
     if (state.allies && Array.isArray(state.allies)) {

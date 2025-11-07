@@ -12,6 +12,11 @@ interface Props {
 
 export const AllyCard = React.memo(({ ally, onEdit, onRemove, onLogUse, colors }: Props) => {
   const [expanded, setExpanded] = useState(false);
+  
+  // Debug: log Mirror & Mystery data
+  if (ally.id === 'mirror') {
+    console.log('Mirror & Mystery data:', { mythicName: ally.mythicName, face: ally.face });
+  }
 
   const handleLongPress = () => {
     Alert.alert(
