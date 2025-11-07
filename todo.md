@@ -26,3 +26,10 @@
 - [x] Round bottom edges of Record a Pattern modal
 
 - [x] Round bottom edges of archetype detail modal
+
+## New Feature: Gradual Color Transitions
+
+- [x] Implement smooth color interpolation throughout the day
+- [x] Colors should blend continuously rather than jumping at time boundaries
+- [x] Maintain existing 4 time containers for anchor organization
+- [x] Apply gradual transitions to entire UI (backgrounds, cards, text, accents)

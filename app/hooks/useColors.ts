@@ -2,6 +2,7 @@ import { useColorScheme as useRNColorScheme } from 'react-native';
 import { ColorScheme, ContainerId, Archetype } from '../constants/Types';
 import { CircadianPalette, ScreenPalettes } from '../constants/Colors';
 import { blendArchetypeColors } from '../utils/colorBlending';
+import { getInterpolatedCircadianColors } from '../utils/colorInterpolation';
 
 type ScreenType = 'home' | 'substances' | 'patterns' | 'nourish' | 'archetypes';
 
@@ -42,9 +43,15 @@ export default function useColors(
     // Screen-specific palette
     console.log('[useColors] Using screen-specific palette for:', screenType);
     baseColors = ScreenPalettes[screenType];
-  } else if (useCircadian && activeContainer && CircadianPalette[activeContainer]) {
-    // Circadian palette for home screen
-    baseColors = CircadianPalette[activeContainer];
+  } else if (useCircadian) {
+    // Interpolated circadian palette for home screen
+    // Get smooth color transition based on current time
+    baseColors = getInterpolatedCircadianColors(
+      CircadianPalette.morning,
+      CircadianPalette.afternoon,
+      CircadianPalette.evening,
+      CircadianPalette.late
+    );
   } else {
     // Fallback
     baseColors = systemTheme === 'dark' ? DarkColorsFallback : LightColorsFallback;
