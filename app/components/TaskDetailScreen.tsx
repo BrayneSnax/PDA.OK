@@ -524,22 +524,23 @@ const styles = StyleSheet.create({
   // Organic glow blocks
   glowBlock: {
     borderRadius: 24, // Even softer, more organic
-    padding: 14, // PSS base (overridden inline with padY)
+    padding: 18, // Increased from 14 for more breathing room
     marginBottom: 12, // PSS base (overridden inline with gap)
     borderWidth: 1,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.28,
     shadowRadius: 14,
     elevation: 6,
+    marginHorizontal: -8, // Extend width beyond normal bounds
   },
   largeBlock: {
-    minHeight: 80, // Increased to cover text better
+    minHeight: 95, // Increased from 80 for better text coverage
   },
   mediumBlock: {
-    minHeight: 85, // Increased to cover text better
+    minHeight: 100, // Increased from 85 for better text coverage
   },
   smallBlock: {
-    minHeight: 75, // Increased to cover text better
+    minHeight: 90, // Increased from 75 for better text coverage
   },
   glowText: {
     textAlign: 'center',

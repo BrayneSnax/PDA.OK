@@ -70,3 +70,8 @@
 - [x] Revert Dreamseed - keep it at top of Late Anchors (undo Transmissions move)
 - [x] Remove "Temperature Ground" anchor from late anchors (already removed)
 - [x] Diagnose and fix color interpolation issue (reverted to simple discrete circadian colors)
+
+## New Fixes
+
+- [ ] Restore accidentally removed late anchor (only Temperature Ground should have been removed)
+- [x] Increase width and height of background boxes in anchor detail modal (padding 14→18, heights +15px, width extended)
