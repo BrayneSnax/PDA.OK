@@ -1315,19 +1315,13 @@ export default function HomeScreen() {
           </View>
 
           {/* Momentum Monitor */}
-          <View style={styles.nourishment}>
-            <Text style={[styles.journalTitle, { color: colors.text }]}>
-              MOMENTUM MONITOR
+          <View style={[styles.compassRoseCard, { backgroundColor: colors.card + 'CC', borderColor: colors.accent + '40', marginTop: 8, marginBottom: 12 }]}>
+            <Text style={[styles.compassRoseTitle, { color: colors.accent }]}>
+              ⚡ MOMENTUM MONITOR
             </Text>
-            <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 10 }]}>
-              Tracking Energy & Vitality
+            <Text style={[styles.compassRoseText, { color: colors.dim }]}>
+              The monitor awaits your first entry. How does your energy flow?
             </Text>
-
-            <View style={[styles.compassRoseCard, { backgroundColor: colors.card + 'CC', borderColor: colors.accent + '40', marginBottom: 12 }]}>
-              <Text style={[styles.compassRoseText, { color: colors.dim, textAlign: 'center' }]}>
-                ⚡ The monitor awaits your first entry. How does your energy flow?
-              </Text>
-            </View>
           </View>
         </View>
 

@@ -146,3 +146,11 @@
 - [x] Shrink MOVEMENT LOG card height (reduce padding)
 - [x] Shrink MOMENTUM MONITOR card height (reduce padding)
 - [x] Reduce all section gaps/margins
+
+## Momentum Monitor Styling
+
+- [x] Make Momentum Monitor match Compass Rose styling exactly
+- [x] Remove "Tracking Energy & Vitality" subtitle
+- [x] Change title to "⚡ MOMENTUM MONITOR" with emoji prefix (all caps like Compass Rose)
+- [x] Use same card styling as Compass Rose
+- [x] Adjust text spacing inside box to match Compass Rose height
