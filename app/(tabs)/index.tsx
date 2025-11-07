@@ -104,7 +104,9 @@ type Screen = 'home' | 'substances' | 'archetypes' | 'patterns' | 'nourish' | 't
     removeArchetype,
     activeArchetypeId,
     setActiveArchetypeId,
-  } = useApp();type = activeArchetypeId 
+  } = useApp();
+
+  const activeArchetype = activeArchetypeId 
     ? archetypes.find(a => a.id === activeArchetypeId) || null
     : null;
 
