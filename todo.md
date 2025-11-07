@@ -112,3 +112,11 @@
 - [x] Integrate theme selection with app state and useColors hook
 - [x] Preserve time-based color switching and top button behavior across all themes
 - [x] Move theme selector to bottom of Transmits page
+
+## Nourish Page Restructuring
+
+- [x] Move Compass Rose below Log Nourishment button
+- [x] Add Movement Field section to bottom half of Nourish page
+- [x] Create movement logging UI with type, somatic notes, before/after states
+- [x] Add movement entry storage to app state
+- [x] Display movement entries in Movement Field section

@@ -107,6 +107,17 @@ export interface FoodEntry {
   energy_level?: string; // Optional: 'low', 'medium', 'high'
 }
 
+export interface MovementEntry {
+  id: string;
+  date: string; // YYYY-MM-DDTHH:mm:ss.sssZ
+  timestamp: number;
+  type: string; // Walk, Stretch, Dance, Flow, etc.
+  beforeState: string; // How body felt before
+  afterState: string; // How body feels after
+  somaticNotes: string; // Observations during movement
+  duration?: number; // Optional: minutes
+}
+
 export interface Dreamseed {
   id: string;
   date: string; // YYYY-MM-DDTHH:mm:ss.sssZ
@@ -147,6 +158,7 @@ export interface AppState {
   completions: Completion[];
   patterns: Pattern[];
   foodEntries: FoodEntry[];
+  movementEntries: MovementEntry[]; // Movement & embodiment tracking
   dreamseeds: Dreamseed[]; // Words/phrases carried into sleep
   archetypes: Archetype[]; // User's archetypes (includes defaults + custom)
   conversations: Conversation[]; // Substance-archetype dialogues

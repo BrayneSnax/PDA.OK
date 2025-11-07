@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { AppState, ContainerItem, Ally, Moment, Completion, ContainerId, Pattern, FoodEntry, Archetype } from '../constants/Types';
+import { AppState, ContainerItem, Ally, Moment, Completion, ContainerId, Pattern, FoodEntry, MovementEntry, Archetype } from '../constants/Types';
 import { JournalEntry } from '../constants/Types'; // Keep JournalEntry for backward compatibility if needed, but Moment is the new primary type
 import { DEFAULT_ALLIES, DEFAULT_GROUNDING_ITEMS, DEFAULT_ARCHETYPES } from '../constants/DefaultData';
 import { ThemeName, DEFAULT_THEME } from '../constants/Themes';
@@ -26,6 +26,8 @@ interface AppContextType extends AppState {
   addFieldWhisper: (whisper: Omit<import('../constants/Types').FieldWhisper, 'id' | 'timestamp' | 'date'>) => void;
   addFoodEntry: (entry: Omit<FoodEntry, 'id' | 'timestamp' | 'date'>) => void;
   removeFoodEntry: (id: string) => void;
+  addMovementEntry: (entry: Omit<MovementEntry, 'id' | 'timestamp' | 'date'>) => void;
+  removeMovementEntry: (id: string) => void;
   addDreamseed: (word: string) => void;
   addArchetype: (archetype: Omit<import('../constants/Types').Archetype, 'id'>) => void;
   updateArchetype: (archetype: import('../constants/Types').Archetype) => void;
@@ -58,6 +60,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [completions, setCompletions] = useState<Completion[]>([]);
   const [patterns, setPatterns] = useState<Pattern[]>([]);
   const [foodEntries, setFoodEntries] = useState<FoodEntry[]>([]);
+  const [movementEntries, setMovementEntries] = useState<MovementEntry[]>([]);
   const [dreamseeds, setDreamseeds] = useState<import('../constants/Types').Dreamseed[]>([]);
   const [conversations, setConversations] = useState<import('../constants/Types').Conversation[]>([]);
   const [fieldWhispers, setFieldWhispers] = useState<import('../constants/Types').FieldWhisper[]>([]);
@@ -81,7 +84,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, dreamseeds, conversations, fieldWhispers, archetypes, activeContainer, selectedTheme, loading]);
+  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, movementEntries, dreamseeds, conversations, fieldWhispers, archetypes, activeContainer, selectedTheme, loading]);
 
   const loadData = useCallback(async () => {
     // Run migration if needed before loading data
@@ -113,6 +116,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         completions: Array.isArray(savedState.completions) ? savedState.completions : [],
         patterns: Array.isArray(savedState.patterns) ? savedState.patterns : [],
         foodEntries: Array.isArray(savedState.foodEntries) ? savedState.foodEntries : [],
+        movementEntries: Array.isArray(savedState.movementEntries) ? savedState.movementEntries : [],
         dreamseeds: Array.isArray(savedState.dreamseeds) ? savedState.dreamseeds : [],
         conversations: Array.isArray(savedState.conversations) ? savedState.conversations : [],
         fieldWhispers: Array.isArray(savedState.fieldWhispers) ? savedState.fieldWhispers : [],
@@ -129,6 +133,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setCompletions(normalized.completions);
       setPatterns(normalized.patterns);
       setFoodEntries(normalized.foodEntries);
+      setMovementEntries(normalized.movementEntries || []);
       setDreamseeds(normalized.dreamseeds);
       setConversations(normalized.conversations);
       setFieldWhispers(normalized.fieldWhispers);
@@ -148,6 +153,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       completions,
       patterns,
       foodEntries,
+      movementEntries,
       dreamseeds,
       conversations,
       fieldWhispers,
@@ -155,7 +161,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       activeContainer,
       selectedTheme,
     });
-  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, dreamseeds, conversations, fieldWhispers, archetypes, activeContainer, selectedTheme]);
+  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, movementEntries, dreamseeds, conversations, fieldWhispers, archetypes, activeContainer, selectedTheme]);
 
   const addItem = useCallback((item: Omit<ContainerItem, 'id'>) => {
     const now = new Date();
@@ -355,6 +361,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setFoodEntries(prev => prev.filter(e => e.id !== id));
   }, []);
 
+  const addMovementEntry = useCallback((entry: Omit<MovementEntry, 'id' | 'timestamp' | 'date'>) => {
+    const now = new Date();
+    const newEntry: MovementEntry = {
+      ...entry,
+      id: generateId(),
+      date: now.toISOString(),
+      timestamp: now.getTime(),
+    };
+    setMovementEntries(prev => [newEntry, ...prev]);
+  }, []);
+
+  const removeMovementEntry = useCallback((id: string) => {
+    setMovementEntries(prev => prev.filter(e => e.id !== id));
+  }, []);
+
   const addArchetype = useCallback((archetype: Omit<Archetype, 'id'>) => {
     const now = new Date();
     const newArchetype: Archetype = {
@@ -387,6 +408,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     completions,
     patterns,
     foodEntries,
+    movementEntries,
     dreamseeds,
     conversations,
     fieldWhispers,
@@ -411,6 +433,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     addFieldWhisper,
     addFoodEntry,
     removeFoodEntry,
+    addMovementEntry,
+    removeMovementEntry,
     addDreamseed,
     addArchetype,
     updateArchetype,

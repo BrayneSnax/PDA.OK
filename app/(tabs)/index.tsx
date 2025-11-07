@@ -43,6 +43,7 @@ import { DailyBlockSynthesisModal } from '../modal/DailyBlockSynthesisModal';
 import { SubstanceSynthesisModal } from '../modal/SubstanceSynthesisModal';
 import { AddPatternModal } from '../modal/AddPatternModal';
 import { AddFoodModal } from '../modal/AddFoodModal';
+import { AddMovementModal } from '../modal/AddMovementModal';
 import { DreamseedModal } from '../modal/DreamseedModal';
 import { Archetype } from '../constants/Types';
 import { ArchetypeCard } from '../components/ArchetypeCard';
@@ -58,7 +59,6 @@ import FieldTransmissions from '../components/FieldTransmissions';
 
 type Screen = 'home' | 'substances' | 'archetypes' | 'patterns' | 'nourish' | 'transmissions';
 
-export default function HomeScreen() {
   const {
     items,
     ambientRhythmEnabled,
@@ -73,12 +73,16 @@ export default function HomeScreen() {
     addItem,
     removeItem,
     updateItem,
-    removeAlly,
-    updateAlly,
-    addAlly,
     journalEntries,
     substanceJournalEntries,
     removeJournalEntry,
+    removeSubstanceJournalEntry,
+    addMoment,
+    addSubstanceMoment,
+    addAlly,
+    updateAlly,
+    removeAlly,
+    logAllyUse,
     patterns,
     addPattern,
     removePattern,
@@ -89,6 +93,10 @@ export default function HomeScreen() {
     foodEntries,
     addFoodEntry,
     removeFoodEntry,
+    movementEntries,
+    addMovementEntry,
+    removeMovementEntry,
+    dreamseeds,
     addDreamseed,
     archetypes,
     addArchetype,
@@ -96,10 +104,7 @@ export default function HomeScreen() {
     removeArchetype,
     activeArchetypeId,
     setActiveArchetypeId,
-  } = useApp();
-
-  // Get active archetype if one is invoked
-  const activeArchetype = activeArchetypeId 
+  } = useApp();type = activeArchetypeId 
     ? archetypes.find(a => a.id === activeArchetypeId) || null
     : null;
 
@@ -138,6 +143,7 @@ export default function HomeScreen() {
   const [isAddPatternModalVisible, setIsAddPatternModalVisible] = useState(false);
   const [isDailySynthesisModalVisible, setIsDailySynthesisModalVisible] = useState(false);
   const [isAddFoodModalVisible, setIsAddFoodModalVisible] = useState(false);
+  const [isAddMovementModalVisible, setIsAddMovementModalVisible] = useState(false);
   const [isDreamseedModalVisible, setIsDreamseedModalVisible] = useState(false);
   const [selectedArchetype, setSelectedArchetype] = useState<Archetype | null>(null);
   const [isArchetypeModalVisible, setIsArchetypeModalVisible] = useState(false);
@@ -1220,6 +1226,13 @@ export default function HomeScreen() {
             }}
           />
 
+          <TouchableOpacity
+            style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
+            onPress={() => setIsAddFoodModalVisible(true)}
+          >
+            <Text style={[styles.addButtonText, { color: colors.card }]}>+ Log Nourishment</Text>
+          </TouchableOpacity>
+
           {/* The Compass Rose - Pattern Synthesis */}
           <View style={[styles.compassRoseCard, { backgroundColor: colors.card + 'CC', borderColor: colors.accent + '40', marginTop: 20, marginBottom: 12 }]}>
             <Text style={[styles.compassRoseTitle, { color: colors.accent }]}>
@@ -1256,12 +1269,47 @@ export default function HomeScreen() {
             )}
           </View>
 
-          <TouchableOpacity
-            style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
-            onPress={() => setIsAddFoodModalVisible(true)}
-          >
-            <Text style={[styles.addButtonText, { color: colors.card }]}>+ Log Nourishment</Text>
-          </TouchableOpacity>
+          {/* Movement Field Section */}
+          <View style={{ marginTop: 32 }}>
+            <Text style={[styles.sectionHeader, { color: colors.dim, marginBottom: 8 }]}>
+              MOVEMENT FIELD
+            </Text>
+            <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 16 }]}>
+              Embodied Presence & Physical States
+            </Text>
+
+            {/* Movement Entries List */}
+            <JournalList
+              title="MOVEMENT LOG"
+              entries={movementEntries.map(entry => {
+                const durationText = entry.duration ? `${entry.duration} min` : 'Duration not tracked';
+                const fullContent = `${entry.type}\n\n${durationText}\n\nBefore: ${entry.beforeState}\n\nSomatic Notes: ${entry.somaticNotes}\n\nAfter: ${entry.afterState}`;
+                return {
+                  id: entry.id,
+                  preview: `${entry.type} - ${entry.afterState}`,
+                  fullContent,
+                  date: new Date(entry.date).toLocaleString(),
+                };
+              })}
+              colors={colors}
+              emptyMessage="The field awaits your first movement. How does your body feel?"
+              onEntryPress={(entry) => {
+                setSelectedJournalEntry({
+                  title: 'Movement Entry',
+                  date: entry.date,
+                  content: entry.fullContent,
+                });
+                setIsJournalEntryModalVisible(true);
+              }}
+            />
+
+            <TouchableOpacity
+              style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12, marginBottom: 20 }]}
+              onPress={() => setIsAddMovementModalVisible(true)}
+            >
+              <Text style={[styles.addButtonText, { color: colors.card }]}>✨ Log Movement</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Time Container Navigation at Bottom */}
@@ -1273,6 +1321,15 @@ export default function HomeScreen() {
           onClose={() => setIsAddFoodModalVisible(false)}
           onSave={(entry) => {
             addFoodEntry(entry);
+          }}
+          colors={colors}
+        />
+
+        <AddMovementModal
+          isVisible={isAddMovementModalVisible}
+          onClose={() => setIsAddMovementModalVisible(false)}
+          onAdd={(entry) => {
+            addMovementEntry(entry);
           }}
           colors={colors}
         />
