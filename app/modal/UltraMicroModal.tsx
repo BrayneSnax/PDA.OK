@@ -47,12 +47,12 @@ export default function UltraMicroModal({
   container,
   onClose,
 }: UltraMicroModalProps) {
-  // Auto-dismiss after 2 seconds
+  // Auto-dismiss after 1.7 seconds
   useEffect(() => {
     if (visible) {
       const timer = setTimeout(() => {
         onClose();
-      }, 2000);
+      }, 1700);
       return () => clearTimeout(timer);
     }
   }, [visible, onClose]);
@@ -93,7 +93,7 @@ export default function UltraMicroModal({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Darker overlay for better modal contrast
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Darkened from 50% to 60%
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
