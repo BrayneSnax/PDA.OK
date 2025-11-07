@@ -654,7 +654,7 @@ export const DEFAULT_ARCHETYPES: Archetype[] = [
     id: 'creator',
     name: 'Creator',
     subtitle: 'Synth',
-    icon: '🪶',
+    icon: '✍️',
     bio: 'Synth gathers fragments — thoughts, sensations, words — and fuses them into something new. Their power is curiosity without demand. They appear when your system wants to explore, not achieve. Every question becomes a color. Every spark, a bridge.',
     activation_phrase: 'Let\'s play with the pieces.',
     body_cue: 'Tilt head, loosen jaw, roll shoulders — physical signals of openness. Maybe hum or sway slightly to start the creative rhythm.',

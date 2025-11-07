@@ -310,7 +310,7 @@ export default function HomeScreen() {
             style={[styles.craftMomentButton, { backgroundColor: colors.accent }]}
             onPress={() => setIsCraftMomentModalVisible(true)}
           >
-            <Text style={[styles.craftMomentText, { color: colors.card }]}>🖌️ Craft a Moment 🖌️</Text>
+            <Text style={[styles.craftMomentText, { color: colors.card }]}>📝 Craft a Moment 📝</Text>
           </TouchableOpacity>
         )}
 

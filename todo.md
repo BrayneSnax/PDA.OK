@@ -12,3 +12,8 @@
 - [x] Change "Create Custom Archetype" button from ✨ to + prefix (like Add New Companion)
 - [x] Actually increase emoji font sizes in cards and buttons (already at 22px mythical, 20px regular)
 - [x] Create migration v7 to sync updated data to users (already in place, will auto-run on next app start)
+
+## New Fixes
+
+- [x] Add second emoji to Creator archetype (Synth) - changed icon to ✍️
+- [x] Replace Craft a Moment button emoji from 🖌️ to 📝
