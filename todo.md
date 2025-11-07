@@ -17,3 +17,8 @@
 
 - [x] Add second emoji to Creator archetype (Synth) - changed icon to ✍️
 - [x] Replace Craft a Moment button emoji from 🖌️ to 📝
+
+## Styling Improvements
+
+- [x] Center archetype modal content (icon and title) like nourish modal
+- [x] Round bottom edges of nourish modal

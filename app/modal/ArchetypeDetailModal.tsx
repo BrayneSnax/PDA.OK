@@ -131,25 +131,27 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   titleRow: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     flex: 1,
   },
   icon: {
     fontSize: 40,
-    marginRight: 12,
+    marginBottom: 8,
   },
   titleContainer: {
-    flex: 1,
+    alignItems: 'center',
   },
   name: {
     fontSize: 24,
     fontWeight: '700',
     marginBottom: 4,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
     fontStyle: 'italic',
+    textAlign: 'center',
   },
   closeButton: {
     padding: 4,
