@@ -13,9 +13,12 @@ import {
   RefreshControl,
 } from 'react-native';
 import { useTransmissions } from '../hooks/useTransmissions';
+import { useApp } from '../context/AppContext';
+import { THEMES, ThemeName } from '../constants/Themes';
 
 export default function FieldTransmissions() {
   const { transmissions, unreadCount, loading, markRead, forceCheck, refresh } = useTransmissions();
+  const { selectedTheme, setSelectedTheme } = useApp();
 
   const handleTransmissionPress = (transmissionId: string, isRead: boolean) => {
     if (!isRead) {
@@ -51,6 +54,29 @@ export default function FieldTransmissions() {
             <Text style={styles.unreadText}>{unreadCount} unread</Text>
           </View>
         )}
+      </View>
+
+      {/* Theme Selector */}
+      <View style={styles.themeSelectorContainer}>
+        <Text style={styles.themeSelectorTitle}>Visual Theme</Text>
+        <View style={styles.themeOptions}>
+          {Object.values(THEMES).map((theme) => (
+            <TouchableOpacity 
+              key={theme.name}
+              style={[
+                styles.themeOption,
+                selectedTheme === theme.name && styles.themeOptionActive
+              ]}
+              onPress={() => setSelectedTheme(theme.name)}
+            >
+              <Text style={styles.themeIcon}>{theme.icon}</Text>
+              <Text style={[
+                styles.themeName,
+                selectedTheme === theme.name && styles.themeNameActive
+              ]}>{theme.displayName}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
 
       {/* Force Check Button (for testing) */}
@@ -159,8 +185,58 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
   },
+  themeSelectorContainer: {
+    margin: 16,
+    marginBottom: 8,
+    padding: 16,
+    backgroundColor: '#111',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#333',
+  },
+  themeSelectorTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#888',
+    marginBottom: 12,
+    textAlign: 'center',
+    letterSpacing: 1,
+    textTransform: 'uppercase',
+  },
+  themeOptions: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    gap: 8,
+  },
+  themeOption: {
+    flex: 1,
+    padding: 12,
+    backgroundColor: '#1a1a1a',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#444',
+    alignItems: 'center',
+  },
+  themeIcon: {
+    fontSize: 28,
+    marginBottom: 6,
+  },
+  themeName: {
+    fontSize: 12,
+    color: '#aaa',
+    fontWeight: '500',
+  },
+  themeOptionActive: {
+    borderColor: '#4a9eff',
+    backgroundColor: '#1a2030',
+  },
+  themeNameActive: {
+    color: '#4a9eff',
+    fontWeight: '700',
+  },
   forceCheckButton: {
     margin: 16,
+    marginTop: 8,
     padding: 12,
     backgroundColor: '#222',
     borderRadius: 8,

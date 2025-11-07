@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback, ReactNode 
 import { AppState, ContainerItem, Ally, Moment, Completion, ContainerId, Pattern, FoodEntry, Archetype } from '../constants/Types';
 import { JournalEntry } from '../constants/Types'; // Keep JournalEntry for backward compatibility if needed, but Moment is the new primary type
 import { DEFAULT_ALLIES, DEFAULT_GROUNDING_ITEMS, DEFAULT_ARCHETYPES } from '../constants/DefaultData';
+import { ThemeName, DEFAULT_THEME } from '../constants/Themes';
 import { saveAppState, loadAppState } from '../utils/storage';
 import { formatDate, generateId, getCurrentContainer } from '../utils/time';
 import { needsMigration, runMigration } from '../utils/migration';
@@ -32,6 +33,8 @@ interface AppContextType extends AppState {
   setActiveContainer: (container: ContainerId) => void;
   activeArchetypeId: string | null;
   setActiveArchetypeId: (id: string | null) => void;
+  selectedTheme: ThemeName;
+  setSelectedTheme: (theme: ThemeName) => void;
   loading: boolean;
   removeJournalEntry: (id: string) => void;
   removeSubstanceJournalEntry: (id: string) => void;
@@ -61,6 +64,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [archetypes, setArchetypes] = useState<Archetype[]>(DEFAULT_ARCHETYPES);
   const [activeContainer, setActiveContainer] = useState<ContainerId>(getCurrentContainer());
   const [activeArchetypeId, setActiveArchetypeId] = useState<string | null>(null);
+  const [selectedTheme, setSelectedTheme] = useState<ThemeName>(DEFAULT_THEME);
 
   const [loading, setLoading] = useState(true);
 
@@ -77,7 +81,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, dreamseeds, conversations, fieldWhispers, archetypes, activeContainer, loading]);
+  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, dreamseeds, conversations, fieldWhispers, archetypes, activeContainer, selectedTheme, loading]);
 
   const loadData = useCallback(async () => {
     // Run migration if needed before loading data
@@ -114,10 +118,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
         fieldWhispers: Array.isArray(savedState.fieldWhispers) ? savedState.fieldWhispers : [],
         archetypes: Array.isArray(savedState.archetypes) && savedState.archetypes.length > 0 ? savedState.archetypes : DEFAULT_ARCHETYPES,
         activeContainer: getCurrentContainer(), // Always use current time, don't load stale value
+        selectedTheme: savedState.selectedTheme || DEFAULT_THEME,
       } as AppState;
 
       setItems(normalized.items);
       setAllies(normalized.allies);
+      setSelectedTheme(normalized.selectedTheme || DEFAULT_THEME);
       setJournalEntries(normalized.journalEntries);
       setSubstanceJournalEntries(normalized.substanceJournalEntries);
       setCompletions(normalized.completions);
@@ -147,9 +153,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       fieldWhispers,
       archetypes,
       activeContainer,
-
+      selectedTheme,
     });
-  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, dreamseeds, conversations, fieldWhispers, archetypes, activeContainer]);
+  }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, dreamseeds, conversations, fieldWhispers, archetypes, activeContainer, selectedTheme]);
 
   const addItem = useCallback((item: Omit<ContainerItem, 'id'>) => {
     const now = new Date();
@@ -412,6 +418,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setActiveContainer,
     activeArchetypeId,
     setActiveArchetypeId,
+    selectedTheme,
+    setSelectedTheme,
     loading,
   };
 

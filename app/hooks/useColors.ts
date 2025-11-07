@@ -1,13 +1,15 @@
 import { useColorScheme as useRNColorScheme } from 'react-native';
 import { ColorScheme, ContainerId, Archetype } from '../constants/Types';
 import { CircadianPalette } from '../constants/Colors';
+import { THEMES, ThemeName, DEFAULT_THEME } from '../constants/Themes';
 import { blendArchetypeColors } from '../utils/colorBlending';
 
 export default function useColors(
   activeContainer?: ContainerId,
   useCircadian: boolean = true,
   _screenType?: any, // Ignored - kept for compatibility
-  activeArchetype?: Archetype | null
+  activeArchetype?: Archetype | null,
+  selectedTheme?: ThemeName
 ): ColorScheme {
   const systemTheme = useRNColorScheme();
 
@@ -33,8 +35,9 @@ export default function useColors(
   let baseColors: ColorScheme;
   
   if (useCircadian && activeContainer) {
-    // Use the discrete circadian palette for the active container
-    baseColors = CircadianPalette[activeContainer];
+    // Use the discrete circadian palette for the active container from selected theme
+    const theme = THEMES[selectedTheme || DEFAULT_THEME];
+    baseColors = theme.palettes[activeContainer];
   } else {
     // Fallback to system theme
     baseColors = systemTheme === 'dark' ? DarkColorsFallback : LightColorsFallback;

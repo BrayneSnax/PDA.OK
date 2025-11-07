@@ -102,3 +102,12 @@
 - [x] Add top margin to NOTICE and ACT boxes to push them down more (REFLECT stays as is)
 - [x] Increase width of background boxes so text doesn't hang off edges
 - [x] Make top navigation buttons (Substances, Archetypes, etc.) use current time-based colors automatically
+
+## Theme System
+
+- [x] Rename "Transmissions" to "Transmits" throughout app
+- [x] Create theme system with multiple visual themes (Liminal, Crystalline, Organic, etc.)
+- [x] Each theme has its own circadian color palettes (morning/afternoon/evening/late)
+- [x] Add theme selector UI to Transmits page
+- [x] Integrate theme selection with app state and useColors hook
+- [x] Preserve time-based color switching and top button behavior across all themes

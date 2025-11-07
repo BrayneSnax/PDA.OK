@@ -66,6 +66,7 @@ export default function HomeScreen() {
     allies,
     activeContainer,
     setActiveContainer,
+    selectedTheme,
     toggleCompletion,
     isCompleted,
     loading,
@@ -112,12 +113,13 @@ export default function HomeScreen() {
     activeContainer, 
     true, 
     undefined,
-    activeArchetype
+    activeArchetype,
+    selectedTheme
   );
   
   // Separate colors for top navigation buttons - always use current time
   const currentTimeContainer = getCurrentContainer();
-  const topButtonColors = useColors(currentTimeContainer, true, undefined, activeArchetype);
+  const topButtonColors = useColors(currentTimeContainer, true, undefined, activeArchetype, selectedTheme);
   const [isCraftMomentModalVisible, setIsCraftMomentModalVisible] = useState(false);
   const [isAddAllyModalVisible, setIsAddAllyModalVisible] = useState(false);
   const [isEditAllyModalVisible, setIsEditAllyModalVisible] = useState(false);
@@ -298,7 +300,7 @@ export default function HomeScreen() {
         onPress={() => setCurrentScreen('transmissions')}
       >
         <Text style={[styles.actionIcon, { color: topButtonColors.accent }]}>📡</Text>
-        <Text style={[styles.actionText, { color: topButtonColors.text }]}>Transmissions</Text>
+        <Text style={[styles.actionText, { color: topButtonColors.text }]}>Transmits</Text>
       </TouchableOpacity>
     </View>
   );
