@@ -310,8 +310,7 @@ export default function HomeScreen() {
             style={[styles.craftMomentButton, { backgroundColor: colors.accent }]}
             onPress={() => setIsCraftMomentModalVisible(true)}
           >
-            <Text style={[styles.craftMomentIcon, { color: colors.card }]}>✨</Text>
-            <Text style={[styles.craftMomentText, { color: colors.card }]}>Craft a Moment</Text>
+            <Text style={[styles.craftMomentText, { color: colors.card }]}>🖌️ Craft a Moment 🖌️</Text>
           </TouchableOpacity>
         )}
 
@@ -916,10 +915,10 @@ export default function HomeScreen() {
 
           {/* Create Custom Archetype Button */}
           <TouchableOpacity
-            style={[styles.createArchetypeButton, { backgroundColor: colors.accent + '20', borderColor: colors.accent + '40' }]}
+            style={[styles.addButton, { backgroundColor: colors.accent }]}
             onPress={() => setIsAddArchetypeModalVisible(true)}
           >
-            <Text style={[styles.createArchetypeButtonText, { color: colors.accent }]}>✨ Create Custom Archetype</Text>
+            <Text style={[styles.addButtonText, { color: colors.card }]}>+ Create Custom Archetype</Text>
           </TouchableOpacity>
 
           {/* Return Ritual Info */}
@@ -1078,7 +1077,7 @@ export default function HomeScreen() {
             style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
             onPress={() => setIsAddPatternModalVisible(true)}
           >
-            <Text style={[styles.addButtonText, { color: colors.card }]}>📸 Record a Pattern</Text>
+            <Text style={[styles.addButtonText, { color: colors.card }]}>📸 Record a Pattern 📸</Text>
           </TouchableOpacity>
 
           {/* Daily Synthesis Card */}
@@ -1095,7 +1094,7 @@ export default function HomeScreen() {
             style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
             onPress={() => setIsDailySynthesisModalVisible(true)}
           >
-            <Text style={[styles.addButtonText, { color: colors.card }]}>🌙 Reflect on Today</Text>
+            <Text style={[styles.addButtonText, { color: colors.card }]}>🌙 Reflect on Today 🌙</Text>
           </TouchableOpacity>
 
           <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 12 }]}>
@@ -1114,7 +1113,7 @@ export default function HomeScreen() {
             disabled={isGeneratingWhispers}
           >
             <Text style={[styles.addButtonText, { color: colors.card }]}>
-              {isGeneratingWhispers ? '🌌 The Field is listening...' : '🌌 Listen to the Field'}
+              {isGeneratingWhispers ? '🌌 The Field is listening... 🌌' : '🌌 Listen to the Field 🌌'}
             </Text>
           </TouchableOpacity>
 

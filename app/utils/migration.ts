@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ContainerItem } from '../constants/Types';
 import { generateId } from './time';
-import { DefaultData } from '../constants/DefaultData';
+import { DEFAULT_GROUNDING_ITEMS, DEFAULT_ALLIES } from '../constants/DefaultData';
 
 const MIGRATION_VERSION_KEY = '@migration_version';
-const CURRENT_MIGRATION_VERSION = 6;
+const CURRENT_MIGRATION_VERSION = 7;
 
 // Migration is now only for reordering - Dreamseed already replaces Stillness Signal in DefaultData
 // No new anchors to add
@@ -91,7 +91,7 @@ function addNewAnchors(existingItems: ContainerItem[]): ContainerItem[] {
 function addUltraMicroField(items: ContainerItem[]): ContainerItem[] {
   // Create a map of default anchors by ID for quick lookup
   const defaultAnchorsMap = new Map<string, ContainerItem>();
-  for (const anchor of DefaultData) {
+  for (const anchor of DEFAULT_GROUNDING_ITEMS) {
     defaultAnchorsMap.set(anchor.id, anchor);
   }
   
@@ -116,7 +116,7 @@ function syncSubstanceData(allies: any[]): any[] {
   
   return allies.map(ally => {
     // Find matching default ally by ID
-    const defaultAlly = DefaultData.allies.find(d => d.id === ally.id);
+    const defaultAlly = DEFAULT_ALLIES.find(d => d.id === ally.id);
     if (defaultAlly) {
       return {
         ...ally,

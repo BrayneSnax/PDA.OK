@@ -58,7 +58,7 @@ export default function FieldTransmissions() {
         style={styles.forceCheckButton} 
         onPress={forceCheck}
       >
-        <Text style={styles.forceCheckText}>⚡ Generate New Transmission</Text>
+        <Text style={styles.forceCheckText}>⚡ Generate New Transmission ⚡</Text>
       </TouchableOpacity>
 
       {/* Transmissions List */}

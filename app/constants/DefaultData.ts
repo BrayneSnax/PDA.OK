@@ -71,7 +71,7 @@ export const DEFAULT_ALLIES: Ally[] = [
   {
     id: 'silence',
     name: 'Benzodiazepines',
-    mythicName: 'The Mother of Silence',
+    mythicName: 'Mother of Silence',
     face: '🌊',
     invocation: 'Teach me calm that still remembers.',
     function: 'Soothes storms, restores coherence, holds panic like a child.',
