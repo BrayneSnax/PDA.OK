@@ -107,7 +107,7 @@ export default function HomeScreen() {
   const colors = useColors(
     activeContainer, 
     true, 
-    currentScreen === 'home' ? undefined : currentScreen as any,
+    currentScreen as any,
     activeArchetype
   );
   const [currentTime, setCurrentTime] = useState(formatTime());

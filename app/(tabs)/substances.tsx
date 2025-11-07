@@ -30,7 +30,7 @@ export default function SubstancesScreen() {
     loading,
   } = useApp();
 
-  const colors = useColors(activeContainer, true);
+  const colors = useColors(activeContainer, true, 'substances');
   const [isAddAllyModalVisible, setIsAddAllyModalVisible] = useState(false);
   const [isEditAllyModalVisible, setIsEditAllyModalVisible] = useState(false);
   const [isSynthesisModalVisible, setIsSynthesisModalVisible] = useState(false);

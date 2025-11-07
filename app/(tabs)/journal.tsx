@@ -14,7 +14,7 @@ import { JournalEntryModal } from '../components/JournalEntryModal';
 
 export default function JournalScreen() {
   const { activeContainer, journalEntries } = useApp();
-  const colors = useColors(activeContainer, true);
+  const colors = useColors(activeContainer, true, 'patterns');
   const [selectedJournalEntry, setSelectedJournalEntry] = useState<any>(null);
   const [isJournalEntryModalVisible, setIsJournalEntryModalVisible] = useState(false);
 
