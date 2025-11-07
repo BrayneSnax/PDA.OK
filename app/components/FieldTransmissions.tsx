@@ -117,7 +117,7 @@ export default function FieldTransmissions() {
                 <View style={styles.unreadDot} />
               )}
             </TouchableOpacity>
-          ))}
+          ))
         )}
 
         {/* Theme Selector at Bottom */}

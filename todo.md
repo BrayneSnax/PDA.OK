@@ -121,3 +121,4 @@
 - [x] Add movement entry storage to app state
 - [x] Display movement entries in Movement Field section
 - [x] Fix syntax error at line 251 in index.tsx (return outside function)
+- [x] Fix syntax error in FieldTransmissions.tsx line 120 (unexpected token)
