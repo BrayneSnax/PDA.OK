@@ -111,3 +111,4 @@
 - [x] Add theme selector UI to Transmits page
 - [x] Integrate theme selection with app state and useColors hook
 - [x] Preserve time-based color switching and top button behavior across all themes
+- [x] Move theme selector to bottom of Transmits page

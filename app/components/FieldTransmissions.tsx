@@ -56,29 +56,6 @@ export default function FieldTransmissions() {
         )}
       </View>
 
-      {/* Theme Selector */}
-      <View style={styles.themeSelectorContainer}>
-        <Text style={styles.themeSelectorTitle}>Visual Theme</Text>
-        <View style={styles.themeOptions}>
-          {Object.values(THEMES).map((theme) => (
-            <TouchableOpacity 
-              key={theme.name}
-              style={[
-                styles.themeOption,
-                selectedTheme === theme.name && styles.themeOptionActive
-              ]}
-              onPress={() => setSelectedTheme(theme.name)}
-            >
-              <Text style={styles.themeIcon}>{theme.icon}</Text>
-              <Text style={[
-                styles.themeName,
-                selectedTheme === theme.name && styles.themeNameActive
-              ]}>{theme.displayName}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
-
       {/* Force Check Button (for testing) */}
       <TouchableOpacity 
         style={styles.forceCheckButton} 
@@ -140,10 +117,32 @@ export default function FieldTransmissions() {
                 <View style={styles.unreadDot} />
               )}
             </TouchableOpacity>
-          ))
+          ))}
         )}
-      </ScrollView>
-    </View>
+
+        {/* Theme Selector at Bottom */}
+        <View style={styles.themeSelectorContainer}>
+          <Text style={styles.themeSelectorTitle}>Visual Theme</Text>
+          <View style={styles.themeOptions}>
+            {Object.values(THEMES).map((theme) => (
+              <TouchableOpacity 
+                key={theme.name}
+                style={[
+                  styles.themeOption,
+                  selectedTheme === theme.name && styles.themeOptionActive
+                ]}
+                onPress={() => setSelectedTheme(theme.name)}
+              >
+                <Text style={styles.themeIcon}>{theme.icon}</Text>
+                <Text style={[
+                  styles.themeName,
+                  selectedTheme === theme.name && styles.themeNameActive
+                ]}>{theme.displayName}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      </ScrollView>    </View>
   );
 }
 
