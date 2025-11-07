@@ -12,11 +12,6 @@ interface Props {
 
 export const AllyCard = React.memo(({ ally, onEdit, onRemove, onLogUse, colors }: Props) => {
   const [expanded, setExpanded] = useState(false);
-  
-  // Debug: log Mirror & Mystery data
-  if (ally.id === 'mirror') {
-    console.log('Mirror & Mystery data:', { mythicName: ally.mythicName, face: ally.face });
-  }
 
   const handleLongPress = () => {
     Alert.alert(
@@ -51,6 +46,11 @@ export const AllyCard = React.memo(({ ally, onEdit, onRemove, onLogUse, colors }
     );
   };
 
+  // Build display name with emojis
+  const displayName = ally.mythicName 
+    ? `${ally.face} ${ally.mythicName} ${ally.face}`
+    : `${ally.face} ${ally.name} ${ally.face}`;
+
   return (
     <Pressable
       onPress={() => setExpanded(!expanded)}
@@ -60,18 +60,12 @@ export const AllyCard = React.memo(({ ally, onEdit, onRemove, onLogUse, colors }
     >
       <View style={styles.header}>
         <View style={styles.nameContainer}>
-          {ally.mythicName ? (
-            <>
-              <Text style={[styles.mythicName, { color: colors.text }]}>
-                {ally.face} {ally.mythicName} {ally.face}
-              </Text>
-              <Text style={[styles.realName, { color: colors.dim }]}>
-                {ally.name}
-              </Text>
-            </>
-          ) : (
-            <Text style={[styles.name, { color: colors.text }]}>
-              {ally.face} {ally.name} {ally.face}
+          <Text style={[ally.mythicName ? styles.mythicName : styles.name, { color: colors.text }]}>
+            {displayName}
+          </Text>
+          {ally.mythicName && (
+            <Text style={[styles.realName, { color: colors.dim }]}>
+              {ally.name}
             </Text>
           )}
         </View>
@@ -144,7 +138,6 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     fontWeight: '600',
-    flex: 1,
     textAlign: 'center',
   },
   expandIcon: {
@@ -182,4 +175,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-

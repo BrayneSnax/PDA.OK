@@ -192,3 +192,9 @@
 - [x] Verify DefaultData is being used correctly
 - [x] Fix any data loading/caching issues
 - [x] Bump migration to v12 to force data sync
+
+## Complete Component Rewrites
+
+- [x] Rewrite AllyCard.tsx from scratch - fix Mirror & Mystery emoji rendering
+- [ ] Rewrite AddMovementModal.tsx from scratch - fix modal not opening
+- [ ] Test both components work correctly
