@@ -136,3 +136,13 @@
 
 - [x] Move "Nourish Map" title way up (reduce top padding from 8 to 0)
 - [x] Move Movement Field closer to Compass Rose (reduce gap from 32 to 16)
+
+## Aggressive Spacing Optimization
+
+- [x] Move Nourish Map title WAY up (right under top nav)
+- [x] Reduce subtitle margin bottom
+- [x] Shrink FOOD ENTRIES card height (reduce padding)
+- [x] Shrink COMPASS ROSE card height (reduce padding)
+- [x] Shrink MOVEMENT LOG card height (reduce padding)
+- [x] Shrink MOMENTUM MONITOR card height (reduce padding)
+- [x] Reduce all section gaps/margins

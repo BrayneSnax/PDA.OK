@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
+    padding: 10,
     borderRadius: 12,
   },
   title: {
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   listContainer: {
     marginTop: 4,
     borderRadius: 12,
-    padding: 12,
+    padding: 8,
   },
   emptyText: {
     fontSize: 13,
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 12,
+    paddingVertical: 8,
     borderBottomWidth: 1,
   },
   entryContent: {

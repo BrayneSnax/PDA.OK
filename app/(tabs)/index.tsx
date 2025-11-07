@@ -1198,10 +1198,10 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.patternsContent}>
-          <Text style={[styles.containerTitle, { color: colors.text, textAlign: 'center', marginTop: 0 }]}>
+          <Text style={[styles.containerTitle, { color: colors.text, textAlign: 'center', marginTop: 0, marginBottom: 2 }]}>
             Nourish Map
           </Text>
-          <Text style={[styles.containerSubtitle, { color: colors.dim, textAlign: 'center', marginBottom: 16 }]}>
+          <Text style={[styles.containerSubtitle, { color: colors.dim, textAlign: 'center', marginBottom: 12 }]}>
             Tracking Fuel & Feeling
           </Text>
 
@@ -1237,7 +1237,7 @@ export default function HomeScreen() {
           </TouchableOpacity>
 
           {/* The Compass Rose - Pattern Synthesis */}
-          <View style={[styles.compassRoseCard, { backgroundColor: colors.card + 'CC', borderColor: colors.accent + '40', marginTop: 20, marginBottom: 12 }]}>
+          <View style={[styles.compassRoseCard, { backgroundColor: colors.card + 'CC', borderColor: colors.accent + '40', marginTop: 12, marginBottom: 12 }]}>
             <Text style={[styles.compassRoseTitle, { color: colors.accent }]}>
               ⚓ The Compass Rose
             </Text>
@@ -1273,11 +1273,11 @@ export default function HomeScreen() {
           </View>
 
           {/* Movement Field Section */}
-          <View style={{ marginTop: 16 }}>
-            <Text style={[styles.sectionHeader, { color: colors.dim, marginBottom: 8 }]}>
+          <View style={{ marginTop: 8 }}>
+            <Text style={[styles.sectionHeader, { color: colors.dim, marginBottom: 4 }]}>
               MOVEMENT FIELD
             </Text>
-            <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 16 }]}>
+            <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 10 }]}>
               Embodied Presence & Physical States
             </Text>
 
@@ -1307,7 +1307,7 @@ export default function HomeScreen() {
             />
 
             <TouchableOpacity
-              style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12, marginBottom: 20 }]}
+              style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12, marginBottom: 12 }]}
               onPress={() => setIsAddMovementModalVisible(true)}
             >
               <Text style={[styles.addButtonText, { color: colors.card }]}>+ Log Movement</Text>
@@ -1319,7 +1319,7 @@ export default function HomeScreen() {
             <Text style={[styles.journalTitle, { color: colors.text }]}>
               MOMENTUM MONITOR
             </Text>
-            <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 16 }]}>
+            <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 10 }]}>
               Tracking Energy & Vitality
             </Text>
 
@@ -1440,7 +1440,7 @@ const styles = StyleSheet.create({
   patternsContent: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 10,
+    paddingTop: 0,
     justifyContent: 'flex-start',
   },
   timeSection: {
@@ -1505,18 +1505,18 @@ const styles = StyleSheet.create({
   containerTitle: {
     fontSize: 28,
     fontWeight: '600',
-    marginBottom: 4,
+    marginBottom: 2,
   },
   containerSubtitle: {
     fontSize: 16,
     fontStyle: 'italic',
   },
   addButton: {
-    paddingVertical: 12,
+    paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 12,
     alignItems: 'center',
-    marginTop: 16,
+    marginTop: 12,
   },
   addButtonText: {
     fontSize: 16,
@@ -1818,7 +1818,7 @@ const styles = StyleSheet.create({
   },
   compassRoseCard: {
     borderRadius: 12,
-    padding: 16,
+    padding: 12,
     borderWidth: 1,
   },
   compassRoseTitle: {
