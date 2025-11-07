@@ -513,7 +513,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 1.2,
     textAlign: 'center',
-    marginBottom: 6, // PSS: Reduced from 10
+    marginBottom: 12, // Increased from 6 for better label/content separation
     opacity: 0.6, // Slightly dimmed but same color
   },
   content: {

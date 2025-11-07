@@ -224,7 +224,7 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
   {
     id: 'late-dreamseed',
     title: 'Dreamseed',
-    body_cue: 'One word to carry into sleep.',
+    body_cue: 'The day dissolves. Write one word to carry into sleep.',
     micro: 'Write it down or whisper it.',
     ultra_micro: 'Think it once.',
     desire: 'The day dissolves.',

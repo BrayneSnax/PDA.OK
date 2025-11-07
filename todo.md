@@ -75,3 +75,8 @@
 
 - [ ] Restore accidentally removed late anchor (only Temperature Ground should have been removed)
 - [x] Increase width and height of background boxes in anchor detail modal (padding 14→18, heights +15px, width extended)
+
+## Latest Fixes
+
+- [x] Increase spacing between NOTICE/ACT/REFLECT labels and content text in anchor detail modal
+- [x] Restore original Dreamseed content ("The day dissolves. Write one word to carry into sleep.")
