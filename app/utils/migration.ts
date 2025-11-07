@@ -4,8 +4,9 @@ import { generateId } from './time';
 import { DEFAULT_GROUNDING_ITEMS, DEFAULT_ALLIES } from '../constants/DefaultData';
 
 const MIGRATION_VERSION_KEY = '@migration_version';
-const CURRENT_MIGRATION_VERSION = 12;
+const CURRENT_MIGRATION_VERSION = 13;
 
+// Migration v13: FIX CRITICAL BUG - Use correct storage key '@pda_app_state' instead of '@app_state'
 // Migration v12: Force-fix Mirror & Mystery mythicName
 // Migration v11: Fix Mirror & Mystery mythicName (remove embedded emojis)
 // Migration v10: Fix Mirror & Mystery emoji (sync substance data)
@@ -212,7 +213,7 @@ function reorderAnchors(items: ContainerItem[]): ContainerItem[] {
  */
 export async function runMigration(): Promise<void> {
   try {
-    const stateJson = await AsyncStorage.getItem('@app_state');
+    const stateJson = await AsyncStorage.getItem('@pda_app_state');
     if (!stateJson) {
       console.log('No saved state found, skipping migration');
       await AsyncStorage.setItem(MIGRATION_VERSION_KEY, CURRENT_MIGRATION_VERSION.toString());
@@ -227,7 +228,7 @@ export async function runMigration(): Promise<void> {
       return;
     }
 
-    console.log('Running migration v12: Force-syncing all substance data including Mirror & Mystery fix...');
+    console.log('Running migration v13: CRITICAL FIX - Using correct storage key + syncing all substance data...');
     
     // Step 1: Sync substance data (face emojis and mythicNames)
     if (state.allies && Array.isArray(state.allies)) {
@@ -257,7 +258,7 @@ export async function runMigration(): Promise<void> {
 
     // Save updated state
     state.items = updatedItems;
-    await AsyncStorage.setItem('@app_state', JSON.stringify(state));
+    await AsyncStorage.setItem('@pda_app_state', JSON.stringify(state));
     
     // Mark migration as complete
     await AsyncStorage.setItem(MIGRATION_VERSION_KEY, CURRENT_MIGRATION_VERSION.toString());
