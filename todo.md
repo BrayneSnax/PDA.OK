@@ -52,3 +52,8 @@
 - [x] Check for syntax errors in useColors.ts
 - [x] Verify imports are correct
 - [x] Fix screenType parameter passing in all tab files
+
+## Dreamseed Relocation
+
+- [x] Remove Dreamseed button from late anchors section
+- [x] Add Dreamseed box to transmissions screen (bottom half)

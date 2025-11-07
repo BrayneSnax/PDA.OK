@@ -222,16 +222,6 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
 
   // Late Anchors
   {
-    id: 'late-dreamseed',
-    title: 'Dreamseed',
-    body_cue: 'The day dissolves.',
-    micro: 'Write one word.',
-    ultra_micro: 'Tap fingers once on chest.',
-    desire: 'Release returns awareness to mystery.',
-    container: 'late',
-    category: 'time',
-  },
-  {
     id: 'late-hydration',
     title: 'Hydration Final',
     body_cue: 'One slow sip; eyes soft.',
