@@ -4,11 +4,20 @@ import { generateId } from './time';
 import { DEFAULT_GROUNDING_ITEMS, DEFAULT_ALLIES } from '../constants/DefaultData';
 
 const MIGRATION_VERSION_KEY = '@migration_version';
-const CURRENT_MIGRATION_VERSION = 8;
+const CURRENT_MIGRATION_VERSION = 9;
 
-// Migration is now only for reordering - Dreamseed already replaces Stillness Signal in DefaultData
-// No new anchors to add
-const NEW_ANCHORS: Omit<ContainerItem, 'id'>[] = [];
+// Migration v9: Add Stillness Signal back as 4th late anchor
+const NEW_ANCHORS: Omit<ContainerItem, 'id'>[] = [
+  {
+    title: 'Stillness Signal',
+    body_cue: 'The hum of devices or thought.',
+    micro: 'Mute one source of sound.',
+    ultra_micro: 'Listen to silence.',
+    desire: 'Quiet becomes friend.',
+    container: 'late',
+    category: 'time',
+  },
+];
 
 // Define the desired order for anchors by their IDs
 const ANCHOR_ORDER_MAP: Record<string, number> = {
@@ -215,7 +224,7 @@ export async function runMigration(): Promise<void> {
       return;
     }
 
-    console.log('Running migration v8: Syncing substance data, anchor content, and reordering...');
+    console.log('Running migration v9: Adding Stillness Signal, syncing substance data, anchor content, and reordering...');
     
     // Step 1: Sync substance data (face emojis and mythicNames)
     if (state.allies && Array.isArray(state.allies)) {

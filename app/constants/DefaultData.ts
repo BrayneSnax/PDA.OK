@@ -251,6 +251,16 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
     container: 'late',
     category: 'time',
   },
+  {
+    id: 'late-stillness',
+    title: 'Stillness Signal',
+    body_cue: 'The hum of devices or thought.',
+    micro: 'Mute one source of sound.',
+    ultra_micro: 'Listen to silence.',
+    desire: 'Quiet becomes friend.',
+    container: 'late',
+    category: 'time',
+  },
 
   // Morning Situational Resonance
   {

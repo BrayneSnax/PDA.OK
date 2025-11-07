@@ -84,3 +84,13 @@
 ## Migration v8
 
 - [x] Create migration v8 to update Dreamseed body_cue for existing users
+
+## Restore 4th Late Anchor
+
+- [x] Add Stillness Signal back as 4th late time anchor
+- [x] Restore original Dreamseed implementation (separate modal/feature, not as a late anchor)
+- [x] Keep Dreamseed at top of late anchors section but with original design
+
+## Migration v9
+
+- [x] Update migration to v9 to add Stillness Signal for existing users

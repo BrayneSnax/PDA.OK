@@ -436,7 +436,12 @@ export default function HomeScreen() {
                 onToggle={() => handleCompletion(item.id)}
                 colors={colors}
                 onPress={() => {
-                  setSelectedItem(item);
+                  // Special handling for Dreamseed - open custom modal
+                  if (item.id === 'late-dreamseed') {
+                    setIsDreamseedModalVisible(true);
+                  } else {
+                    setSelectedItem(item);
+                  }
                 }}
                 onDelete={() => removeItem(item.id)}
                 onEdit={() => {
