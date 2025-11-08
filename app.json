@@ -40,7 +40,7 @@
       },
       "EXPO_PUBLIC_TEST_MODE": "false",
       "EXPO_PUBLIC_ANALYSIS_URL": "",
-      "EXPO_PUBLIC_GEMINI_API_KEY": "AIzaSyB2KrZKjJa2h6eptuylrwXjvCEctKdtzRQ"
+      "EXPO_PUBLIC_GEMINI_API_KEY": ""
     }
   }
 }

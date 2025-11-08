@@ -185,7 +185,8 @@ async function updateLastCheckTime(): Promise<void> {
  * Generate and store new transmissions if needed
  */
 export async function checkAndGenerateTransmissions(
-  context: TransmissionContext
+  context: TransmissionContext,
+  force: boolean = false
 ): Promise<Transmission[]> {
   // Check if it's time
   const shouldCheck = await shouldCheckForTransmissions();
@@ -225,11 +226,12 @@ export async function checkAndGenerateTransmissions(
     });
   }
 
-  // Generate transmissions (max 2 per check)
+  // Generate transmissions (max 2 per check, or 1 if forced)
   const newTransmissions = await generateMultipleTransmissions(
     entities,
     context,
-    2 // Max 2 transmissions per check
+    force ? 1 : 2, // Max 1 if forced for testing, 2 for normal checks
+    force
   );
 
   // Store new transmissions
@@ -273,9 +275,10 @@ export function initializeTransmissionScheduler(
 export async function forceCheckTransmissions(
   context: TransmissionContext
 ): Promise<Transmission[]> {
+  console.log('Force checking transmissions...');
   // Temporarily clear last check time to force generation
   await AsyncStorage.removeItem(LAST_CHECK_KEY);
-  return await checkAndGenerateTransmissions(context);
+  return await checkAndGenerateTransmissions(context, true);
 }
 
 /**

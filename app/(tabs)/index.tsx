@@ -1111,7 +1111,7 @@ export default function HomeScreen() {
             style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
             onPress={() => setIsDailySynthesisModalVisible(true)}
           >
-            <Text style={[styles.addButtonText, { color: colors.card }]}>🌙 Reflect on Today 🌙</Text>
+            <Text style={[styles.addButtonText, { color: colors.card }]}>✨ Reflect on Today ✨</Text>
           </TouchableOpacity>
 
           <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 12, height: 140 }]}>
@@ -1130,7 +1130,7 @@ export default function HomeScreen() {
             disabled={isGeneratingWhispers}
           >
             <Text style={[styles.addButtonText, { color: colors.card }]}>
-              {isGeneratingWhispers ? '🌌 The Field is listening... 🌌' : '🌌 Listen to the Field 🌌'}
+              {isGeneratingWhispers ? '⚡ The Field is listening... ⚡' : '⚡ Listen to the Field ⚡'}
             </Text>
           </TouchableOpacity>
 

@@ -202,7 +202,8 @@ function checkTriggerConditions(
 export async function generateMultipleTransmissions(
   entities: Array<{ name: string; type: 'archetype' | 'substance'; lastTransmission?: Date }>,
   context: TransmissionContext,
-  maxTransmissions: number = 2
+  maxTransmissions: number = 2,
+  force: boolean = false
 ): Promise<Transmission[]> {
   const transmissions: Transmission[] = [];
 
@@ -215,9 +216,14 @@ export async function generateMultipleTransmissions(
     const personality = getPersonality(entity.name, entity.type);
     if (!personality) continue;
 
-    // Check if should generate
-    if (!shouldGenerateTransmission(personality, context, entity.lastTransmission)) {
+    // Check if should generate (skip check if forced)
+    if (!force && !shouldGenerateTransmission(personality, context, entity.lastTransmission)) {
+      console.log(`Skipping ${entity.name} - frequency/trigger check failed`);
       continue;
+    }
+    
+    if (force) {
+      console.log(`Forcing transmission from ${entity.name}`);
     }
 
     // Generate transmission
