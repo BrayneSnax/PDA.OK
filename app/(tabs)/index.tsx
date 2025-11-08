@@ -1094,11 +1094,7 @@ export default function HomeScreen() {
             style={[styles.addButton, { backgroundColor: colors.accent, marginTop: 12 }]}
             onPress={() => setIsAddPatternModalVisible(true)}
           >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={[styles.addButtonText, { color: colors.card }]}>📸</Text>
-              <Text style={[styles.addButtonText, { color: colors.card }]}> Record a Pattern </Text>
-              <Text style={[styles.addButtonText, { color: colors.card }]}>📸</Text>
-            </View>
+            <Text style={[styles.addButtonText, { color: colors.card }]}>📸 Record a Pattern 📸</Text>
           </TouchableOpacity>
 
           {/* Daily Synthesis Card */}
@@ -1133,13 +1129,9 @@ export default function HomeScreen() {
             onPress={handleListenToField}
             disabled={isGeneratingWhispers}
           >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={[styles.addButtonText, { color: colors.card }]}>🌌</Text>
-              <Text style={[styles.addButtonText, { color: colors.card }]}>
-                {isGeneratingWhispers ? ' The Field is listening... ' : ' Listen to the Field '}
-              </Text>
-              <Text style={[styles.addButtonText, { color: colors.card }]}>🌌</Text>
-            </View>
+            <Text style={[styles.addButtonText, { color: colors.card }]}>
+              {isGeneratingWhispers ? '🌌 The Field is listening... 🌌' : '🌌 Listen to the Field 🌌'}
+            </Text>
           </TouchableOpacity>
 
         </View>
