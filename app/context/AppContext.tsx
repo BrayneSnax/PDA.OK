@@ -87,14 +87,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [items, allies, journalEntries, substanceJournalEntries, completions, patterns, foodEntries, movementEntries, dreamseeds, conversations, fieldWhispers, archetypes, activeContainer, selectedTheme, loading]);
 
   const loadData = useCallback(async () => {
-    // FORCE RUN MIGRATION v13 - bypass version check to fix cache issues
-    console.log('FORCE RUNNING MIGRATION v13...');
-    try {
-      const { forceMigration } = require('../utils/migration');
-      await forceMigration();
-      console.log('Migration v13 force-completed successfully');
-    } catch (error) {
-      console.error('Force migration failed:', error);
+    // Run migration if needed before loading data
+    if (await needsMigration()) {
+      await runMigration();
     }
     
     const savedState = await loadAppState();

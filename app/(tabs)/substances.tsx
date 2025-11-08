@@ -16,8 +16,6 @@ import { AddAllyModal, EditAllyModal } from '../modal';
 import { SubstanceSynthesisModal } from '../modal/SubstanceSynthesisModal';
 import { JournalList } from '../components/JournalList';
 import { JournalEntryModal } from '../components/JournalEntryModal';
-import { forceMigration } from '../utils/migration';
-import { Alert } from 'react-native';
 // ⧈replace-end:imports
 
 export default function SubstancesScreen() {
@@ -59,27 +57,12 @@ export default function SubstancesScreen() {
         showsVerticalScrollIndicator={false}
       >
         <Text style={[styles.containerTitle, { color: colors.text, textAlign: 'center' }]}>
-          🔥 SUBSTANCES v13.2 🔥
+          Substances
         </Text>
         <Text style={[styles.containerSubtitle, { color: colors.dim, textAlign: 'center' }]}>
           Living Pharmacopeia
         </Text>
-        <Text style={{ color: colors.accent, fontSize: 10, textAlign: 'center', marginTop: 4 }}>v2.0-FIXED</Text>
-        
-        {/* DEBUG: Force Migration Button */}
-        <TouchableOpacity
-          style={{ backgroundColor: colors.accent, padding: 8, borderRadius: 8, marginTop: 12, marginHorizontal: 20 }}
-          onPress={async () => {
-            try {
-              await forceMigration();
-              Alert.alert('Success', 'Migration v13 completed! Restart the app to see changes.');
-            } catch (error) {
-              Alert.alert('Error', `Migration failed: ${error}`);
-            }
-          }}
-        >
-          <Text style={{ color: colors.card, textAlign: 'center', fontWeight: '600' }}>🔧 Force Migration v13</Text>
-        </TouchableOpacity>
+
 
         <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 24 }]}>
           YOUR SUBSTANCES

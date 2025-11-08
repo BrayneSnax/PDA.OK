@@ -127,27 +127,16 @@ function addUltraMicroField(items: ContainerItem[]): ContainerItem[] {
 function syncSubstanceData(allies: any[]): any[] {
   if (!allies || !Array.isArray(allies)) return allies;
   
-  console.log('=== SYNCING SUBSTANCE DATA ===');
-  console.log('Total allies to sync:', allies.length);
-  
   return allies.map(ally => {
-    console.log(`Checking ally: ${ally.name} (ID: ${ally.id})`);
-    console.log(`  Current mythicName: ${ally.mythicName}`);
-    console.log(`  Current face: ${ally.face}`);
-    
     // Find matching default ally by ID
     const defaultAlly = DEFAULT_ALLIES.find(d => d.id === ally.id);
     if (defaultAlly) {
-      console.log(`  ✓ MATCH FOUND in DefaultData`);
-      console.log(`  New mythicName: ${defaultAlly.mythicName}`);
-      console.log(`  New face: ${defaultAlly.face}`);
       return {
         ...ally,
         face: defaultAlly.face, // Update emoji
         mythicName: defaultAlly.mythicName, // Update mythical name
       };
     }
-    console.log(`  ✗ NO MATCH in DefaultData - keeping original`);
     return ally;
   });
 }
@@ -239,33 +228,21 @@ export async function runMigration(): Promise<void> {
       return;
     }
 
-    console.log('Running migration v13: CRITICAL FIX - Using correct storage key + syncing all substance data...');
+    console.log('Running migration v13...');
     
-    // Step 1: Sync substance data (face emojis and mythicNames)
+    // Sync substance data (face emojis and mythicNames)
     if (state.allies && Array.isArray(state.allies)) {
       state.allies = syncSubstanceData(state.allies);
-      console.log(`Synced ${state.allies.length} substances with DefaultData`);
     }
     
-    // Step 2: Sync anchor content from DefaultData (updates Dreamseed and other anchors)
+    // Sync anchor content from DefaultData
     let updatedItems = syncAnchorContent(state.items);
-    console.log(`Synced content for ${updatedItems.length} anchors with DefaultData`);
     
-    // Step 3: Add new anchors
+    // Add new anchors
     updatedItems = addNewAnchors(updatedItems);
-    console.log(`Added ${updatedItems.length - state.items.length} new anchors`);
     
-    // Log before reordering
-    const lateSituational = updatedItems.filter(i => i.container === 'late' && i.category === 'situational');
-    console.log('Late situational BEFORE reorder:', lateSituational.map(i => `${i.id}: ${i.title}`));
-    
-    // Step 4: Reorder all anchors
+    // Reorder all anchors
     updatedItems = reorderAnchors(updatedItems);
-    
-    // Log after reordering
-    const lateSituationalAfter = updatedItems.filter(i => i.container === 'late' && i.category === 'situational');
-    console.log('Late situational AFTER reorder:', lateSituationalAfter.map(i => `${i.id}: ${i.title}`));
-    console.log('Anchors reordered');
 
     // Save updated state
     state.items = updatedItems;
