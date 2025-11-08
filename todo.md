@@ -182,9 +182,9 @@
 
 ## Fix Movement Modal Crash
 
-- [ ] Diagnose why modal shows black overlay but no content
-- [ ] Fix rendering issue in AddMovementModal
-- [ ] Test modal opens and functions correctly
+- [x] Diagnose why modal shows black overlay but no content
+- [x] Fix rendering issue in AddMovementModal
+- [x] Test modal opens and functions correctly
 
 ## Debug Mirror & Mystery Emoji Issue
 
@@ -196,5 +196,12 @@
 ## Complete Component Rewrites
 
 - [x] Rewrite AllyCard.tsx from scratch - fix Mirror & Mystery emoji rendering
-- [ ] Rewrite AddMovementModal.tsx from scratch - fix modal not opening
-- [ ] Test both components work correctly
+- [x] Rewrite AddMovementModal.tsx from scratch - fix modal not opening
+- [x] Test both components work correctly
+
+## November 8, 2025 Fixes
+
+- [x] Fix Mirror & Mystery emoji rendering (remove hardcoded logic, use universal emoji stripping)
+- [x] Fix AddMovementModal crash (restructure layout hierarchy, add proper height constraints)
+- [x] Create FIXES_SUMMARY.md documentation
+- [x] Commit changes to git
