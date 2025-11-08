@@ -322,14 +322,14 @@ export default function HomeScreen() {
     return (
       <View>
         {/* Craft a Moment Button - Only show on home screen */}
-        {showCraftButton && (
+        {showCraftButton ? (
           <TouchableOpacity
             style={[styles.craftMomentButton, { backgroundColor: colors.accent }]}
             onPress={() => setIsCraftMomentModalVisible(true)}
           >
             <Text style={[styles.craftMomentText, { color: colors.card }]}>📝 Craft a Moment 📝</Text>
           </TouchableOpacity>
-        )}
+        ) : null}
 
         {/* Time Container Navigation */}
         <View style={[styles.timeContainerNav, { backgroundColor: colors.bg, borderTopColor: colors.dim }]}>
@@ -338,7 +338,7 @@ export default function HomeScreen() {
               key={container}
               style={[
                 styles.timeButton,
-                activeContainer === container && { backgroundColor: colors.accent + '20' }
+                activeContainer === container ? { backgroundColor: colors.accent + '20' } : null
               ]}
               onPress={() => {
                 // Mark this as a manual transition
@@ -557,7 +557,7 @@ export default function HomeScreen() {
         />
 
         {/* Task Detail Modal */}
-        {selectedItem && (
+        {selectedItem ? (
           <Modal isVisible={!!selectedItem} onClose={() => {
             setSelectedItem(null);
             setIsEditMode(false);
@@ -613,7 +613,7 @@ export default function HomeScreen() {
               }}
             />
           </Modal>
-        )}
+        ) : null}
 
         {/* Somatic Feedback Layer */}
         <CompletionPulse
@@ -675,7 +675,7 @@ export default function HomeScreen() {
         />
         
         {/* Return Node - appears when archetype is active */}
-        {activeArchetype && (
+        {activeArchetype ? (
           <ReturnNode
             archetype={activeArchetype}
             onReturn={() => {
@@ -683,7 +683,7 @@ export default function HomeScreen() {
               // TODO: Show "Back to center" toast
             }}
           />
-        )}
+        ) : null}
       </View>
     );
   }
@@ -837,7 +837,7 @@ export default function HomeScreen() {
           }}
           colors={colors}
         />
-        {allyToEdit && (
+        {allyToEdit ? (
           <EditAllyModal
             isVisible={isEditAllyModalVisible}
             onClose={() => {
@@ -850,7 +850,7 @@ export default function HomeScreen() {
             colors={colors}
             ally={allyToEdit}
           />
-        )}
+        ) : null}
         <SubstanceSynthesisModal
           isVisible={isSubstanceSynthesisModalVisible}
           onClose={() => {
@@ -1033,7 +1033,7 @@ export default function HomeScreen() {
         />
 
         {/* Journal Entry Detail Modal */}
-        {selectedJournalEntry && (
+        {selectedJournalEntry ? (
           <JournalEntryModal
             visible={isJournalEntryModalVisible}
             onClose={() => {
@@ -1045,7 +1045,7 @@ export default function HomeScreen() {
             content={selectedJournalEntry.content}
             colors={colors}
           />
-        )}
+        ) : null}
       </View>
     );
   }
@@ -1156,7 +1156,7 @@ export default function HomeScreen() {
         />
         
         {/* Field Whisper Overlay */}
-        {showWhispers && activeWhispers.length > 0 && (
+        {(showWhispers && activeWhispers.length > 0) ? (
           <FieldWhisperSequence
             whispers={activeWhispers}
             colors={colors}
@@ -1165,10 +1165,10 @@ export default function HomeScreen() {
               setActiveWhispers([]);
             }}
           />
-        )}
+        ) : null}
 
         {/* Journal Entry Detail Modal */}
-        {selectedJournalEntry && (
+        {selectedJournalEntry ? (
           <JournalEntryModal
             visible={isJournalEntryModalVisible}
             onClose={() => {
@@ -1358,7 +1358,7 @@ export default function HomeScreen() {
         />
 
         {/* Journal Entry Detail Modal */}
-        {selectedJournalEntry && (
+        {selectedJournalEntry ? (
           <JournalEntryModal
             visible={isJournalEntryModalVisible}
             onClose={() => {
@@ -1370,7 +1370,7 @@ export default function HomeScreen() {
             content={selectedJournalEntry.content}
             colors={colors}
           />
-        )}
+        ) : null}
       </View>
     );
   }
