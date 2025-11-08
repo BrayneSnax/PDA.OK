@@ -1098,7 +1098,7 @@ export default function HomeScreen() {
           </TouchableOpacity>
 
           {/* Daily Synthesis Card */}
-          <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 20, minHeight: 120 }]}>
+          <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 20, height: 140 }]}>
             <Text style={[styles.sectionHeader, { color: colors.dim, marginBottom: 12 }]}>
               DAILY SYNTHESIS
             </Text>
@@ -1114,7 +1114,7 @@ export default function HomeScreen() {
             <Text style={[styles.addButtonText, { color: colors.card }]}>🌙 Reflect on Today 🌙</Text>
           </TouchableOpacity>
 
-          <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 12 }]}>
+          <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 12, height: 140 }]}>
             <Text style={[styles.sectionHeader, { color: colors.dim, marginBottom: 12 }]}>
               PATTERN WEAVER
             </Text>
