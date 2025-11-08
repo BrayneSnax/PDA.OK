@@ -108,7 +108,7 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
   {
     id: 'morning-orientation',
     title: 'Orientation',
-    body_cue: 'What day wants from you, not the other way.',
+    body_cue: 'What the day asks of you, not what you demand from it.',
     micro: 'Name one micro-intention aloud.',
     ultra_micro: 'Glance left, then right.',
     desire: 'Direction without demand.',
