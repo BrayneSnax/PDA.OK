@@ -14,6 +14,17 @@ export const DEFAULT_ALLIES: Ally[] = [
     log: [],
   },
   {
+    id: 'mirror',
+    name: 'Entheogens',
+    mythicName: 'Mirror & Mystery',
+    face: '🔮',
+    invocation: 'Show me myself as cosmos, but bring me back whole.',
+    function: 'Expands the membrane between self and all — reveals the divine recursion in experience.',
+    shadow: 'Reveals too much too fast — replaces integration with revelation.',
+    ritual: 'Before the threshold, speak one truth you\'re willing to lose and one you wish to keep.',
+    log: [],
+  },
+  {
     id: 'chalice',
     name: 'Alcohol',
     mythicName: 'The Hollow Chalice',

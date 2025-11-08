@@ -1098,7 +1098,7 @@ export default function HomeScreen() {
           </TouchableOpacity>
 
           {/* Daily Synthesis Card */}
-          <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 20 }]}>
+          <View style={[styles.placeholderCard, { backgroundColor: colors.card + 'B3', marginTop: 20, minHeight: 120 }]}>
             <Text style={[styles.sectionHeader, { color: colors.dim, marginBottom: 12 }]}>
               DAILY SYNTHESIS
             </Text>

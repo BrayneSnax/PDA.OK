@@ -25,6 +25,7 @@ interface AddFoodModalProps {
 }
 
 export function AddFoodModal({ isVisible, onClose, onSave, colors }: AddFoodModalProps) {
+  const [time] = useState(new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }));
   const [name, setName] = useState('');
   const [feeling, setFeeling] = useState('');
   const [notes, setNotes] = useState('');
@@ -79,6 +80,9 @@ export function AddFoodModal({ isVisible, onClose, onSave, colors }: AddFoodModa
               <Text style={[styles.closeButton, { color: colors.accent }]}>✕</Text>
             </TouchableOpacity>
           </View>
+
+          {/* Timestamp */}
+          <Text style={[styles.timestamp, { color: colors.dim }]}>{time}</Text>
 
           <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
             {/* What did you eat? */}
@@ -197,6 +201,12 @@ const styles = StyleSheet.create({
   closeButton: {
     fontSize: 28,
     fontWeight: '300',
+  },
+  timestamp: {
+    fontSize: 13,
+    fontWeight: '500',
+    textAlign: 'center',
+    marginBottom: 16,
   },
   scrollView: {
     marginBottom: 20,
