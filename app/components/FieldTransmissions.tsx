@@ -49,11 +49,11 @@ export default function FieldTransmissions() {
         <Text style={styles.headerSubtitle}>
           Autonomous messages from your archetypes and allies
         </Text>
-        {unreadCount > 0 && (
+        {unreadCount > 0 ? (
           <View style={styles.unreadBadge}>
             <Text style={styles.unreadText}>{unreadCount} unread</Text>
           </View>
-        )}
+        ) : null}
       </View>
 
       {/* Force Check Button (for testing) */}

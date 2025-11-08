@@ -3,7 +3,9 @@
  * Uses direct Gemini REST API (not OpenAI-compatible)
  */
 
+// @ts-ignore - env variables are injected by babel plugin
 import { EXPO_PUBLIC_GEMINI_API_KEY } from '@env';
+import Constants from 'expo-constants';
 
 const GEMINI_MODEL = 'gemini-2.0-flash-exp';
 const API_TIMEOUT = 10000; // 10 seconds
@@ -36,7 +38,8 @@ interface GeminiResponse {
 export async function generateInsight(prompt: string): Promise<string> {
   try {
     // Get API key from environment
-    const apiKey = EXPO_PUBLIC_GEMINI_API_KEY;
+    // Try @env first (from .env via babel), then fall back to Constants (from app.json)
+    const apiKey = EXPO_PUBLIC_GEMINI_API_KEY || Constants.expoConfig?.extra?.EXPO_PUBLIC_GEMINI_API_KEY;
     
     if (!apiKey) {
       throw new Error('Gemini API key not configured');
