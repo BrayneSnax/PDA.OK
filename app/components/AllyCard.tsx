@@ -51,7 +51,10 @@ export const AllyCard = React.memo(({ ally, onEdit, onRemove, onLogUse, colors }
   let displayName;
   if (ally.mythicName) {
     // Remove any existing emojis from mythicName to prevent duplicates
-    const cleanMythicName = ally.mythicName.replace(/[\u{1F300}-\u{1F9FF}]/gu, '').trim();
+    // More comprehensive emoji regex that works in React Native
+    const cleanMythicName = ally.mythicName
+      .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F000}-\u{1F02F}\u{1F0A0}-\u{1F0FF}\u{1F100}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}]/gu, '')
+      .trim();
     displayName = `${ally.face} ${cleanMythicName} ${ally.face}`;
   } else {
     displayName = `${ally.face} ${ally.name} ${ally.face}`;
