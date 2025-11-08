@@ -4,8 +4,9 @@ import { generateId } from './time';
 import { DEFAULT_GROUNDING_ITEMS, DEFAULT_ALLIES } from '../constants/DefaultData';
 
 const MIGRATION_VERSION_KEY = '@migration_version';
-const CURRENT_MIGRATION_VERSION = 13;
+const CURRENT_MIGRATION_VERSION = 14;
 
+// Migration v14: Change Mirror & Mystery emoji from 🌌 to 🔮
 // Migration v13: FIX CRITICAL BUG - Use correct storage key '@pda_app_state' instead of '@app_state'
 // Migration v12: Force-fix Mirror & Mystery mythicName
 // Migration v11: Fix Mirror & Mystery mythicName (remove embedded emojis)

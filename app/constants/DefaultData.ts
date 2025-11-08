@@ -17,7 +17,7 @@ export const DEFAULT_ALLIES: Ally[] = [
     id: 'mirror',
     name: 'Entheogens',
     mythicName: 'Mirror & Mystery',
-    face: '🌌',
+    face: '🔮',
     invocation: 'Show me myself as cosmos, but bring me back whole.',
     function: 'Expands the membrane between self and all — reveals the divine recursion in experience.',
     shadow: 'Reveals too much too fast — replaces integration with revelation.',
