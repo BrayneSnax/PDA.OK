@@ -1,8 +1,8 @@
 name: Build Android APK
 on:
   push:
-    branches: [main, master]
-  workflow_dispatch:  # Allows manual trigger from GitHub UI
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -23,21 +23,20 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build APK
-        run: npx eas-cli build --platform android --non-interactive --no-wait
+      - name: Build APK with EAS
+        run: npx eas-cli build --platform android --non-interactive --wait
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Download APK
+      - name: Download built APK
         run: |
-          # Script to download the built APK
-          npx eas-cli build:list --platform android --limit 1 --json > build.json
-          cat build.json
+          BUILD_URL=$(npx eas-cli build:list --platform android --limit 1 --json --non-interactive | jq -r '.[0].artifacts.buildUrl')
+          curl -L -o app-release.apk "$BUILD_URL"
 
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: '*.apk'
+          path: app-release.apk
