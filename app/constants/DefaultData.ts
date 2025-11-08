@@ -98,7 +98,7 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
   {
     id: 'morning-ground',
     title: 'Ground',
-    body_cue: 'Breath enters through your nose; feel weight in your heels.',
+    body_cue: 'Breath entering your nose, gravity answering through your feet.',
     micro: 'Press your toes lightly into the earth.',
     ultra_micro: 'Feel soles press once.',
     desire: 'Presence begins from below; let your mind catch up to your body.',
