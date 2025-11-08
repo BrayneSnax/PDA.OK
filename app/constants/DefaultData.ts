@@ -160,7 +160,7 @@ export const DEFAULT_GROUNDING_ITEMS: ContainerItem[] = [
   {
     id: 'afternoon-hydration',
     title: 'Hydration Reset',
-    body_cue: 'Taste the water; feel its temperature.',
+    body_cue: 'Feel the water, taste its temperature.',
     micro: 'One mindful sip.',
     ultra_micro: 'Wet tongue; notice taste.',
     desire: 'Coherence through simplicity.',
