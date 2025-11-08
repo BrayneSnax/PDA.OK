@@ -1,12 +1,10 @@
 /**
  * Gemini API Service
- * Uses Vertex AI endpoint
+ * Uses direct Gemini REST API (not OpenAI-compatible)
  */
 
 const GEMINI_MODEL = 'gemini-2.0-flash-exp';
 const API_TIMEOUT = 10000; // 10 seconds
-const PROJECT_ID = 'gen-lang-client-0816764627';
-const LOCATION = 'us-east1'; // Closest to EST
 
 /**
  * Clean markdown formatting from AI responses
@@ -31,7 +29,7 @@ interface GeminiResponse {
 }
 
 /**
- * Call Gemini API via Vertex AI to generate pattern insight
+ * Call Gemini API to generate pattern insight
  */
 export async function generateInsight(prompt: string): Promise<string> {
   try {
@@ -47,14 +45,13 @@ export async function generateInsight(prompt: string): Promise<string> {
       setTimeout(() => reject(new Error('Request timeout')), API_TIMEOUT);
     });
 
-    // Use Vertex AI endpoint
+    // Use direct Gemini REST API
     const fetchPromise = fetch(
-      `https://${LOCATION}-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/locations/${LOCATION}/publishers/google/models/${GEMINI_MODEL}:generateContent`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
           contents: [
