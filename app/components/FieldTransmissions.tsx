@@ -83,7 +83,7 @@ export default function FieldTransmissions() {
               key={transmission.id}
               style={[
                 styles.transmissionCard,
-                !transmission.read && styles.unreadCard,
+                !transmission.read ? styles.unreadCard : null,
               ]}
               onPress={() => handleTransmissionPress(transmission.id, transmission.read)}
             >
@@ -97,11 +97,11 @@ export default function FieldTransmissions() {
                     <Text style={styles.entityName}>
                       {transmission.entityMythicName || transmission.entityName}
                     </Text>
-                    {transmission.entityMythicName && (
+                    {transmission.entityMythicName ? (
                       <Text style={styles.entitySubname}>
                         {transmission.entityName}
                       </Text>
-                    )}
+                    ) : null}
                   </View>
                 </View>
                 <Text style={styles.timestamp}>
@@ -113,9 +113,9 @@ export default function FieldTransmissions() {
               <Text style={styles.message}>{transmission.message}</Text>
 
               {/* Unread indicator */}
-              {!transmission.read && (
+              {!transmission.read ? (
                 <View style={styles.unreadDot} />
-              )}
+              ) : null}
             </TouchableOpacity>
           ))
         )}
@@ -129,14 +129,14 @@ export default function FieldTransmissions() {
                 key={theme.name}
                 style={[
                   styles.themeOption,
-                  selectedTheme === theme.name && styles.themeOptionActive
+                  selectedTheme === theme.name ? styles.themeOptionActive : null
                 ]}
                 onPress={() => setSelectedTheme(theme.name)}
               >
                 <Text style={styles.themeIcon}>{theme.icon}</Text>
                 <Text style={[
                   styles.themeName,
-                  selectedTheme === theme.name && styles.themeNameActive
+                  selectedTheme === theme.name ? styles.themeNameActive : null
                 ]}>{theme.displayName}</Text>
               </TouchableOpacity>
             ))}
