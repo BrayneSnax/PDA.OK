@@ -48,17 +48,15 @@ export const AllyCard = React.memo(({ ally, onEdit, onRemove, onLogUse, colors }
 
   // Build display name with emojis on both sides
   // Strip any embedded emojis from mythicName/name before adding face emojis
-  let displayName;
-  if (ally.mythicName) {
-    // Remove any existing emojis from mythicName to prevent duplicates
-    // More comprehensive emoji regex that works in React Native
-    const cleanMythicName = ally.mythicName
-      .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F000}-\u{1F02F}\u{1F0A0}-\u{1F0FF}\u{1F100}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}]/gu, '')
-      .trim();
-    displayName = `${ally.face} ${cleanMythicName} ${ally.face}`;
-  } else {
-    displayName = `${ally.face} ${ally.name} ${ally.face}`;
-  }
+  const cleanMythicName = ally.mythicName
+    ? ally.mythicName
+        .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F000}-\u{1F02F}\u{1F0A0}-\u{1F0FF}\u{1F100}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}]/gu, '')
+        .trim()
+    : '';
+  
+  const displayName = ally.mythicName
+    ? `${ally.face} ${cleanMythicName} ${ally.face}`
+    : `${ally.face} ${ally.name} ${ally.face}`;
 
   return (
     <Pressable
@@ -69,9 +67,17 @@ export const AllyCard = React.memo(({ ally, onEdit, onRemove, onLogUse, colors }
     >
       <View style={styles.header}>
         <View style={styles.nameContainer}>
-          <Text style={[ally.mythicName ? styles.mythicName : styles.name, { color: colors.text }]}>
-            {displayName}
-          </Text>
+          {ally.mythicName ? (
+            <View style={styles.nameRow}>
+              <Text style={[styles.mythicName, { color: colors.text }]}>{ally.face}</Text>
+              <Text style={[styles.mythicName, { color: colors.text }]}> {cleanMythicName} </Text>
+              <Text style={[styles.mythicName, { color: colors.text }]}>{ally.face}</Text>
+            </View>
+          ) : (
+            <Text style={[styles.name, { color: colors.text }]}>
+              {displayName}
+            </Text>
+          )}
           {ally.mythicName && (
             <Text style={[styles.realName, { color: colors.dim }]}>
               {ally.name}
@@ -131,6 +137,11 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 4,
     alignItems: 'center',
+  },
+  nameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   mythicName: {
     fontSize: 22,
