@@ -56,136 +56,153 @@ export function AddMovementModal({ isVisible, onClose, onAdd, colors }: Props) {
     }
   };
 
+  const handleClose = () => {
+    // Reset state when closing
+    setAct('');
+    setResistance('');
+    setGainingInertia('');
+    setGoalposts('');
+    setShowResistanceDropdown(false);
+    onClose();
+  };
+
   return (
     <Modal
       visible={isVisible}
-      transparent
+      transparent={true}
       animationType="slide"
-      onRequestClose={onClose}
+      onRequestClose={handleClose}
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.overlay}
-      >
-        <View style={[styles.container, { backgroundColor: colors.bg }]}>
-          <ScrollView
-            style={styles.scrollView}
-            contentContainerStyle={styles.scrollContent}
-            showsVerticalScrollIndicator={false}
-          >
-            {/* Header */}
-            <Text style={[styles.title, { color: colors.text }]}>
-              Log Physical Interaction
-            </Text>
+      <View style={styles.overlay}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.keyboardView}
+        >
+          <View style={[styles.container, { backgroundColor: colors.bg }]}>
+            <ScrollView
+              style={styles.scrollView}
+              contentContainerStyle={styles.scrollContent}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+            >
+              {/* Header */}
+              <Text style={[styles.title, { color: colors.text }]}>
+                Log Physical Interaction
+              </Text>
 
-            {/* THE 3-PART CHECK-IN */}
-            <Text style={[styles.sectionLabel, { color: colors.dim }]}>
-              THE 3-PART CHECK-IN
-            </Text>
+              {/* THE 3-PART CHECK-IN */}
+              <Text style={[styles.sectionLabel, { color: colors.dim }]}>
+                THE 3-PART CHECK-IN
+              </Text>
 
-            <View style={styles.checkInRow}>
-              {/* Time */}
-              <View style={styles.checkInField}>
-                <Text style={[styles.fieldLabel, { color: colors.text }]}>Time</Text>
-                <View style={[styles.timeDisplay, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}>
-                  <Text style={[styles.timeText, { color: colors.text }]}>{time}</Text>
+              <View style={styles.checkInRow}>
+                {/* Time */}
+                <View style={styles.checkInField}>
+                  <Text style={[styles.fieldLabel, { color: colors.text }]}>Time</Text>
+                  <View style={[styles.timeDisplay, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}>
+                    <Text style={[styles.timeText, { color: colors.text }]}>{time}</Text>
+                  </View>
+                </View>
+
+                {/* Act */}
+                <View style={[styles.checkInField, { flex: 1 }]}>
+                  <Text style={[styles.fieldLabel, { color: colors.text }]}>Act</Text>
+                  <TextInput
+                    style={[styles.input, { backgroundColor: colors.card, borderColor: colors.accent + '40', color: colors.text }]}
+                    value={act}
+                    onChangeText={setAct}
+                    placeholder="..."
+                    placeholderTextColor={colors.dim}
+                  />
+                </View>
+
+                {/* Resistance */}
+                <View style={[styles.checkInField, { flex: 1 }]}>
+                  <Text style={[styles.fieldLabel, { color: colors.text }]}>Resistance</Text>
+                  <TouchableOpacity
+                    style={[styles.dropdown, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}
+                    onPress={() => setShowResistanceDropdown(!showResistanceDropdown)}
+                  >
+                    <Text style={[styles.dropdownText, { color: resistance ? colors.text : colors.dim }]}>
+                      {resistance || '▼'}
+                    </Text>
+                  </TouchableOpacity>
+                  {showResistanceDropdown && (
+                    <View style={[styles.dropdownMenu, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}>
+                      {RESISTANCE_LEVELS.map((level) => (
+                        <TouchableOpacity
+                          key={level}
+                          style={styles.dropdownItem}
+                          onPress={() => {
+                            setResistance(level);
+                            setShowResistanceDropdown(false);
+                          }}
+                        >
+                          <Text style={[styles.dropdownItemText, { color: colors.text }]}>{level}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  )}
                 </View>
               </View>
 
-              {/* Act */}
-              <View style={[styles.checkInField, { flex: 1 }]}>
-                <Text style={[styles.fieldLabel, { color: colors.text }]}>Act</Text>
-                <TextInput
-                  style={[styles.input, { backgroundColor: colors.card, borderColor: colors.accent + '40', color: colors.text }]}
-                  value={act}
-                  onChangeText={setAct}
-                  placeholder="..."
-                  placeholderTextColor={colors.dim}
-                />
-              </View>
+              {/* GAINING INERTIA */}
+              <Text style={[styles.sectionLabel, { color: colors.dim, marginTop: 24 }]}>
+                GAINING INERTIA
+              </Text>
+              <TextInput
+                style={[styles.textArea, { backgroundColor: colors.card, borderColor: colors.accent + '40', color: colors.text }]}
+                value={gainingInertia}
+                onChangeText={setGainingInertia}
+                placeholder="What small momentum did you gather? Notice the first step, the shift from stillness..."
+                placeholderTextColor={colors.dim}
+                multiline
+                numberOfLines={4}
+                textAlignVertical="top"
+              />
 
-              {/* Resistance */}
-              <View style={[styles.checkInField, { flex: 1 }]}>
-                <Text style={[styles.fieldLabel, { color: colors.text }]}>Resistance</Text>
+              {/* GOALPOSTS & REFLECTIONS */}
+              <Text style={[styles.sectionLabel, { color: colors.dim, marginTop: 24 }]}>
+                GOALPOSTS & REFLECTIONS
+              </Text>
+              <TextInput
+                style={[styles.textArea, { backgroundColor: colors.card, borderColor: colors.accent + '40', color: colors.text }]}
+                value={goalposts}
+                onChangeText={setGoalposts}
+                placeholder="Where did you aim? What markers did you pass? Trace the path from intention to completion..."
+                placeholderTextColor={colors.dim}
+                multiline
+                numberOfLines={4}
+                textAlignVertical="top"
+              />
+
+              {/* Buttons */}
+              <View style={styles.buttonRow}>
                 <TouchableOpacity
-                  style={[styles.dropdown, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}
-                  onPress={() => setShowResistanceDropdown(!showResistanceDropdown)}
+                  style={[styles.button, styles.cancelButton, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}
+                  onPress={handleClose}
                 >
-                  <Text style={[styles.dropdownText, { color: resistance ? colors.text : colors.dim }]}>
-                    {resistance || '▼'}
+                  <Text style={[styles.buttonText, { color: colors.dim }]}>Cancel</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[
+                    styles.button,
+                    styles.saveButton,
+                    { backgroundColor: colors.accent, opacity: (!act.trim() || !resistance) ? 0.5 : 1 }
+                  ]}
+                  onPress={handleSave}
+                  disabled={!act.trim() || !resistance}
+                >
+                  <Text style={[styles.buttonText, { color: colors.card }]}>
+                    Log Movement
                   </Text>
                 </TouchableOpacity>
-                {showResistanceDropdown && (
-                  <View style={[styles.dropdownMenu, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}>
-                    {RESISTANCE_LEVELS.map((level) => (
-                      <TouchableOpacity
-                        key={level}
-                        style={styles.dropdownItem}
-                        onPress={() => {
-                          setResistance(level);
-                          setShowResistanceDropdown(false);
-                        }}
-                      >
-                        <Text style={[styles.dropdownItemText, { color: colors.text }]}>{level}</Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                )}
               </View>
-            </View>
-
-            {/* GAINING INERTIA */}
-            <Text style={[styles.sectionLabel, { color: colors.dim, marginTop: 24 }]}>
-              GAINING INERTIA
-            </Text>
-            <TextInput
-              style={[styles.textArea, { backgroundColor: colors.card, borderColor: colors.accent + '40', color: colors.text }]}
-              value={gainingInertia}
-              onChangeText={setGainingInertia}
-              placeholder="What small momentum did you gather? Notice the first step, the shift from stillness..."
-              placeholderTextColor={colors.dim}
-              multiline
-              numberOfLines={4}
-              textAlignVertical="top"
-            />
-
-            {/* GOALPOSTS & REFLECTIONS */}
-            <Text style={[styles.sectionLabel, { color: colors.dim, marginTop: 24 }]}>
-              GOALPOSTS & REFLECTIONS
-            </Text>
-            <TextInput
-              style={[styles.textArea, { backgroundColor: colors.card, borderColor: colors.accent + '40', color: colors.text }]}
-              value={goalposts}
-              onChangeText={setGoalposts}
-              placeholder="Where did you aim? What markers did you pass? Trace the path from intention to completion..."
-              placeholderTextColor={colors.dim}
-              multiline
-              numberOfLines={4}
-              textAlignVertical="top"
-            />
-
-            {/* Buttons */}
-            <View style={styles.buttonRow}>
-              <TouchableOpacity
-                style={[styles.button, styles.cancelButton, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}
-                onPress={onClose}
-              >
-                <Text style={[styles.buttonText, { color: colors.dim }]}>Cancel</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[styles.button, styles.saveButton, { backgroundColor: colors.accent }]}
-                onPress={handleSave}
-                disabled={!act.trim() || !resistance}
-              >
-                <Text style={[styles.buttonText, { color: colors.card }]}>
-                  Log Movement
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </View>
-      </KeyboardAvoidingView>
+            </ScrollView>
+          </View>
+        </KeyboardAvoidingView>
+      </View>
     </Modal>
   );
 }
@@ -196,16 +213,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'flex-end',
   },
+  keyboardView: {
+    maxHeight: '90%',
+  },
   container: {
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    maxHeight: '90%',
+    maxHeight: '100%',
   },
   scrollView: {
-    flex: 1,
+    maxHeight: '100%',
   },
   scrollContent: {
     padding: 20,
+    paddingBottom: 40,
   },
   title: {
     fontSize: 24,
@@ -276,11 +297,6 @@ const styles = StyleSheet.create({
   dropdownItemText: {
     fontSize: 14,
     textAlign: 'center',
-  },
-  journalHeader: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 8,
   },
   textArea: {
     borderWidth: 1,
