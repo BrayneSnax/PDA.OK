@@ -7,7 +7,7 @@ import {
   StatusBar,
   ActivityIndicator,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import useColors from '../hooks/useColors';
 import { useTransmissions } from '../hooks/useTransmissions';
@@ -42,6 +42,13 @@ export default function SubstancesScreen() {
   const [isJournalEntryModalVisible, setIsJournalEntryModalVisible] = useState(false);
   const [isPersonalLogExpanded, setIsPersonalLogExpanded] = useState(false);
   const [isTransmissionsExpanded, setIsTransmissionsExpanded] = useState(false);
+
+  useEffect(() => {
+    console.log('=== MODAL STATE CHANGED ===');
+    console.log('isJournalEntryModalVisible:', isJournalEntryModalVisible);
+    console.log('selectedJournalEntry:', selectedJournalEntry);
+    console.log('Modal should be visible:', isJournalEntryModalVisible && selectedJournalEntry !== null);
+  }, [isJournalEntryModalVisible, selectedJournalEntry]);
 
   if (loading) {
     return (
@@ -138,7 +145,6 @@ export default function SubstancesScreen() {
                     key={entry.id}
                     style={[styles.entryRow, { borderBottomColor: colors.dim + '33' }]}
                     onPress={() => {
-                      alert('TAP REGISTERED!');
                       try {
                         console.log('=== SUBSTANCES TAP START ===');
                         console.log('Entry ID:', entry.id);
@@ -165,7 +171,7 @@ export default function SubstancesScreen() {
                     }}
                     activeOpacity={0.7}
                   >
-                    <View style={styles.entryContent}>
+                    <View style={styles.entryContent} pointerEvents="none">
                       <Text style={[styles.entryDate, { color: colors.dim }]}>
                         {new Date(entry.date).toLocaleDateString()}
                       </Text>
@@ -173,7 +179,7 @@ export default function SubstancesScreen() {
                         {preview}
                       </Text>
                     </View>
-                    <Text style={[styles.entryArrow, { color: colors.dim }]}>›</Text>
+                    <Text style={[styles.entryArrow, { color: colors.dim }]} pointerEvents="none">›</Text>
                   </TouchableOpacity>
                 );
               })
@@ -233,7 +239,7 @@ export default function SubstancesScreen() {
                       }}
                     activeOpacity={0.7}
                   >
-                    <View style={styles.entryContent}>
+                    <View style={styles.entryContent} pointerEvents="none">
                       <Text style={[styles.entryDate, { color: colors.dim }]}>
                         {new Date(transmission.timestamp).toLocaleDateString()}
                       </Text>
@@ -241,7 +247,7 @@ export default function SubstancesScreen() {
                         {transmission.entityMythicName || transmission.entityName}
                       </Text>
                     </View>
-                    <Text style={[styles.entryArrow, { color: colors.dim }]}>›</Text>
+                    <Text style={[styles.entryArrow, { color: colors.dim }]} pointerEvents="none">›</Text>
                   </TouchableOpacity>
                   );
                 })
