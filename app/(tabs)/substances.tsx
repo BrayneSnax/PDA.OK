@@ -242,7 +242,8 @@ export default function SubstancesScreen() {
                     </View>
                     <Text style={[styles.entryArrow, { color: colors.dim }]}>›</Text>
                   </TouchableOpacity>
-                ))
+                  );
+                })
             )}
             {transmissions.filter(t => t.entityType === 'substance').length > 10 && (
               <Text style={[styles.moreText, { color: colors.dim }]}>
