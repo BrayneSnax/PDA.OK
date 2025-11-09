@@ -1180,7 +1180,7 @@ export default function HomeScreen() {
             content={selectedJournalEntry.content}
             colors={colors}
           />
-        )}
+        ) : null}
       </View>
     );
   }
