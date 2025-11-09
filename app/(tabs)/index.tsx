@@ -586,9 +586,12 @@ export default function HomeScreen() {
                   handleCompletion(selectedItem.id);
                 } else {
                   // For other actions (skipped, forgot, couldn't, not relevant),
-                  // show gentle ActionToast feedback
+                  // show ring pulse (breath), then ActionToast after 1.5s
+                  setShowRingPulse(true);
                   setCurrentActionType(status);
-                  setShowActionToast(true);
+                  setTimeout(() => {
+                    setShowActionToast(true);
+                  }, 1500);
                   
                   // Note: We're just acknowledging the action, not creating a duplicate task
                   // The note parameter could be logged to a journal system in the future
