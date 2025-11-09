@@ -122,11 +122,13 @@ export default function SubstancesScreen() {
           colors={colors}
           emptyMessage="No personal substance logs yet. Log your first interaction to begin."
           onEntryPress={(entry) => {
+            console.log('Entry tapped:', entry);
             setSelectedJournalEntry({
               title: 'Substance Reflection',
               date: entry.date,
               content: entry.fullContent,
             });
+            console.log('Modal should open now');
             setIsJournalEntryModalVisible(true);
           }}
         />
