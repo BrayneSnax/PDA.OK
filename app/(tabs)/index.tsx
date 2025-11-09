@@ -368,6 +368,32 @@ export default function HomeScreen() {
         
         <StatusBar barStyle="dark-content" backgroundColor={colors.bg} />
         
+        {/* TEST BANNER - HOT RELOAD CHECK */}
+        <View style={{
+          backgroundColor: '#FF00FF',
+          padding: 20,
+          alignItems: 'center',
+          borderBottomWidth: 5,
+          borderBottomColor: '#00FFFF'
+        }}>
+          <Text style={{
+            color: '#FFFF00',
+            fontSize: 24,
+            fontWeight: 'bold',
+            textAlign: 'center'
+          }}>
+            🔥 HOT RELOAD TEST 🔥
+          </Text>
+          <Text style={{
+            color: '#FFFFFF',
+            fontSize: 16,
+            marginTop: 8,
+            textAlign: 'center'
+          }}>
+            If you see this, tunnel is working!
+          </Text>
+        </View>
+        
         {/* 2x2 Action Grid at Top */}
         <View style={styles.topSection}>
           {renderActionGrid()}
