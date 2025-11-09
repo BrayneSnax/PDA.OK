@@ -138,13 +138,29 @@ export default function SubstancesScreen() {
                     key={entry.id}
                     style={[styles.entryRow, { borderBottomColor: colors.dim + '33' }]}
                     onPress={() => {
-                      console.log('Entry tapped:', entry.id);
-                      setSelectedJournalEntry({
-                        title: 'Substance Reflection',
-                        date: formattedDate,
-                        content: fullContent,
-                      });
-                      setIsJournalEntryModalVisible(true);
+                      try {
+                        console.log('=== SUBSTANCES TAP START ===');
+                        console.log('Entry ID:', entry.id);
+                        console.log('Entry date:', entry.date);
+                        console.log('Formatted date:', formattedDate);
+                        console.log('Full content length:', fullContent.length);
+                        console.log('Setting modal entry...');
+                        
+                        setSelectedJournalEntry({
+                          title: 'Substance Reflection',
+                          date: formattedDate,
+                          content: fullContent,
+                        });
+                        
+                        console.log('Modal entry set, opening modal...');
+                        setIsJournalEntryModalVisible(true);
+                        console.log('=== SUBSTANCES TAP END ===');
+                      } catch (error) {
+                        console.error('=== ERROR IN TAP HANDLER ===');
+                        console.error('Error:', error);
+                        console.error('Error message:', error.message);
+                        console.error('Error stack:', error.stack);
+                      }
                     }}
                     activeOpacity={0.7}
                   >
@@ -281,17 +297,31 @@ export default function SubstancesScreen() {
       />
 
       {/* Journal Entry Detail Modal */}
-      <JournalEntryModal
-        visible={isJournalEntryModalVisible && selectedJournalEntry !== null}
-        onClose={() => {
-          setIsJournalEntryModalVisible(false);
-          setSelectedJournalEntry(null);
-        }}
-        title={selectedJournalEntry?.title || ''}
-        date={selectedJournalEntry?.date}
-        content={selectedJournalEntry?.content || ''}
-        colors={colors}
-      />
+      {(() => {
+        try {
+          console.log('=== MODAL RENDER ===');
+          console.log('Modal visible:', isJournalEntryModalVisible);
+          console.log('Selected entry:', selectedJournalEntry);
+          return (
+            <JournalEntryModal
+              visible={isJournalEntryModalVisible && selectedJournalEntry !== null}
+              onClose={() => {
+                console.log('Modal closing...');
+                setIsJournalEntryModalVisible(false);
+                setSelectedJournalEntry(null);
+              }}
+              title={selectedJournalEntry?.title || ''}
+              date={selectedJournalEntry?.date}
+              content={selectedJournalEntry?.content || ''}
+              colors={colors}
+            />
+          );
+        } catch (error) {
+          console.error('=== ERROR RENDERING MODAL ===');
+          console.error('Error:', error);
+          return null;
+        }
+      })()}
     </View>
   );
 }
