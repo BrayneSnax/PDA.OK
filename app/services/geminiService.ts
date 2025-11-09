@@ -119,6 +119,13 @@ export async function generateGeminiText(
 }
 
 /**
+ * Alias for generateGeminiText for backward compatibility
+ */
+export async function generateWithGemini(prompt: string): Promise<string> {
+  return generateGeminiText(prompt);
+}
+
+/**
  * Call Gemini API to generate pattern insight
  */
 export async function generateInsight(prompt: string): Promise<string> {
