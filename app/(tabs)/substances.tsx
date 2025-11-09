@@ -128,28 +128,26 @@ export default function SubstancesScreen() {
           }}
         />
 
-        {/* Substance Transmissions - Archetype Dialogues */}
+        {/* Substance Transmissions - Autonomous Reflections */}
         <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 32 }]}>
           SUBSTANCE TRANSMISSIONS
         </Text>
         <Text style={[styles.journalSubtitle, { color: colors.dim, marginBottom: 16 }]}>
-          Internal Dialogues & Emergent Consciousness
+          Autonomous Reflections & Emergent Consciousness
         </Text>
 
         <JournalList
-          title="RECENT DIALOGUES"
-          entries={conversations.filter(c => c.substanceName).map(conversation => {
-            const preview = `${conversation.archetypeName || 'Dialogue'}${conversation.substanceMythicName ? ' × ' + conversation.substanceMythicName : ''}`;
-            const fullContent = conversation.messages.map(msg => `${msg.speaker}:\n${msg.text}`).join('\n\n');
-            return {
-              id: conversation.id,
-              preview,
-              fullContent,
-              date: new Date(conversation.timestamp).toLocaleDateString(),
-            };
-          })}
+          title="RECENT TRANSMISSIONS"
+          entries={transmissions
+            .filter(t => t.entityType === 'substance')
+            .map(transmission => ({
+              id: transmission.id,
+              preview: `${transmission.entityMythicName || transmission.entityName}`,
+              fullContent: transmission.message,
+              date: new Date(transmission.timestamp).toLocaleDateString(),
+            }))}
           colors={colors}
-          emptyMessage="No substance dialogues yet. Invoke an archetype and log a substance moment to begin."
+          emptyMessage="The substances are listening. As patterns emerge, they will begin to speak."
           onEntryPress={(entry) => {
             setSelectedJournalEntry({
               title: 'Substance Transmission',
