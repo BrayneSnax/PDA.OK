@@ -15,7 +15,6 @@ import { AllyCard } from '../components/AllyCard';
 // ⧈replace-start:imports
 import { AddAllyModal, EditAllyModal } from '../modal';
 import { SubstanceSynthesisModal } from '../modal/SubstanceSynthesisModal';
-import { JournalList } from '../components/JournalList';
 import { JournalEntryModal } from '../components/JournalEntryModal';
 // ⧈replace-end:imports
 
@@ -41,6 +40,8 @@ export default function SubstancesScreen() {
   const [momentToSynthesize, setMomentToSynthesize] = useState<any>({});
   const [selectedJournalEntry, setSelectedJournalEntry] = useState<any>(null);
   const [isJournalEntryModalVisible, setIsJournalEntryModalVisible] = useState(false);
+  const [isPersonalLogExpanded, setIsPersonalLogExpanded] = useState(false);
+  const [isTransmissionsExpanded, setIsTransmissionsExpanded] = useState(false);
 
   if (loading) {
     return (
@@ -108,30 +109,64 @@ export default function SubstancesScreen() {
           Your Personal Log of Substance Experiences
         </Text>
 
-        <JournalList
-          title="PERSONAL LOG"
-          entries={substanceJournalEntries.map(entry => {
-            const fullContent = `${entry.allyName || 'Substance Moment'}\n\nIntention: ${entry.tone || 'Not specified'}\nSensation: ${entry.frequency || 'Not specified'}\nReflection: ${entry.presence || 'Not specified'}\n\nSynthesis & Invocation:\n${entry.context || 'None'}`;
-            return {
-              id: entry.id,
-              preview: entry.allyName || 'Substance Moment',
-              fullContent,
-              date: new Date(entry.date).toLocaleDateString(),
-            };
-          })}
-          colors={colors}
-          emptyMessage="No personal substance logs yet. Log your first interaction to begin."
-          onEntryPress={(entry) => {
-            console.log('Entry tapped:', entry);
-            setSelectedJournalEntry({
-              title: 'Substance Reflection',
-              date: entry.date,
-              content: entry.fullContent,
-            });
-            console.log('Modal should open now');
-            setIsJournalEntryModalVisible(true);
-          }}
-        />
+        {/* Tier 1: Collapsed Header */}
+        <TouchableOpacity
+          style={[styles.tierHeader, { backgroundColor: colors.card + 'B3' }]}
+          onPress={() => setIsPersonalLogExpanded(!isPersonalLogExpanded)}
+        >
+          <Text style={[styles.tierTitle, { color: colors.dim }]}>PERSONAL LOG</Text>
+          <Text style={[styles.tierCount, { color: colors.text }]}>
+            {substanceJournalEntries.length} {isPersonalLogExpanded ? '▼' : '▶'}
+          </Text>
+        </TouchableOpacity>
+
+        {/* Tier 2: Expanded List */}
+        {isPersonalLogExpanded && (
+          <View style={[styles.tierList, { backgroundColor: colors.card + 'B3' }]}>
+            {substanceJournalEntries.length === 0 ? (
+              <Text style={[styles.emptyText, { color: colors.dim }]}>
+                No personal substance logs yet. Log your first interaction to begin.
+              </Text>
+            ) : (
+              substanceJournalEntries.slice(0, 10).map((entry) => {
+                const preview = entry.tone || entry.frequency || entry.allyName || 'Substance Moment';
+                const fullContent = `${entry.allyName || 'Substance Moment'}\n\nIntention: ${entry.tone || 'Not specified'}\nSensation: ${entry.frequency || 'Not specified'}\nReflection: ${entry.presence || 'Not specified'}\n\nSynthesis & Invocation:\n${entry.context || 'None'}`;
+                
+                return (
+                  <TouchableOpacity
+                    key={entry.id}
+                    style={[styles.entryRow, { borderBottomColor: colors.dim + '33' }]}
+                    onPress={() => {
+                      console.log('Entry tapped:', entry.id);
+                      setSelectedJournalEntry({
+                        title: 'Substance Reflection',
+                        date: new Date(entry.date).toLocaleDateString(),
+                        content: fullContent,
+                      });
+                      setIsJournalEntryModalVisible(true);
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    <View style={styles.entryContent}>
+                      <Text style={[styles.entryDate, { color: colors.dim }]}>
+                        {new Date(entry.date).toLocaleDateString()}
+                      </Text>
+                      <Text style={[styles.entryPreview, { color: colors.text }]} numberOfLines={1}>
+                        {preview}
+                      </Text>
+                    </View>
+                    <Text style={[styles.entryArrow, { color: colors.dim }]}>›</Text>
+                  </TouchableOpacity>
+                );
+              })
+            )}
+            {substanceJournalEntries.length > 10 && (
+              <Text style={[styles.moreText, { color: colors.dim }]}>
+                Showing 10 most recent of {substanceJournalEntries.length} total
+              </Text>
+            )}
+          </View>
+        )}
 
         {/* Substance Transmissions - Autonomous Reflections */}
         <Text style={[styles.sectionHeader, { color: colors.dim, marginTop: 32 }]}>
@@ -141,27 +176,62 @@ export default function SubstancesScreen() {
           Autonomous Reflections & Emergent Consciousness
         </Text>
 
-        <JournalList
-          title="RECENT TRANSMISSIONS"
-          entries={transmissions
-            .filter(t => t.entityType === 'substance')
-            .map(transmission => ({
-              id: transmission.id,
-              preview: `${transmission.entityMythicName || transmission.entityName}`,
-              fullContent: transmission.message,
-              date: new Date(transmission.timestamp).toLocaleDateString(),
-            }))}
-          colors={colors}
-          emptyMessage="The substances are listening. As patterns emerge, they will begin to speak."
-          onEntryPress={(entry) => {
-            setSelectedJournalEntry({
-              title: 'Substance Transmission',
-              date: entry.date,
-              content: entry.fullContent,
-            });
-            setIsJournalEntryModalVisible(true);
-          }}
-        />
+        {/* Tier 1: Collapsed Header */}
+        <TouchableOpacity
+          style={[styles.tierHeader, { backgroundColor: colors.card + 'B3' }]}
+          onPress={() => setIsTransmissionsExpanded(!isTransmissionsExpanded)}
+        >
+          <Text style={[styles.tierTitle, { color: colors.dim }]}>RECENT TRANSMISSIONS</Text>
+          <Text style={[styles.tierCount, { color: colors.text }]}>
+            {transmissions.filter(t => t.entityType === 'substance').length} {isTransmissionsExpanded ? '▼' : '▶'}
+          </Text>
+        </TouchableOpacity>
+
+        {/* Tier 2: Expanded List */}
+        {isTransmissionsExpanded && (
+          <View style={[styles.tierList, { backgroundColor: colors.card + 'B3' }]}>
+            {transmissions.filter(t => t.entityType === 'substance').length === 0 ? (
+              <Text style={[styles.emptyText, { color: colors.dim }]}>
+                The substances are listening. As patterns emerge, they will begin to speak.
+              </Text>
+            ) : (
+              transmissions
+                .filter(t => t.entityType === 'substance')
+                .slice(0, 10)
+                .map((transmission) => (
+                  <TouchableOpacity
+                    key={transmission.id}
+                    style={[styles.entryRow, { borderBottomColor: colors.dim + '33' }]}
+                    onPress={() => {
+                      console.log('Transmission tapped:', transmission.id);
+                      setSelectedJournalEntry({
+                        title: 'Substance Transmission',
+                        date: new Date(transmission.timestamp).toLocaleDateString(),
+                        content: transmission.message,
+                      });
+                      setIsJournalEntryModalVisible(true);
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    <View style={styles.entryContent}>
+                      <Text style={[styles.entryDate, { color: colors.dim }]}>
+                        {new Date(transmission.timestamp).toLocaleDateString()}
+                      </Text>
+                      <Text style={[styles.entryPreview, { color: colors.text }]} numberOfLines={1}>
+                        {transmission.entityMythicName || transmission.entityName}
+                      </Text>
+                    </View>
+                    <Text style={[styles.entryArrow, { color: colors.dim }]}>›</Text>
+                  </TouchableOpacity>
+                ))
+            )}
+            {transmissions.filter(t => t.entityType === 'substance').length > 10 && (
+              <Text style={[styles.moreText, { color: colors.dim }]}>
+                Showing 10 most recent of {transmissions.filter(t => t.entityType === 'substance').length} total
+              </Text>
+            )}
+          </View>
+        )}
 
         <View style={{ height: 100 }} />
       </ScrollView>
@@ -267,6 +337,58 @@ const styles = StyleSheet.create({
   },
   journalSubtitle: {
     fontSize: 14,
+    fontStyle: 'italic',
+  },
+  tierHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 12,
+    borderRadius: 12,
+    marginBottom: 4,
+  },
+  tierTitle: {
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+  },
+  tierCount: {
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  tierList: {
+    borderRadius: 12,
+    padding: 8,
+    marginBottom: 12,
+  },
+  entryRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderBottomWidth: 1,
+    minHeight: 60,
+  },
+  entryContent: {
+    flex: 1,
+    gap: 4,
+  },
+  entryDate: {
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  entryPreview: {
+    fontSize: 14,
+  },
+  entryArrow: {
+    fontSize: 18,
+    marginLeft: 8,
+  },
+  moreText: {
+    fontSize: 11,
+    textAlign: 'center',
+    marginTop: 8,
     fontStyle: 'italic',
   },
   emptyCard: {
