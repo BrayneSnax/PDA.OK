@@ -10,6 +10,7 @@ import {
   Transmission,
   TransmissionContext 
 } from './transmissionGenerator';
+import { generateWitnessTransmission } from './witnessTransmissionGenerator';
 
 const STORAGE_KEY = '@pda_transmissions';
 const LAST_CHECK_KEY = '@pda_last_transmission_check';
@@ -195,6 +196,13 @@ export async function checkAndGenerateTransmissions(
   }
 
   console.log('Checking for new transmissions...');
+
+  // First, try to generate a Witness transmission (Pattern Engine v0.1)
+  const witnessTransmission = await generateWitnessTransmission(force);
+  if (witnessTransmission) {
+    await addTransmission(witnessTransmission);
+    console.log('[Witness] Transmission added');
+  }
 
   // Build entity list with last transmission times
   const entities: Array<{ name: string; type: 'archetype' | 'substance'; lastTransmission?: Date }> = [];
