@@ -2,6 +2,7 @@
   "expo": {
     "name": "PDA.OK",
     "slug": "pda-ok",
+    "owner": "chronicmic",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
