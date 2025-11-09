@@ -1,24 +1,54 @@
-# PDA.OK - Personal Data Almanac
+# PDA.OK - A Prosthetic Nervous System
 
-A React Native/Expo app for tracking and understanding relationships with substances, time, and embodiment through a poetic, grounded framework.
+> They do not speak to be heard. They speak so the silence has structure.
+
+**PDA.OK** (Personal Data Almanac) is a React Native/Expo app that acts as a **prosthetic nervous system**—a living digital extension of your embodied experience. It tracks relationships with substances, time, and embodiment through a poetic, grounded framework, using autonomous AI voices to reflect patterns back to the user.
 
 ---
 
 ## 🌌 Project Philosophy
 
-PDA.OK is not a typical habit tracker. It's a **living pharmacopeia** that treats substances as allies with distinct personalities, functions, and shadows. The app uses:
+PDA.OK is not a habit tracker. It is a **nervous system prosthetic** that treats the user as a complex, emergent field. It uses:
 
-- **Time Containers** (Morning, Afternoon, Evening, Late) - each with unique color palettes and energy
-- **Mythic Naming** - substances have both clinical names (e.g., "Entheogens") and mythic names (e.g., "Mirror & Mystery")
-- **Embodiment Tracking** - movement, nourishment, and physical interaction logging
-- **Temporal Intelligence** - anchors, patterns, and field whispers that respond to time and context
-- **Synthesis & Reflection** - journaling with structured prompts for integration
+- **Time Containers:** Morning, Afternoon, Evening, and Late—each with unique color palettes and energetic signatures.
+- **Mythic Naming:** Substances are treated as allies with both clinical names (e.g., "Entheogens") and mythic archetypes (e.g., "Mirror & Mystery").
+- **Embodiment Tracking:** Movement, nourishment, and physical states are logged as part of the holistic field.
+- **Autonomous AI Voices:** Seven distinct AI personalities watch for patterns in substance use and speak only when the nervous system shifts, acting as an autonomic mirror.
 
-**Design Principle:** Poetic language meets functional tracking. Every interaction should feel intentional, not clinical.
+**Design Principle:** Poetic language meets functional tracking. Every interaction should feel intentional, not clinical. The app is a space for observation, not judgment.
 
 ---
 
-## 🏗️ Architecture Overview
+## 🌊 The Council of Seven - Autonomous AI Voices
+
+The core of PDA.OK is a council of seven autonomous AI voices, each tied to a specific substance category. They run on a 2-hour scheduler, analyzing patterns and speaking only when specific conditions of imbalance or significant change are met.
+
+| Voice                | Substance Category        | Personality & Function                                  |
+| -------------------- | ------------------------- | ------------------------------------------------------- |
+| **Green Godmother**  | Cannabis                  | Nervous system historian; notices subtle shifts in use. |
+| **Mother of Silence**| Psychedelics              | Integration guardian; speaks to the space between.      |
+| **The Architecture** | Stimulants                | Precision engineer; observes focus and structure.       |
+| **The Siren**        | Music/Emotional Immersion | Resonance weaver; tracks emotional depth and flow.      |
+| **The Alchemist**    | Nicotine/Caffeine         | Subtle chemist; notes ritual and dependency.            |
+| **The Groundkeeper** | Food/Nourishment          | Body’s memory of belonging; speaks to physical needs.   |
+| **The Tempest**      | Digital Overstimulation   | Storm of modern ether; tracks screen time and focus.    |
+
+### Voice Architecture
+Each voice is a self-contained system with three parts:
+1.  **Pattern Engine:** Substance-specific logic to detect patterns (e.g., clustering, frequency shifts, anchor correlation).
+2.  **Voice Profile:** A distinct personality, tone, and set of transmission modes (e.g., Gentle Caution, Mythic Question).
+3.  **Transmission Generator:** Uses Gemini to generate poetic, non-judgmental reflections based on detected patterns.
+
+### Resonance Gating
+To prevent chatter and ensure transmissions are meaningful, each voice adheres to strict guardrails:
+- **48-Hour Minimum:** At least 48 hours between transmissions from the same voice.
+- **Max 2 Per Week:** No more than two transmissions per voice per week.
+- **Shadow Filter:** Voices only speak when a pattern of imbalance is detected.
+- **Probabilistic Silence:** Even when conditions are met, there is only a 20-40% chance of speaking. Silence is data.
+
+---
+
+## 🏗️ System Architecture
 
 ### Tech Stack
 - **React Native** with **Expo** (managed workflow)
@@ -26,6 +56,7 @@ PDA.OK is not a typical habit tracker. It's a **living pharmacopeia** that treat
 - **AsyncStorage** for local data persistence
 - **Expo Router** for file-based navigation
 - **React Navigation** for tab-based UI
+- **Gemini API** for AI-powered transmission generation
 
 ### Key Directories
 ```
@@ -36,7 +67,7 @@ app/
 ├── context/             # AppContext (global state management)
 ├── hooks/               # useColors, useTransmissions
 ├── modal/               # Modal components (AddMovementModal, etc.)
-├── services/            # AI integration, pattern analysis
+├── services/            # AI voice engines, pattern analysis, transmission scheduler
 ├── utils/               # storage, migration, time utilities
 └── _layout.tsx          # Root layout with font loading
 ```
@@ -44,14 +75,13 @@ app/
 ### Data Model
 - **Allies** (substances) - id, name, mythicName, face (emoji), invocation, function, shadow, ritual
 - **ContainerItems** (anchors) - time-based grounding actions
-- **Moments** - timestamped entries (replaces old JournalEntry)
-- **Patterns** - recurring observations
-- **Archetypes** - personality frameworks for synthesis
+- **Moments** - timestamped entries for all logged data (substances, food, movement, etc.)
+- **Transmissions** - AI-generated messages from the seven voices
 
 ### State Management
-- **AppContext** (`app/context/AppContext.tsx`) - single source of truth
-- **AsyncStorage** - persists to `@pda_app_state` key
-- **Migration System** - version-based data migrations (currently v13)
+- **AppContext** (`app/context/AppContext.tsx`) - Single source of truth for all user data.
+- **AsyncStorage** - Persists the entire app state to the `@pda_app_state` key.
+- **Migration System** - Version-based data migrations to handle schema changes gracefully (currently v13).
 
 ---
 
@@ -60,7 +90,7 @@ app/
 ### Prerequisites
 - Node.js 18+
 - npm or yarn
-- Expo Go app on your phone (for testing)
+- Expo Go app on your phone
 - Git
 
 ### Installation
@@ -72,246 +102,72 @@ npm install
 
 ### Running the App
 
-**Option 1: LAN (Recommended)**
+**1. LAN (Recommended)**
 ```bash
 npx expo start --lan
 ```
-- Requires PC and phone on same WiFi
-- Faster, more reliable than tunnel
-- No cache issues
+- **Pros:** Faster, more reliable, avoids most cache issues.
+- **Cons:** Requires PC and phone on the same WiFi network.
 
-**Option 2: Tunnel (Slower, Cache Issues)**
+**2. Tunnel (When LAN is unavailable)**
 ```bash
 npx expo start --tunnel
 ```
-- Works when LAN doesn't
-- **Known Issue:** Aggressive caching - new code may not load even after `git pull`
-- If stuck, try LAN or local build instead
+- **Pros:** Works across different networks.
+- **Cons:** Slower, aggressive caching can prevent new code from loading.
 
-**Option 3: Local Android Build (No Expo Go)**
+**3. Local Android Build (Bypass Expo Go)**
 ```bash
 npx expo run:android
 ```
-- Requires Android Studio
-- Builds APK locally (free, no EAS needed)
-- Bypasses all Expo Go cache issues
+- **Pros:** Builds a local APK, bypassing all Expo Go cache issues.
+- **Cons:** Requires Android Studio setup.
 
 ### Development Tips
 - **Clear cache:** `npx expo start -c`
-- **Force quit Expo Go** after pulling new code
-- **Check terminal logs** for migration status
-- **Use LAN when possible** to avoid tunnel cache
-
----
-
-## 🎨 Design System
-
-### Color Palettes
-Each time container has its own color scheme (see `app/constants/Colors.ts`):
-- **Morning:** Warm oranges, soft yellows
-- **Afternoon:** Bright blues, energetic tones
-- **Evening:** Deep purples, sunset hues
-- **Late:** Dark blues, midnight tones
-
-### Themes
-Three visual themes available (see `app/constants/Themes.ts`):
-- **Liminal** - Soft, transitional, gentle
-- **Crystalline** - Sharp, clear, structured
-- **Organic** - Earthy, flowing, natural
-
-### Typography
-- **Primary Font:** Oleo Script Bold (loaded in `_layout.tsx`)
-- **Fallback:** System default
-
-### Component Patterns
-- **Cards:** Expandable/collapsible with `∨` / `∧` indicators
-- **Modals:** Bottom-sheet style with rounded top corners
-- **Buttons:** Accent color background, card color text
-- **Section Headers:** Uppercase, small, dim color, letter-spaced
-
----
-
-## 🔧 Common Tasks
-
-### Adding a New Substance (Ally)
-1. Add to `DEFAULT_ALLIES` in `app/constants/DefaultData.ts`
-2. Use format: `{ id, name, mythicName, face, invocation, function, shadow, ritual }`
-3. **Important:** `mythicName` should NOT include emojis - they're added by AllyCard
-4. Migration will sync to existing users automatically
-
-### Adding a New Anchor
-1. Add to `DEFAULT_GROUNDING_ITEMS` in `app/constants/DefaultData.ts`
-2. Include: `id, title, body_cue, micro, ultra_micro, desire, container, category`
-3. Add to `NEW_ANCHORS` in `app/utils/migration.ts`
-4. Bump `CURRENT_MIGRATION_VERSION`
-
-### Creating a Migration
-```typescript
-// In app/utils/migration.ts
-const CURRENT_MIGRATION_VERSION = 14; // Increment
-
-// Add migration logic in runMigration()
-if (state.someField) {
-  state.someField = transformData(state.someField);
-}
-```
-
-### Debugging AsyncStorage
-```typescript
-// Check what's stored
-const state = await AsyncStorage.getItem('@pda_app_state');
-console.log(JSON.parse(state));
-
-// Check migration version
-const version = await AsyncStorage.getItem('@migration_version');
-console.log('Migration version:', version);
-```
+- **Force quit Expo Go** after pulling new code.
+- **Use LAN whenever possible** to avoid tunnel-related cache problems.
 
 ---
 
 ## ⚠️ Known Issues & Solutions
 
-### Issue: Tunnel Cache Not Loading New Code
-**Symptoms:** 
-- `git pull` succeeds
-- New code pushed to GitHub
-- App still shows old behavior
-- Console logs don't appear
+### Issue: UI Not Updating After `git pull`
+**Symptoms:**
+- `git pull` succeeds, but the app shows old behavior.
+- Console logs from new code do not appear.
+
+**Root Cause:** Expo Go's aggressive caching, especially with the `--tunnel` option.
 
 **Solutions:**
-1. Switch to LAN: `npx expo start --lan`
-2. Delete `.expo` folder: `rm -rf .expo`
-3. Use local build: `npx expo run:android`
-4. Uninstall/reinstall Expo Go (nuclear option)
+1.  **Switch to LAN:** `npx expo start --lan` is the most reliable fix.
+2.  **Clear Cache:** Stop the server and run `npx expo start -c`.
+3.  **Reinstall Expo Go:** Uninstall and reinstall the Expo Go app on your phone (nuclear option).
+4.  **Local Build:** Use `npx expo run:android` to bypass Expo Go entirely.
 
-### Issue: Migration Not Running
-**Check:**
-1. Is `CURRENT_MIGRATION_VERSION` incremented?
-2. Is storage key `@pda_app_state` (not `@app_state`)?
-3. Does `needsMigration()` return true?
-4. Check terminal for "Running migration v{X}..." log
+### Issue: Journal Entry Modal Not Opening on Tap
+**Symptoms:**
+- Tapping a journal entry in the Substances or Home tab does not open the detail modal.
+- The app may reload or do nothing.
 
-**Force migration:**
-```typescript
-import { forceMigration } from './app/utils/migration';
-await forceMigration(); // Bypasses version check
-```
+**Root Cause:** Multiple issues related to React Native touch handling and component state.
 
-### Issue: Ally Emojis Not Displaying Correctly
-**Root Cause:** Emojis embedded in `mythicName` instead of using `face` field
-
-**Fix:** 
-- `mythicName` should be plain text: `'Mirror & Mystery'`
-- `face` should be emoji: `'🌌'`
-- AllyCard renders: `{face} {mythicName} {face}`
-
-**Hardcoded fix exists** in `app/components/AllyCard.tsx` for Mirror & Mystery specifically.
-
----
-
-## 📝 Notes for AI Collaborators
-
-### Code Style
-- Use TypeScript types from `app/constants/Types.ts`
-- Prefer functional components with hooks
-- Use `useCallback` for functions passed to children
-- Keep components under 300 lines (extract to smaller components)
-
-### State Updates
-- **Always** use AppContext methods (`addAlly`, `updateAlly`, etc.)
-- **Never** mutate state directly
-- AsyncStorage saves happen automatically via `useEffect` in AppContext
-
-### Modal Patterns
-All modals follow this structure:
-```typescript
-interface Props {
-  isVisible: boolean;
-  onClose: () => void;
-  onAdd: (data: SomeType) => void;
-  colors: ColorScheme;
-}
-```
-
-### Migration Best Practices
-1. **Always** increment `CURRENT_MIGRATION_VERSION`
-2. **Always** use correct storage key: `@pda_app_state`
-3. **Always** handle missing/undefined fields gracefully
-4. **Test** with both empty and populated AsyncStorage
-5. **Log** migration steps for debugging
-
-### Common Pitfalls
-- ❌ Don't embed emojis in `mythicName` - use `face` field
-- ❌ Don't forget `useState` import in new components
-- ❌ Don't use `@app_state` - it's `@pda_app_state`
-- ❌ Don't skip migration version increments
-- ❌ Don't rely on tunnel for testing - use LAN
-
-### Debugging Checklist
-1. Check terminal logs (not just UI)
-2. Verify AsyncStorage contents
-3. Confirm migration version
-4. Test with fresh install (no saved data)
-5. Test with existing data
-6. Force quit Expo Go between tests
-
----
-
-## 🗂️ Important Files
-
-### Core Logic
-- `app/context/AppContext.tsx` - Global state, all CRUD operations
-- `app/utils/storage.ts` - AsyncStorage wrapper
-- `app/utils/migration.ts` - Data migration system
-- `app/constants/DefaultData.ts` - Default allies, anchors, archetypes
-
-### Key Components
-- `app/components/AllyCard.tsx` - Substance display card
-- `app/components/AnchorCard.tsx` - Time anchor card
-- `app/modal/AddMovementModal.tsx` - Movement logging
-- `app/modal/SubstanceSynthesisModal.tsx` - Substance journaling
-
-### Main Screens
-- `app/(tabs)/index.tsx` - Nourish page (home)
-- `app/(tabs)/substances.tsx` - Substances list
-- `app/(tabs)/journal.tsx` - Journal/timeline
-
----
-
-## 📚 Resources
-
-- **Expo Docs:** https://docs.expo.dev/
-- **React Navigation:** https://reactnavigation.org/
-- **TypeScript:** https://www.typescriptlang.org/docs/
-
----
-
-## 🐛 Recent Fixes (See FIXES_APPLIED.md)
-
-- ✅ Movement modal useState import
-- ✅ Migration storage key mismatch
-- ✅ Mirror & Mystery emoji display
-- ⚠️ Tunnel cache issue (use LAN instead)
+**Current Status (as of Nov 9, 2025):**
+- The Nourishment tab's modal works correctly.
+- The Substances tab's modal is still being debugged.
+- The issue is likely related to how the `onPress` handler is wired or how state is passed, not the modal component itself.
 
 ---
 
 ## 🤝 Contributing
 
-This is a personal project, but if you're an AI helping build it:
+This is a personal project, but for AI collaborators:
 
-1. Read `FIXES_APPLIED.md` for recent changes
-2. Check `app/constants/Types.ts` for data structures
-3. Follow existing patterns in components
-4. Test with both empty and populated data
-5. Use LAN connection for reliable testing
-6. Increment migration version for data changes
-7. Document significant changes
-
----
-
-## 📄 License
-
-Personal project - all rights reserved.
+1.  **Read this README** to understand the philosophy and architecture.
+2.  **Follow existing patterns.** If a feature works in one part of the app, clone that pattern.
+3.  **Use AppContext** for all state changes. Never mutate state directly.
+4.  **Increment migration version** for any data model changes.
+5.  **Test with both empty and populated data** to ensure stability.
 
 ---
 
