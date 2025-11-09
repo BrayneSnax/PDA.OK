@@ -79,7 +79,7 @@ export const JournalList: React.FC<JournalListProps> = ({
                     {entry.preview}
                   </Text>
                 </View>
-                <Text style={[styles.arrow, { color: colors.dim }]}>›</Text>
+                <Text style={[styles.arrow, { color: colors.dim }]} pointerEvents="none">›</Text>
               </TouchableOpacity>
             ))
           )}
