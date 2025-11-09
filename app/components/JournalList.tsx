@@ -65,7 +65,7 @@ export const JournalList: React.FC<JournalListProps> = ({
                 }}
                 activeOpacity={0.7}
               >
-                <View style={styles.entryContent}>
+                <View style={styles.entryContent} pointerEvents="none">
                   {entry.date && (
                     <Text style={[styles.entryDate, { color: colors.dim }]}>
                       {entry.date}
