@@ -172,3 +172,35 @@ This is a personal project, but for AI collaborators:
 ---
 
 **Built with intention. Used with care.** 🌌
+
+
+---
+
+## 🏛️ The Four Containers - Daily Ritual & Embodiment
+
+The foundation of PDA.OK is the **anchor and container system**—a set of daily rituals designed to ground the user in time and embodiment. The day is divided into four containers, each with its own energetic signature, color palette, and set of grounding anchors.
+
+| Container   | Time of Day | Energetic Signature | Color Palette         |
+| ----------- | ----------- | ------------------- | --------------------- |
+| **Morning** | 5am - 12pm  | Emergence, Clarity  | Warm oranges, soft yellows |
+| **Afternoon** | 12pm - 6pm  | Expression, Action  | Bright blues, energetic tones |
+| **Evening** | 6pm - 10pm  | Integration, Descent| Deep purples, sunset hues |
+| **Late**      | 10pm - 5am  | Stillness, Mystery  | Dark blues, midnight tones |
+
+### Grounding Anchors
+Each container holds a set of **grounding anchors**—simple, embodied actions that serve as daily rituals. These are not tasks to be completed, but invitations to return to the present moment.
+
+**Anchor Structure:**
+- **Title:** The name of the anchor (e.g., "Ground", "Light Intake").
+- **Body Cue:** A prompt to notice a physical sensation (e.g., "Breath entering your nose").
+- **Micro-Action:** A small, simple action (e.g., "Press your toes lightly into the earth.").
+- **Ultra-Micro Action:** An even smaller, almost imperceptible action (e.g., "Feel soles press once.").
+- **Desire:** The underlying intention of the anchor (e.g., "Presence begins from below.").
+
+### Somatic & Narrative Feedback
+When an anchor is completed, the app provides two layers of feedback:
+
+1.  **Somatic Layer (Breath Motion):** A soft pulse animation is triggered, creating a visual ripple effect that mimics a gentle breath. This provides a non-verbal, embodied sense of completion.
+2.  **Narrative Layer (Toaster Card):** A small, temporary "toaster" card appears with a random, gentle phrase like "good contact," "small shift made," or "system heard you." This provides a poetic, non-judgmental acknowledgment.
+
+This two-layered feedback system reinforces the app's core philosophy: the body feels the shift first (somatic), and the mind receives a gentle story about it (narrative).
