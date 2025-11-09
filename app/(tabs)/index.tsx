@@ -11,6 +11,7 @@ import {
 import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import useColors from '../hooks/useColors';
+import { useTransmissions } from '../hooks/useTransmissions';
 import { formatTime, formatLongDate, getCurrentContainer } from '../utils/time';
 import { ContainerThemes } from '../constants/Colors';
 import { AnchorCard } from '../components/AnchorCard';
@@ -106,6 +107,8 @@ export default function HomeScreen() {
     activeArchetypeId,
     setActiveArchetypeId,
   } = useApp();
+
+  const { transmissions } = useTransmissions();
 
   const activeArchetype = activeArchetypeId 
     ? archetypes.find(a => a.id === activeArchetypeId) || null
