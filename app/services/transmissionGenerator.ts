@@ -18,6 +18,7 @@ export interface TransmissionContext {
   journalEntries: Moment[];
   allies: Ally[];
   archetypes: Archetype[];
+  anchors: any[]; // Anchor data with completions for pattern analysis
   currentTimeOfDay: 'morning' | 'afternoon' | 'evening' | 'late';
 }
 

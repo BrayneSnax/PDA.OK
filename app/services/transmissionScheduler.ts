@@ -11,6 +11,7 @@ import {
   TransmissionContext 
 } from './transmissionGenerator';
 import { generateWitnessTransmission } from './witnessTransmissionGenerator';
+import { checkGreenGodmotherTransmission } from './greenGodmotherTransmissionGenerator';
 
 const STORAGE_KEY = '@pda_transmissions';
 const LAST_CHECK_KEY = '@pda_last_transmission_check';
@@ -202,6 +203,51 @@ export async function checkAndGenerateTransmissions(
   if (witnessTransmission) {
     await addTransmission(witnessTransmission);
     console.log('[Witness] Transmission added');
+  }
+
+  // Check for Green Godmother transmission
+  // Extract substance entries and anchor completions from context
+  const substanceEntries = context.journalEntries
+    .filter(entry => entry.allyName)
+    .map(entry => ({
+      id: entry.id || `entry_${entry.timestamp}`,
+      allyId: entry.allyId || '',
+      allyName: entry.allyName || '',
+      timestamp: entry.timestamp,
+      intention: entry.context, // Map 'context' to 'intention'
+      sensation: entry.action_reflection, // Map 'action_reflection' to 'sensation'
+      reflection: entry.result_shift, // Map 'result_shift' to 'reflection'
+      timeContainer: entry.container as 'morning' | 'afternoon' | 'evening' | 'late',
+    }));
+
+  const anchorCompletions = context.anchors
+    .flatMap(anchor => 
+      anchor.completions?.map(c => ({
+        anchorId: anchor.id,
+        anchorName: anchor.name,
+        timestamp: c.timestamp,
+        timeContainer: c.timeContainer,
+      })) || []
+    );
+
+  const greenGodmotherTransmission = await checkGreenGodmotherTransmission(
+    substanceEntries,
+    anchorCompletions
+  );
+  
+  if (greenGodmotherTransmission) {
+    // Convert to Transmission format expected by scheduler
+    const transmission: Transmission = {
+      id: greenGodmotherTransmission.id,
+      type: 'substance',
+      entityName: 'Cannabis',
+      entityMythicName: 'Green Godmother',
+      message: greenGodmotherTransmission.content,
+      timestamp: new Date(greenGodmotherTransmission.timestamp),
+      context: greenGodmotherTransmission.patternContext || '',
+    };
+    await addTransmission(transmission);
+    console.log('[Green Godmother] Transmission added');
   }
 
   // Build entity list with last transmission times
