@@ -36,9 +36,6 @@
     },
     "extra": {
       "router": {},
-      "eas": {
-        "projectId": "7ba133ff-6a63-48eb-9c04-aa10ca1ff89a"
-      },
       "EXPO_PUBLIC_TEST_MODE": "false",
       "EXPO_PUBLIC_ANALYSIS_URL": "",
       "EXPO_PUBLIC_GEMINI_API_KEY": ""
