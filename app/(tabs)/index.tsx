@@ -586,26 +586,9 @@ export default function HomeScreen() {
                   handleCompletion(selectedItem.id);
                 } else {
                   // For other actions (skipped, forgot, couldn't, not relevant),
-                  // show ring pulse and ultra-micro modal with random anchor
-                  setShowRingPulse(true);
+                  // show gentle ActionToast feedback
                   setCurrentActionType(status);
-                  
-                  // Get all anchors with ultra_micro field
-                  const anchorsWithUltraMicro = items.filter(item => item.ultra_micro);
-                  
-                  if (anchorsWithUltraMicro.length > 0) {
-                    // Pick a random anchor
-                    const randomAnchor = anchorsWithUltraMicro[Math.floor(Math.random() * anchorsWithUltraMicro.length)];
-                    setUltraMicroData({
-                      title: randomAnchor.title,
-                      ultraMicro: randomAnchor.ultra_micro || ''
-                    });
-                    
-                    // Delay the modal slightly so ring pulse is visible first
-                    setTimeout(() => {
-                      setShowUltraMicroModal(true);
-                    }, 400);
-                  }
+                  setShowActionToast(true);
                   
                   // Note: We're just acknowledging the action, not creating a duplicate task
                   // The note parameter could be logged to a journal system in the future
@@ -642,6 +625,14 @@ export default function HomeScreen() {
           colors={colors}
           container={activeContainer}
           onDismiss={() => setShowShiftToast(false)}
+        />
+        
+        <ActionToast
+          isVisible={showActionToast}
+          actionType={currentActionType}
+          colors={colors}
+          container={activeContainer}
+          onDismiss={() => setShowActionToast(false)}
         />
         
         <UltraMicroModal

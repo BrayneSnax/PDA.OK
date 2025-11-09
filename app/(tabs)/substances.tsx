@@ -298,31 +298,17 @@ export default function SubstancesScreen() {
       />
 
       {/* Journal Entry Detail Modal */}
-      {(() => {
-        try {
-          console.log('=== MODAL RENDER ===');
-          console.log('Modal visible:', isJournalEntryModalVisible);
-          console.log('Selected entry:', selectedJournalEntry);
-          return (
-            <JournalEntryModal
-              visible={isJournalEntryModalVisible && selectedJournalEntry !== null}
-              onClose={() => {
-                console.log('Modal closing...');
-                setIsJournalEntryModalVisible(false);
-                setSelectedJournalEntry(null);
-              }}
-              title={selectedJournalEntry?.title || ''}
-              date={selectedJournalEntry?.date}
-              content={selectedJournalEntry?.content || ''}
-              colors={colors}
-            />
-          );
-        } catch (error) {
-          console.error('=== ERROR RENDERING MODAL ===');
-          console.error('Error:', error);
-          return null;
-        }
-      })()}
+      <JournalEntryModal
+        visible={isJournalEntryModalVisible && selectedJournalEntry !== null}
+        onClose={() => {
+          setIsJournalEntryModalVisible(false);
+          setSelectedJournalEntry(null);
+        }}
+        title={selectedJournalEntry?.title || ''}
+        date={selectedJournalEntry?.date}
+        content={selectedJournalEntry?.content || ''}
+        colors={colors}
+      />
     </View>
   );
 }

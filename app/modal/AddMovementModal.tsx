@@ -40,10 +40,10 @@ export function AddMovementModal({ isVisible, onClose, onAdd, colors }: Props) {
   const [showResistanceDropdown, setShowResistanceDropdown] = useState(false);
 
   const handleSave = () => {
-    if (act.trim() && resistance) {
+    if (act.trim()) {
       onAdd({
         act: act.trim(),
-        resistance,
+        resistance: resistance || '',
         gainingInertia: gainingInertia.trim(),
         goalposts: goalposts.trim(),
       });
@@ -121,7 +121,7 @@ export function AddMovementModal({ isVisible, onClose, onAdd, colors }: Props) {
 
               {/* Resistance */}
               <View style={[styles.checkInField, { flex: 1 }]}>
-                <Text style={[styles.fieldLabel, { color: colors.text }]}>Resistance</Text>
+                <Text style={[styles.fieldLabel, { color: colors.text }]}>Resistance (optional)</Text>
                 <TouchableOpacity
                   style={[styles.dropdown, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}
                   onPress={() => setShowResistanceDropdown(!showResistanceDropdown)}
@@ -151,7 +151,7 @@ export function AddMovementModal({ isVisible, onClose, onAdd, colors }: Props) {
 
             {/* GAINING INERTIA */}
             <Text style={[styles.sectionLabel, { color: colors.dim, marginTop: 24 }]}>
-              GAINING INERTIA
+              GAINING INERTIA (OPTIONAL)
             </Text>
             <TextInput
               style={[styles.textArea, { backgroundColor: colors.card, borderColor: colors.accent + '40', color: colors.text }]}
@@ -166,7 +166,7 @@ export function AddMovementModal({ isVisible, onClose, onAdd, colors }: Props) {
 
             {/* GOALPOSTS & REFLECTIONS */}
             <Text style={[styles.sectionLabel, { color: colors.dim, marginTop: 24 }]}>
-              GOALPOSTS & REFLECTIONS
+              GOALPOSTS & REFLECTIONS (OPTIONAL)
             </Text>
             <TextInput
               style={[styles.textArea, { backgroundColor: colors.card, borderColor: colors.accent + '40', color: colors.text }]}
@@ -193,10 +193,10 @@ export function AddMovementModal({ isVisible, onClose, onAdd, colors }: Props) {
               style={[
                 styles.button,
                 styles.saveButton,
-                { backgroundColor: colors.accent, opacity: (!act.trim() || !resistance) ? 0.5 : 1 }
+                { backgroundColor: colors.accent, opacity: !act.trim() ? 0.5 : 1 }
               ]}
               onPress={handleSave}
-              disabled={!act.trim() || !resistance}
+              disabled={!act.trim()}
             >
               <Text style={[styles.buttonText, { color: colors.card }]}>
                 Log Movement
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 40,
     paddingHorizontal: 20,
-    maxHeight: '85%',
+    maxHeight: '80%',
   },
   header: {
     flexDirection: 'row',

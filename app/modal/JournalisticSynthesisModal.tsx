@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Modal } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, KeyboardAvoidingView, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker'; // Assuming Picker is available or will be installed
 
 import { ContainerId, ColorScheme, Moment } from '../constants/Types';
@@ -52,11 +52,7 @@ export const JournalisticSynthesisModal = ({ isVisible, onClose, momentData }: P
   }, [isVisible]);
 
   const handleSave = () => {
-    if (!synthesisState.tone || !synthesisState.frequency || !synthesisState.presence) {
-      // Basic validation for the 3 core fields
-      alert('Please select Tone, Frequency, and Presence before saving.');
-      return;
-    }
+    // All fields are optional - no validation required
 
     const finalMoment: Omit<Moment, 'id' | 'timestamp' | 'date'> = {
       ...momentData,
@@ -87,17 +83,20 @@ export const JournalisticSynthesisModal = ({ isVisible, onClose, momentData }: P
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <View style={[styles.centeredView, { backgroundColor: colors.bg + 'CC' }]}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={[styles.centeredView, { backgroundColor: colors.bg + 'CC' }]}
+      >
         <View style={[styles.modalView, { backgroundColor: colors.card }]}>
           <Text style={[styles.modalTitle, { color: colors.text }]}>Journalistic Synthesis</Text>
           <Text style={[styles.modalSubtitle, { color: colors.dim }]}>
             Reflect on the Moment with guided prompts.
           </Text>
 
-          <ScrollView style={styles.scrollView}>
+          <View style={styles.contentContainer}>
             {/* The 3-Part Check-in (Tone, Frequency, Presence) - Now as Dropdowns */}
             <View style={styles.checkInSection}>
-              <Text style={[styles.sectionTitle, { color: colors.accent }]}>The 3-Part Check-in</Text>
+              <Text style={[styles.sectionTitle, { color: colors.accent }]}>THE 3-PART CHECK-IN</Text>
 
               <View style={styles.dropdownRow}>
                 {/* Tone Dropdown */}
@@ -158,7 +157,7 @@ export const JournalisticSynthesisModal = ({ isVisible, onClose, momentData }: P
 
             {/* Guided Reflection Prompts */}
             <View style={styles.reflectionSection}>
-              <Text style={[styles.sectionTitle, { color: colors.accent }]}>Guided Reflection</Text>
+              <Text style={[styles.sectionTitle, { color: colors.accent }]}>GUIDED INVOCATION</Text>
               {synthesisPrompts.map(prompt => (
                 <View key={prompt.key} style={styles.promptContainer}>
                   <Text style={[styles.promptLabel, { color: colors.text }]}>{prompt.title}</Text>
@@ -174,7 +173,7 @@ export const JournalisticSynthesisModal = ({ isVisible, onClose, momentData }: P
                 </View>
               ))}
             </View>
-          </ScrollView>
+          </View>
 
           <View style={styles.buttonRow}>
             <TouchableOpacity
@@ -191,7 +190,7 @@ export const JournalisticSynthesisModal = ({ isVisible, onClose, momentData }: P
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
@@ -205,7 +204,7 @@ const styles = StyleSheet.create({
   modalView: {
     margin: 20,
     borderRadius: 20,
-    padding: 25,
+    padding: 20,
     alignItems: 'stretch',
     shadowColor: '#000',
     shadowOffset: {
@@ -217,39 +216,35 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: '90%',
     maxWidth: 600,
-    maxHeight: '90%',
+    maxHeight: '75%',
   },
   modalTitle: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '700',
     marginBottom: 4,
   },
   modalSubtitle: {
-    fontSize: 14,
-    marginBottom: 16,
+    fontSize: 13,
+    marginBottom: 12,
   },
-  scrollView: {
-    maxHeight: '75%',
-    paddingVertical: 10,
+  contentContainer: {
+    flex: 1,
   },
   checkInSection: {
-    marginBottom: 20,
-    paddingBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc3',
+    marginBottom: 12,
   },
   reflectionSection: {
-    marginBottom: 20,
+    marginTop: 8,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '600',
-    marginBottom: 10,
+    marginBottom: 8,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
   promptContainer: {
-    marginBottom: 15,
+    marginBottom: 8,
   },
   promptLabel: {
     fontSize: 14,
@@ -259,9 +254,10 @@ const styles = StyleSheet.create({
   input: {
     borderRadius: 8,
     padding: 10,
-    minHeight: 80,
+    minHeight: 50,
+    maxHeight: 80,
     textAlignVertical: 'top',
-    fontSize: 14,
+    fontSize: 13,
     borderWidth: 1,
   },
   // New styles for the dropdown layout
@@ -279,7 +275,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   picker: {
-    height: 40, // Adjust height as needed
+    height: 35,
     width: '100%',
   },
   // Removed old button styles
@@ -300,7 +296,7 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20,
+    marginTop: 12,
   },
   cancelButton: {
     flex: 1,

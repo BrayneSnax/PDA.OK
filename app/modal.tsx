@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 
 import { Ally, ColorScheme, ContainerId } from '../constants/Types';
 
@@ -43,32 +43,35 @@ export const AddAllyModal: React.FC<AddAllyModalProps> = ({ isVisible, onClose, 
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <View style={styles.centeredView}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.centeredView}
+      >
         <View style={[styles.modalView, { backgroundColor: colors.bg }]}>
           <Text style={[styles.modalTitle, { color: colors.text }]}>Add New Ally</Text>
-          <ScrollView style={styles.scrollView}>
+          <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Mythological Name (e.g., The Awakener, Liquid Focus)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Mythological Name (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setMythicalName}
                 value={mythicalName}
-                placeholder="Optional poetic name"
+                placeholder="e.g., The Awakener, Liquid Focus"
                 placeholderTextColor={colors.dim}
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Name* (e.g., Caffeine, Sunlight)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Name* (required)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setName}
                 value={name}
-                placeholder="Ally Name"
+                placeholder="e.g., Caffeine, Cannabis, Sunlight"
                 placeholderTextColor={colors.dim}
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Face (Emoji Icon)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Face (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setFace}
@@ -79,45 +82,45 @@ export const AddAllyModal: React.FC<AddAllyModalProps> = ({ isVisible, onClose, 
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Invocation (How you call it to action)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Invocation (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setInvocation}
                 value={invocation}
-                placeholder="A gentle nudge"
+                placeholder="How you call it to action"
                 placeholderTextColor={colors.dim}
                 multiline
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Function (What it does for you)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Function (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setFunc}
                 value={func}
-                placeholder="Boosts focus and energy"
+                placeholder="What it does for you"
                 placeholderTextColor={colors.dim}
                 multiline
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Shadow (The downside/risk)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Shadow (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setShadow}
                 value={shadow}
-                placeholder="Jitters, crash, dependence"
+                placeholder="The downside/risk"
                 placeholderTextColor={colors.dim}
                 multiline
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Ritual (How you use it mindfully)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Ritual (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setRitual}
                 value={ritual}
-                placeholder="Only before 12pm, with a glass of water"
+                placeholder="How you use it mindfully"
                 placeholderTextColor={colors.dim}
                 multiline
               />
@@ -140,7 +143,7 @@ export const AddAllyModal: React.FC<AddAllyModalProps> = ({ isVisible, onClose, 
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
@@ -206,12 +209,15 @@ export const EditAllyModal: React.FC<EditAllyModalProps> = ({ isVisible, onClose
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <View style={styles.centeredView}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.centeredView}
+      >
         <View style={[styles.modalView, { backgroundColor: colors.bg }]}>
           <Text style={[styles.modalTitle, { color: colors.text }]}>Edit Ally: {ally.name}</Text>
-          <ScrollView style={styles.scrollView}>
+          <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Name* (e.g., Caffeine, Sunlight)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Name* (required)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setName}
@@ -221,7 +227,7 @@ export const EditAllyModal: React.FC<EditAllyModalProps> = ({ isVisible, onClose
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Face (Emoji Icon)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Face (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setFace}
@@ -232,45 +238,45 @@ export const EditAllyModal: React.FC<EditAllyModalProps> = ({ isVisible, onClose
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Invocation (How you call it to action)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Invocation (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setInvocation}
                 value={invocation}
-                placeholder="A gentle nudge"
+                placeholder="How you call it to action"
                 placeholderTextColor={colors.dim}
                 multiline
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Function (What it does for you)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Function (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setFunc}
                 value={func}
-                placeholder="Boosts focus and energy"
+                placeholder="What it does for you"
                 placeholderTextColor={colors.dim}
                 multiline
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Shadow (The downside/risk)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Shadow (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setShadow}
                 value={shadow}
-                placeholder="Jitters, crash, dependence"
+                placeholder="The downside/risk"
                 placeholderTextColor={colors.dim}
                 multiline
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Ritual (How you use it mindfully)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Ritual (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setRitual}
                 value={ritual}
-                placeholder="Only before 12pm, with a glass of water"
+                placeholder="How you use it mindfully"
                 placeholderTextColor={colors.dim}
                 multiline
               />
@@ -293,7 +299,7 @@ export const EditAllyModal: React.FC<EditAllyModalProps> = ({ isVisible, onClose
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
@@ -303,30 +309,37 @@ export const EditAllyModal: React.FC<EditAllyModalProps> = ({ isVisible, onClose
 interface CraftMomentModalProps {
   isVisible: boolean;
   onClose: () => void;
-  onSave: (title: string, container: ContainerId, category: 'time' | 'situational' | 'uplift' | 'crafted', body_cue: string, micro: string, desire: string) => void;
+  onSave: (title: string, body: string, container: ContainerId) => void;
   colors: ColorScheme;
+  container: ContainerId;
 }
 
-
-
-export const CraftMomentModal: React.FC<CraftMomentModalProps> = ({ isVisible, onClose, onSave, colors }) => {
+export const CraftMomentModal: React.FC<CraftMomentModalProps> = ({ isVisible, onClose, onSave, colors, container }) => {
   const [title, setTitle] = React.useState('');
-  const [bodyCue, setBodyCue] = React.useState('');
-  const [micro, setMicro] = React.useState('');
-  const [desire, setDesire] = React.useState('');
+  const [body, setBody] = React.useState('');
 
   const handleSave = () => {
     if (title.trim()) {
-      // All crafted moments go to 'morning' container by default (doesn't matter since they're filtered by category)
-      onSave(title, 'morning', 'crafted', bodyCue, micro, desire);
-      // Reset form
+      onSave(title, body, container);
       setTitle('');
-      setBodyCue('');
-      setMicro('');
-      setDesire('');
+      setBody('');
       onClose();
     }
   };
+
+  const containerLabels: Record<ContainerId, string> = {
+    morning: 'Morning',
+    afternoon: 'Afternoon',
+    evening: 'Evening',
+    late: 'Late',
+  };
+
+  const radioOptions = [
+    { id: 'morning' as ContainerId, label: containerLabels.morning },
+    { id: 'afternoon' as ContainerId, label: containerLabels.afternoon },
+    { id: 'evening' as ContainerId, label: containerLabels.evening },
+    { id: 'late' as ContainerId, label: containerLabels.late },
+  ];
 
   return (
     <Modal
@@ -335,58 +348,34 @@ export const CraftMomentModal: React.FC<CraftMomentModalProps> = ({ isVisible, o
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <View style={styles.centeredView}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.centeredView}
+      >
         <View style={[styles.modalView, { backgroundColor: colors.bg }]}>
           <Text style={[styles.modalTitle, { color: colors.text }]}>Craft a Moment</Text>
-          <ScrollView style={styles.scrollView}>
+          <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Moment Title* (e.g., Hydrate, Stretch)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Title* (required)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
                 onChangeText={setTitle}
                 value={title}
-                placeholder="A simple, meaningful action"
+                placeholder="What happened?"
                 placeholderTextColor={colors.dim}
               />
             </View>
-
-
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Notice</Text>
-              <Text style={[styles.helperText, { color: colors.dim, fontSize: 11, fontStyle: 'italic', marginBottom: 6 }]}>A word or phrase is enough...</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Body (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
-                onChangeText={setBodyCue}
-                value={bodyCue}
-                placeholder="When I feel a slump in energy..."
+                onChangeText={setBody}
+                value={body}
+                placeholder="Tell the story..."
                 placeholderTextColor={colors.dim}
                 multiline
-              />
-            </View>
-
-            <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Act</Text>
-              <Text style={[styles.helperText, { color: colors.dim, fontSize: 11, fontStyle: 'italic', marginBottom: 6 }]}>A word or phrase is enough...</Text>
-              <TextInput
-                style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
-                onChangeText={setMicro}
-                value={micro}
-                placeholder="One deep breath"
-                placeholderTextColor={colors.dim}
-                multiline
-              />
-            </View>
-
-            <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Reflect</Text>
-              <Text style={[styles.helperText, { color: colors.dim, fontSize: 11, fontStyle: 'italic', marginBottom: 6 }]}>A word or phrase is enough...</Text>
-              <TextInput
-                style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
-                onChangeText={setDesire}
-                value={desire}
-                placeholder="To feel present and grounded"
-                placeholderTextColor={colors.dim}
-                multiline
+                numberOfLines={4}
+                textAlignVertical="top"
               />
             </View>
             <View style={{ height: 20 }} />
@@ -407,7 +396,7 @@ export const CraftMomentModal: React.FC<CraftMomentModalProps> = ({ isVisible, o
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
@@ -436,7 +425,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: '90%',
-    maxHeight: '85%',
+    maxHeight: '80%',
   },
   modalTitle: {
     fontSize: 24,
@@ -445,7 +434,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   scrollView: {
-    maxHeight: '80%',
+    flexGrow: 1,
   },
   inputGroup: {
     marginBottom: 15,
