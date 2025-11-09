@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Platform, KeyboardAvoidingView } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Modal, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 import { ContainerId, ColorScheme, Moment } from '../constants/Types';
@@ -57,7 +57,10 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
   }, [isVisible]);
 
   const handleSave = () => {
-    // All fields are optional - no validation required
+    if (!synthesisState.intention || !synthesisState.sensation || !synthesisState.reflection) {
+      alert('Please fill in Intention, Sensation, and Reflection before saving.');
+      return;
+    }
 
     const finalMoment: Omit<Moment, 'id' | 'timestamp' | 'date'> = {
       ...momentData,
@@ -172,17 +175,14 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={[styles.centeredView, { backgroundColor: colors.bg + 'CC' }]}
-      >
+      <View style={[styles.centeredView, { backgroundColor: colors.bg + 'CC' }]}>
         <View style={[styles.modalView, { backgroundColor: colors.card }]}>
           <Text style={[styles.modalTitle, { color: colors.text }]}>Journalistic Synthesis</Text>
           <Text style={[styles.modalSubtitle, { color: colors.dim }]}>
             Reflect on the Moment.
           </Text>
 
-          <View style={styles.contentContainer}>
+          <ScrollView style={styles.scrollView}>
             <View style={styles.checkInSection}>
               <Text style={[styles.sectionTitle, { color: colors.accent }]}>THE 3-PART CHECK-IN</Text>
 
@@ -248,7 +248,7 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
                 numberOfLines={8}
               />
             </View>
-          </View>
+          </ScrollView>
 
           <View style={styles.buttonRow}>
             <TouchableOpacity
@@ -265,7 +265,7 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
             </TouchableOpacity>
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </Modal>
   );
 };
@@ -278,9 +278,9 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: '90%',
-    maxHeight: '75%',
+    maxHeight: '80%',
     borderRadius: 16,
-    padding: 20,
+    padding: 24,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -288,19 +288,19 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '600',
-    marginBottom: 6,
+    marginBottom: 8,
   },
   modalSubtitle: {
-    fontSize: 13,
-    marginBottom: 12,
+    fontSize: 14,
+    marginBottom: 16,
   },
-  contentContainer: {
-    flex: 1,
+  scrollView: {
+    maxHeight: 400,
   },
   checkInSection: {
-    marginBottom: 12,
+    marginBottom: 20,
   },
   horizontalFieldsRow: {
     flexDirection: 'row',
@@ -311,60 +311,59 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sectionTitle: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '700',
     textTransform: 'uppercase',
     letterSpacing: 1,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   label: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: '600',
-    marginBottom: 4,
+    marginBottom: 6,
   },
   textInput: {
     borderRadius: 8,
     borderWidth: 1,
-    padding: 10,
-    fontSize: 13,
+    padding: 12,
+    fontSize: 14,
   },
   miniTextInput: {
-    minHeight: 38,
+    minHeight: 44,
   },
   pickerContainer: {
     borderRadius: 8,
     borderWidth: 1,
     overflow: 'hidden',
-    minHeight: 38,
+    minHeight: 44,
     justifyContent: 'center',
   },
   picker: {
-    height: 38,
+    height: 44,
   },
   largeTextInput: {
-    minHeight: 80,
-    maxHeight: 100,
+    minHeight: 120,
     textAlignVertical: 'top',
   },
   promptSection: {
-    marginBottom: 12,
+    marginBottom: 20,
   },
   guidedReflectionTitle: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '700',
     textTransform: 'uppercase',
     letterSpacing: 1,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   promptTitle: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
-    marginBottom: 6,
+    marginBottom: 8,
   },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 12,
+    marginTop: 20,
     gap: 12,
   },
   button: {

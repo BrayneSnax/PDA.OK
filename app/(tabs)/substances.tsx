@@ -138,6 +138,7 @@ export default function SubstancesScreen() {
                     key={entry.id}
                     style={[styles.entryRow, { borderBottomColor: colors.dim + '33' }]}
                     onPress={() => {
+                      alert('TAP REGISTERED!');
                       try {
                         console.log('=== SUBSTANCES TAP START ===');
                         console.log('Entry ID:', entry.id);
