@@ -12,6 +12,12 @@ import {
 } from './transmissionGenerator';
 import { generateWitnessTransmission } from './witnessTransmissionGenerator';
 import { checkGreenGodmotherTransmission } from './greenGodmotherTransmissionGenerator';
+import { checkMotherOfSilenceTransmission } from './motherOfSilenceTransmissionGenerator';
+import { checkArchitectureTransmission } from './architectureTransmissionGenerator';
+import { checkSirenTransmission } from './sirenTransmissionGenerator';
+import { checkAlchemistTransmission } from './alchemistTransmissionGenerator';
+import { checkGroundkeeperTransmission } from './groundkeeperTransmissionGenerator';
+import { checkTempestTransmission } from './tempestTransmissionGenerator';
 
 const STORAGE_KEY = '@pda_transmissions';
 const LAST_CHECK_KEY = '@pda_last_transmission_check';
@@ -236,7 +242,6 @@ export async function checkAndGenerateTransmissions(
   );
   
   if (greenGodmotherTransmission) {
-    // Convert to Transmission format expected by scheduler
     const transmission: Transmission = {
       id: greenGodmotherTransmission.id,
       type: 'substance',
@@ -248,6 +253,120 @@ export async function checkAndGenerateTransmissions(
     };
     await addTransmission(transmission);
     console.log('[Green Godmother] Transmission added');
+  }
+
+  // Check for Mother of Silence transmission
+  const motherOfSilenceTransmission = await checkMotherOfSilenceTransmission(
+    substanceEntries,
+    anchorCompletions
+  );
+  if (motherOfSilenceTransmission) {
+    const transmission: Transmission = {
+      id: motherOfSilenceTransmission.id,
+      type: 'substance',
+      entityName: 'Psychedelics',
+      entityMythicName: 'Mother of Silence',
+      message: motherOfSilenceTransmission.content,
+      timestamp: new Date(motherOfSilenceTransmission.timestamp),
+      context: motherOfSilenceTransmission.patternContext || '',
+    };
+    await addTransmission(transmission);
+    console.log('[Mother of Silence] Transmission added');
+  }
+
+  // Check for The Architecture transmission
+  const architectureTransmission = await checkArchitectureTransmission(
+    substanceEntries,
+    anchorCompletions
+  );
+  if (architectureTransmission) {
+    const transmission: Transmission = {
+      id: architectureTransmission.id,
+      type: 'substance',
+      entityName: 'Stimulants',
+      entityMythicName: 'The Architecture',
+      message: architectureTransmission.content,
+      timestamp: new Date(architectureTransmission.timestamp),
+      context: architectureTransmission.patternContext || '',
+    };
+    await addTransmission(transmission);
+    console.log('[The Architecture] Transmission added');
+  }
+
+  // Check for The Siren transmission
+  const sirenTransmission = await checkSirenTransmission(
+    substanceEntries,
+    anchorCompletions
+  );
+  if (sirenTransmission) {
+    const transmission: Transmission = {
+      id: sirenTransmission.id,
+      type: 'substance',
+      entityName: 'Music',
+      entityMythicName: 'The Siren',
+      message: sirenTransmission.content,
+      timestamp: new Date(sirenTransmission.timestamp),
+      context: sirenTransmission.patternContext || '',
+    };
+    await addTransmission(transmission);
+    console.log('[The Siren] Transmission added');
+  }
+
+  // Check for The Alchemist transmission
+  const alchemistTransmission = await checkAlchemistTransmission(
+    substanceEntries,
+    anchorCompletions
+  );
+  if (alchemistTransmission) {
+    const transmission: Transmission = {
+      id: alchemistTransmission.id,
+      type: 'substance',
+      entityName: 'Nicotine/Caffeine',
+      entityMythicName: 'The Alchemist',
+      message: alchemistTransmission.content,
+      timestamp: new Date(alchemistTransmission.timestamp),
+      context: alchemistTransmission.patternContext || '',
+    };
+    await addTransmission(transmission);
+    console.log('[The Alchemist] Transmission added');
+  }
+
+  // Check for The Groundkeeper transmission
+  const groundkeeperTransmission = await checkGroundkeeperTransmission(
+    substanceEntries,
+    anchorCompletions
+  );
+  if (groundkeeperTransmission) {
+    const transmission: Transmission = {
+      id: groundkeeperTransmission.id,
+      type: 'substance',
+      entityName: 'Food',
+      entityMythicName: 'The Groundkeeper',
+      message: groundkeeperTransmission.content,
+      timestamp: new Date(groundkeeperTransmission.timestamp),
+      context: groundkeeperTransmission.patternContext || '',
+    };
+    await addTransmission(transmission);
+    console.log('[The Groundkeeper] Transmission added');
+  }
+
+  // Check for The Tempest transmission
+  const tempestTransmission = await checkTempestTransmission(
+    substanceEntries,
+    anchorCompletions
+  );
+  if (tempestTransmission) {
+    const transmission: Transmission = {
+      id: tempestTransmission.id,
+      type: 'substance',
+      entityName: 'Digital',
+      entityMythicName: 'The Tempest',
+      message: tempestTransmission.content,
+      timestamp: new Date(tempestTransmission.timestamp),
+      context: tempestTransmission.patternContext || '',
+    };
+    await addTransmission(transmission);
+    console.log('[The Tempest] Transmission added');
   }
 
   // Build entity list with last transmission times
