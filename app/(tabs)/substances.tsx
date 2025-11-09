@@ -131,6 +131,7 @@ export default function SubstancesScreen() {
               substanceJournalEntries.slice(0, 10).map((entry) => {
                 const preview = entry.tone || entry.frequency || entry.allyName || 'Substance Moment';
                 const fullContent = `${entry.allyName || 'Substance Moment'}\n\nIntention: ${entry.tone || 'Not specified'}\nSensation: ${entry.frequency || 'Not specified'}\nReflection: ${entry.presence || 'Not specified'}\n\nSynthesis & Invocation:\n${entry.context || 'None'}`;
+                const formattedDate = new Date(entry.date).toLocaleDateString();
                 
                 return (
                   <TouchableOpacity
@@ -140,7 +141,7 @@ export default function SubstancesScreen() {
                       console.log('Entry tapped:', entry.id);
                       setSelectedJournalEntry({
                         title: 'Substance Reflection',
-                        date: new Date(entry.date).toLocaleDateString(),
+                        date: formattedDate,
                         content: fullContent,
                       });
                       setIsJournalEntryModalVisible(true);
@@ -198,19 +199,21 @@ export default function SubstancesScreen() {
               transmissions
                 .filter(t => t.entityType === 'substance')
                 .slice(0, 10)
-                .map((transmission) => (
-                  <TouchableOpacity
-                    key={transmission.id}
-                    style={[styles.entryRow, { borderBottomColor: colors.dim + '33' }]}
-                    onPress={() => {
-                      console.log('Transmission tapped:', transmission.id);
-                      setSelectedJournalEntry({
-                        title: 'Substance Transmission',
-                        date: new Date(transmission.timestamp).toLocaleDateString(),
-                        content: transmission.message,
-                      });
-                      setIsJournalEntryModalVisible(true);
-                    }}
+                .map((transmission) => {
+                  const formattedDate = new Date(transmission.timestamp).toLocaleDateString();
+                  return (
+                    <TouchableOpacity
+                      key={transmission.id}
+                      style={[styles.entryRow, { borderBottomColor: colors.dim + '33' }]}
+                      onPress={() => {
+                        console.log('Transmission tapped:', transmission.id);
+                        setSelectedJournalEntry({
+                          title: 'Substance Transmission',
+                          date: formattedDate,
+                          content: transmission.message,
+                        });
+                        setIsJournalEntryModalVisible(true);
+                      }}
                     activeOpacity={0.7}
                   >
                     <View style={styles.entryContent}>
