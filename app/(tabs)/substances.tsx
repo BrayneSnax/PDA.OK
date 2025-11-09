@@ -10,6 +10,7 @@ import {
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import useColors from '../hooks/useColors';
+import { useTransmissions } from '../hooks/useTransmissions';
 import { AllyCard } from '../components/AllyCard';
 // ⧈replace-start:imports
 import { AddAllyModal, EditAllyModal } from '../modal';
@@ -29,6 +30,8 @@ export default function SubstancesScreen() {
     conversations,
     loading,
   } = useApp();
+
+  const { transmissions } = useTransmissions();
 
   const colors = useColors(activeContainer, true, 'substances');
   const [isAddAllyModalVisible, setIsAddAllyModalVisible] = useState(false);
