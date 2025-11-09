@@ -59,7 +59,11 @@ export const JournalList: React.FC<JournalListProps> = ({
               <TouchableOpacity
                 key={entry.id}
                 style={[styles.entryRow, { borderBottomColor: colors.dim + '33' }]}
-                onPress={() => onEntryPress?.(entry)}
+                onPress={() => {
+                  console.log('JournalList: Entry tapped', entry.id);
+                  onEntryPress?.(entry);
+                }}
+                activeOpacity={0.7}
               >
                 <View style={styles.entryContent}>
                   {entry.date && (
@@ -124,8 +128,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
     borderBottomWidth: 1,
+    minHeight: 60,
   },
   entryContent: {
     flex: 1,
