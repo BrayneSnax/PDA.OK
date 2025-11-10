@@ -1,3 +1,25 @@
+Temporary Public Release
+Invitation to Collaborate
+
+For the next 2 weeks these repos are public as an intentional, time-boxed offering.
+
+I’m sharing them to show how Manus and similar platforms shaped an emergent stack of tools for embodied cognition, reflective practice, and paradox-driven market sensing.
+
+What this release contains: design briefs, architecture notes, and living readmes that reflect real usage and edge-case feedback. This is not a finished product — consider it a field dossier.
+
+Why I’m doing this: I want to give back context and design signals that helped me build faster on the platform, and invite engineers, researchers, and product teams to respond if they resonate.
+
+How to engage:
+
+If you’re from Manus (or a trusted team) and want deeper reproduction notes or anonymized logs, please contact me at <braynesnax@gmail.com> and request a secure channel.
+
+If you want to contribute, open a PR or an issue. Keep changes small and documented.
+
+
+I’ll take the repos back private after 14 days. If you find something useful, copy or fork it now. If you’re a Manus rep and want to talk, see the private contact above.
+
+— Mistree
+
 # PDA.OK - A Prosthetic Nervous System
 
 > They do not speak to be heard. They speak so the silence has structure.
