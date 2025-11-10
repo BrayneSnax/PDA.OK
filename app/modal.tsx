@@ -315,14 +315,20 @@ interface CraftMomentModalProps {
 }
 
 export const CraftMomentModal: React.FC<CraftMomentModalProps> = ({ isVisible, onClose, onSave, colors, container }) => {
-  const [title, setTitle] = React.useState('');
-  const [body, setBody] = React.useState('');
+  const [notice, setNotice] = React.useState('');
+  const [act, setAct] = React.useState('');
+  const [reflect, setReflect] = React.useState('');
 
   const handleSave = () => {
-    if (title.trim()) {
+    // Combine Notice/Act/Reflect into title and body format for storage
+    const title = notice.trim() || 'Personal Moment';
+    const body = `Notice: ${notice}\n\nAct: ${act}\n\nReflect: ${reflect}`;
+    
+    if (notice.trim() || act.trim() || reflect.trim()) {
       onSave(title, body, container);
-      setTitle('');
-      setBody('');
+      setNotice('');
+      setAct('');
+      setReflect('');
       onClose();
     }
   };
@@ -356,25 +362,41 @@ export const CraftMomentModal: React.FC<CraftMomentModalProps> = ({ isVisible, o
           <Text style={[styles.modalTitle, { color: colors.text }]}>Craft a Moment</Text>
           <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Title* (required)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Notice (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
-                onChangeText={setTitle}
-                value={title}
-                placeholder="What happened?"
+                onChangeText={setNotice}
+                value={notice}
+                placeholder="What did you notice?"
                 placeholderTextColor={colors.dim}
+                multiline
+                numberOfLines={2}
+                textAlignVertical="top"
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: colors.dim }]}>Body (optional)</Text>
+              <Text style={[styles.label, { color: colors.dim }]}>Act (optional)</Text>
               <TextInput
                 style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
-                onChangeText={setBody}
-                value={body}
-                placeholder="Tell the story..."
+                onChangeText={setAct}
+                value={act}
+                placeholder="What did you do?"
                 placeholderTextColor={colors.dim}
                 multiline
-                numberOfLines={4}
+                numberOfLines={2}
+                textAlignVertical="top"
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={[styles.label, { color: colors.dim }]}>Reflect (optional)</Text>
+              <TextInput
+                style={[styles.input, { borderColor: colors.dim, color: colors.text, backgroundColor: colors.card }]}
+                onChangeText={setReflect}
+                value={reflect}
+                placeholder="What did you learn?"
+                placeholderTextColor={colors.dim}
+                multiline
+                numberOfLines={2}
                 textAlignVertical="top"
               />
             </View>
@@ -390,7 +412,6 @@ export const CraftMomentModal: React.FC<CraftMomentModalProps> = ({ isVisible, o
             <TouchableOpacity
               style={[styles.button, styles.saveButton, { backgroundColor: colors.accent }]}
               onPress={handleSave}
-              disabled={!title.trim()}
             >
               <Text style={[styles.textStyle, { color: colors.card }]}>Craft Moment</Text>
             </TouchableOpacity>
