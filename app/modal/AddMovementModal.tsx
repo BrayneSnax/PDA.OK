@@ -254,6 +254,7 @@ const styles = StyleSheet.create({
   },
   checkInField: {
     minWidth: 80,
+    alignItems: 'flex-start',
   },
   fieldLabel: {
     fontSize: 14,
