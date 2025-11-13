@@ -98,7 +98,7 @@ export function AddMovementModal({ isVisible, onClose, onAdd, colors }: Props) {
 
             <View style={styles.checkInRow}>
               {/* Time */}
-              <View style={styles.checkInField}>
+              <View style={[styles.checkInField, { flex: 1 }]}>
                 <Text style={[styles.fieldLabel, { color: colors.text }]}>Time</Text>
                 <View style={[styles.timeDisplay, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}>
                   <Text style={[styles.timeText, { color: colors.text }]}>{time}</Text>
@@ -251,7 +251,6 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   checkInField: {
-    minWidth: 80,
     alignItems: 'flex-start',
   },
   fieldLabel: {
@@ -265,6 +264,8 @@ const styles = StyleSheet.create({
     padding: 12,
     justifyContent: 'center',
     alignItems: 'center',
+    minHeight: 44,
+    width: '100%',
   },
   timeText: {
     fontSize: 14,
@@ -275,6 +276,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     fontSize: 14,
+    minHeight: 44,
+    width: '100%',
   },
   dropdown: {
     borderWidth: 1,
@@ -282,6 +285,8 @@ const styles = StyleSheet.create({
     padding: 12,
     justifyContent: 'center',
     alignItems: 'center',
+    minHeight: 44,
+    width: '100%',
   },
   dropdownText: {
     fontSize: 14,
