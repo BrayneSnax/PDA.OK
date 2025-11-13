@@ -52,12 +52,6 @@ export const PatternSynthesisModal = ({ isVisible, onClose, momentData }: Props)
   }, [isVisible]);
 
   const handleSave = () => {
-    if (!synthesisState.tone || !synthesisState.frequency || !synthesisState.presence) {
-      // Basic validation for the 3 core fields
-      alert('Please select Tone, Frequency, and Presence before saving.');
-      return;
-    }
-
     const finalMoment: Omit<Moment, 'id' | 'timestamp' | 'date'> = {
       ...momentData,
       ...synthesisState,

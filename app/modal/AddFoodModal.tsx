@@ -32,20 +32,18 @@ export function AddFoodModal({ isVisible, onClose, onSave, colors }: AddFoodModa
   const [energyLevel, setEnergyLevel] = useState<string>('');
 
   const handleSave = () => {
-    if (name.trim()) {
-      onSave({
-        name: name.trim(),
-        feeling: feeling.trim() || undefined,
-        notes: notes.trim() || undefined,
-        energy_level: energyLevel || undefined,
-      });
-      // Reset form
-      setName('');
-      setFeeling('');
-      setNotes('');
-      setEnergyLevel('');
-      onClose();
-    }
+    onSave({
+      name: name.trim(),
+      feeling: feeling.trim() || undefined,
+      notes: notes.trim() || undefined,
+      energy_level: energyLevel || undefined,
+    });
+    // Reset form
+    setName('');
+    setFeeling('');
+    setNotes('');
+    setEnergyLevel('');
+    onClose();
   };
 
   const handleClose = () => {
@@ -161,7 +159,7 @@ export function AddFoodModal({ isVisible, onClose, onSave, colors }: AddFoodModa
             <TouchableOpacity
               style={[styles.button, styles.saveButton, { backgroundColor: colors.accent }]}
               onPress={handleSave}
-              disabled={!name.trim()}
+
             >
               <Text style={[styles.buttonText, { color: colors.card }]}>Save Entry</Text>
             </TouchableOpacity>

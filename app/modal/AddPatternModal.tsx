@@ -24,12 +24,10 @@ export function AddPatternModal({ isVisible, onClose, onSave, colors }: AddPatte
   const [category, setCategory] = useState<string>('general');
 
   const handleSave = () => {
-    if (text.trim()) {
-      onSave(text.trim(), category);
-      setText('');
-      setCategory('general');
-      onClose();
-    }
+    onSave(text.trim(), category);
+    setText('');
+    setCategory('general');
+    onClose();
   };
 
   const handleClose = () => {
@@ -110,7 +108,7 @@ export function AddPatternModal({ isVisible, onClose, onSave, colors }: AddPatte
             <TouchableOpacity
               style={[styles.button, styles.saveButton, { backgroundColor: colors.accent }]}
               onPress={handleSave}
-              disabled={!text.trim()}
+
             >
               <Text style={[styles.buttonText, { color: colors.card }]}>Save Pattern</Text>
             </TouchableOpacity>

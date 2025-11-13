@@ -48,7 +48,7 @@ export function EditArchetypeModal({ isVisible, archetype, onClose, onSave, colo
   }, [archetype]);
 
   const handleSave = () => {
-    if (!archetype || !name.trim()) {
+    if (!archetype) {
       return;
     }
 

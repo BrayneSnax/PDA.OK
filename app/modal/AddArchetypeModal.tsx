@@ -35,10 +35,6 @@ export function AddArchetypeModal({ isVisible, onClose, onSave, colors }: AddArc
   const [theme, setTheme] = useState(generateHarmonicTheme());
 
   const handleSave = () => {
-    if (!name.trim()) {
-      return; // Require at least a name
-    }
-
     onSave({
       name: name.trim(),
       subtitle: subtitle.trim() || 'Custom Archetype',

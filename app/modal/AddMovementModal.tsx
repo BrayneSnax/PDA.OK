@@ -40,20 +40,18 @@ export function AddMovementModal({ isVisible, onClose, onAdd, colors }: Props) {
   const [showResistanceDropdown, setShowResistanceDropdown] = useState(false);
 
   const handleSave = () => {
-    if (act.trim()) {
-      onAdd({
-        act: act.trim(),
-        resistance: resistance || '',
-        gainingInertia: gainingInertia.trim(),
-        goalposts: goalposts.trim(),
-      });
-      // Reset
-      setAct('');
-      setResistance('');
-      setGainingInertia('');
-      setGoalposts('');
-      onClose();
-    }
+    onAdd({
+      act: act.trim(),
+      resistance: resistance || '',
+      gainingInertia: gainingInertia.trim(),
+      goalposts: goalposts.trim(),
+    });
+    // Reset
+    setAct('');
+    setResistance('');
+    setGainingInertia('');
+    setGoalposts('');
+    onClose();
   };
 
   const handleClose = () => {

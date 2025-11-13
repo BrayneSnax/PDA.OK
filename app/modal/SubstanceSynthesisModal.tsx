@@ -57,11 +57,6 @@ export const SubstanceSynthesisModal = ({ isVisible, onClose, momentData, onConv
   }, [isVisible]);
 
   const handleSave = () => {
-    if (!synthesisState.intention || !synthesisState.sensation || !synthesisState.reflection) {
-      alert('Please fill in Intention, Sensation, and Reflection before saving.');
-      return;
-    }
-
     const finalMoment: Omit<Moment, 'id' | 'timestamp' | 'date'> = {
       ...momentData,
       // Map new fields to Moment type structure

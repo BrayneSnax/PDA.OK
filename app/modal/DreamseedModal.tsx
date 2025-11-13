@@ -13,11 +13,9 @@ export function DreamseedModal({ isVisible, onClose, onSave, colors }: Props) {
   const [word, setWord] = useState('');
 
   const handleSave = () => {
-    if (word.trim()) {
-      onSave(word.trim());
-      setWord('');
-      onClose();
-    }
+    onSave(word.trim());
+    setWord('');
+    onClose();
   };
 
   return (
