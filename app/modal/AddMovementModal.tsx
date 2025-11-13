@@ -119,7 +119,7 @@ export function AddMovementModal({ isVisible, onClose, onAdd, colors }: Props) {
 
               {/* Resistance */}
               <View style={[styles.checkInField, { flex: 1 }]}>
-                <Text style={[styles.fieldLabel, { color: colors.text }]}>Resistance (optional)</Text>
+                <Text style={[styles.fieldLabel, { color: colors.text }]}>Resistance</Text>
                 <TouchableOpacity
                   style={[styles.dropdown, { backgroundColor: colors.card, borderColor: colors.accent + '40' }]}
                   onPress={() => setShowResistanceDropdown(!showResistanceDropdown)}
