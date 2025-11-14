@@ -176,10 +176,18 @@ export default function HomeScreen() {
   const [isJournalEntryModalVisible, setIsJournalEntryModalVisible] = useState(false);
   const [activeWhispers, setActiveWhispers] = useState<string[]>([]);
   
+  // Align Flow state - tracks which items have been aligned in current time period
+  const [alignedItems, setAlignedItems] = useState<Set<string>>(new Set());
+  
   // ScrollView ref for scrolling to top
   const scrollViewRef = useRef<ScrollView>(null);
   const [showWhispers, setShowWhispers] = useState(false);
   
+  // Reset aligned items when time container changes
+  useEffect(() => {
+    setAlignedItems(new Set());
+  }, [activeContainer]);
+
   // Scroll to top when screen or time container changes
   useEffect(() => {
     scrollViewRef.current?.scrollTo({ y: 0, animated: true });
@@ -266,6 +274,11 @@ export default function HomeScreen() {
   const closeEntryModal = () => {
     setIsJournalEntryModalVisible(false);
     setSelectedJournalEntry(null);
+  };
+
+  // Mark an item as aligned (for Align Flow visual feedback)
+  const markAsAligned = (itemId: string) => {
+    setAlignedItems(prev => new Set(prev).add(itemId));
   };
 
   if (loading) {
@@ -446,6 +459,8 @@ export default function HomeScreen() {
                   setSelectedItem(item);
                   setIsEditMode(true);
                 }}
+                container={activeContainer}
+                aligned={alignedItems.has(item.id)}
               />
 	            ))}
 	          </CollapsibleSection>
@@ -485,6 +500,7 @@ export default function HomeScreen() {
                   setIsEditMode(true);
                 }}
                 container={activeContainer}
+                aligned={alignedItems.has(item.id)}
               />
             ))}
           </CollapsibleSection>
@@ -511,6 +527,7 @@ export default function HomeScreen() {
                   setIsEditMode(true);
                 }}
                 container={activeContainer}
+                aligned={alignedItems.has(item.id)}
               />
             ))}
           </CollapsibleSection>
@@ -537,6 +554,7 @@ export default function HomeScreen() {
                   setIsEditMode(true);
                 }}
                 container={activeContainer}
+                aligned={alignedItems.has(item.id)}
               />
             ))}
           </CollapsibleSection>
@@ -591,6 +609,7 @@ export default function HomeScreen() {
                 setSelectedItem(null);
                 setIsEditMode(false);
               }}
+              onAlignFlow={() => markAsAligned(selectedItem.id)}
               isEditMode={isEditMode}
               onSave={(updatedItem) => {
                 updateItem(updatedItem.id, updatedItem);

@@ -9,6 +9,7 @@ interface Props {
   container: ContainerId;
   onClose: () => void;
   onComplete: (status: 'did it' | 'skipped' | 'forgot' | 'couldn\'t' | 'not relevant', note: string) => void;
+  onAlignFlow?: () => void; // Called when Align Flow is clicked
   isEditMode?: boolean;
   onSave?: (updatedItem: ContainerItem) => void;
 }
@@ -73,7 +74,7 @@ const getDynamicFontSize = (text: string, baseSize: number, baseLineHeight: numb
   }
 };
 
-export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete, isEditMode = false, onSave }: Props) => {
+export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete, onAlignFlow, isEditMode = false, onSave }: Props) => {
   const insets = useSafeAreaInsets();
   const [note, setNote] = useState('');
   const [editedTitle, setEditedTitle] = useState(item.title || '');
@@ -428,9 +429,13 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
               ]}
               onPress={() => {
                 setShowCheckmark(true);
-                // Brief delay to show checkmark before calling onComplete
+                // Call onAlignFlow to update emoji in parent
+                if (onAlignFlow) {
+                  onAlignFlow();
+                }
+                // Close modal after brief delay to show checkmark
                 setTimeout(() => {
-                  onComplete('did it', note);
+                  onClose();
                 }, 300);
               }}
             >

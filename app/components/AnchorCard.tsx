@@ -13,6 +13,7 @@ interface Props {
   onDelete: () => void;
   onEdit?: () => void; // Optional edit handler
   container?: ContainerId; // Add container to determine glow color
+  aligned?: boolean; // Whether Align Flow was clicked for this task
 }
 
 // Atmospheric glow field colors by time of day
@@ -49,7 +50,7 @@ const getGlowFieldStyle = (container: ContainerId | undefined, colors: ColorSche
   };
 };
 
-export const AnchorCard = React.memo(({ item, completed, onToggle, colors, onPress, onDelete, onEdit, container }: Props) => {
+export const AnchorCard = React.memo(({ item, completed, onToggle, colors, onPress, onDelete, onEdit, container, aligned }: Props) => {
   const opacity = useSharedValue(1);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -110,15 +111,15 @@ export const AnchorCard = React.memo(({ item, completed, onToggle, colors, onPre
         >
           <View style={styles.row}>
             <Text style={[styles.emoji, { color: colors.dim }]}>
-              {item.category === 'time' 
+              {aligned ? '🜁' : (item.category === 'time' 
                 ? (container === 'morning' ? '🌅' : container === 'afternoon' ? '☀️' : container === 'evening' ? '🌇' : '🌙')
-                : item.category === 'situational' ? '⚡' : '✨'}
+                : item.category === 'situational' ? '⚡' : '✨')}
             </Text>
             <Text style={[styles.title, { color: colors.text }]}>{item.title}</Text>
             <Text style={[styles.emoji, { color: colors.dim }]}>
-              {item.category === 'time' 
+              {aligned ? '🜁' : (item.category === 'time' 
                 ? (container === 'morning' ? '🌅' : container === 'afternoon' ? '☀️' : container === 'evening' ? '🌇' : '🌙')
-                : item.category === 'situational' ? '⚡' : '✨'}
+                : item.category === 'situational' ? '⚡' : '✨')}
             </Text>
           </View>
         </TouchableOpacity>
