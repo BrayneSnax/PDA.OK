@@ -306,6 +306,7 @@ export default function SubstancesScreen() {
 
       {/* Journal Entry Detail Modal */}
       <JournalEntryModal
+        key={selectedJournalEntry?.content || 'empty'}
         visible={isJournalEntryModalVisible && selectedJournalEntry !== null}
         onClose={() => {
           setIsJournalEntryModalVisible(false);
