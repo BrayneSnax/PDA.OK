@@ -96,6 +96,11 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
   
   // Shimmer removed - direct action on press
   
+  // Reset Align Flow checkmark when time container changes
+  useEffect(() => {
+    setShowCheckmark(false);
+  }, [container]);
+
   useEffect(() => {
     // Create continuous breathing animation with both scale and opacity
     const breathing = Animated.loop(
@@ -442,7 +447,7 @@ export const TaskDetailScreen = ({ item, colors, container, onClose, onComplete,
                   }
                 ]}
               >
-                {showCheckmark ? '✓ Aligned' : 'Align Flow'}
+                {showCheckmark ? '🜁' : 'Align Flow'}
               </Text>
             </TouchableOpacity>
 
