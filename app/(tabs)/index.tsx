@@ -253,6 +253,21 @@ export default function HomeScreen() {
     }
   };
 
+  // Helper functions for shared modal (used by sub-screens, not home)
+  const openEntryModal = (entry: any, title: string) => {
+    setSelectedJournalEntry({
+      title,
+      date: entry.date,
+      content: entry.fullContent,
+    });
+    setIsJournalEntryModalVisible(true);
+  };
+
+  const closeEntryModal = () => {
+    setIsJournalEntryModalVisible(false);
+    setSelectedJournalEntry(null);
+  };
+
   if (loading) {
     return (
       <View style={[styles.loadingContainer, { backgroundColor: colors.bg }]}>
@@ -364,9 +379,12 @@ export default function HomeScreen() {
     );
   };
 
+  // Determine which screen to render
+  let screenContent = null;
+
   // HOME SCREEN (Anchors)
   if (currentScreen === 'home') {
-    return (
+    screenContent = (
       <View style={[styles.container, { backgroundColor: colors.bg }]}>
         
         <StatusBar barStyle="dark-content" backgroundColor={colors.bg} />
@@ -687,7 +705,7 @@ export default function HomeScreen() {
 
   // SUBSTANCES SCREEN
   if (currentScreen === 'substances') {
-    return (
+    screenContent = (
       <View style={[styles.container, { backgroundColor: colors.bg }]}>
         <StatusBar barStyle="dark-content" backgroundColor={colors.bg} />
         
@@ -765,12 +783,7 @@ export default function HomeScreen() {
             colors={colors}
             emptyMessage="No personal substance logs yet. Log your first interaction to begin."
             onEntryPress={(entry) => {
-              setSelectedJournalEntry({
-                title: 'Substance Reflection',
-                date: entry.date,
-                content: entry.fullContent,
-              });
-              setIsJournalEntryModalVisible(true);
+              openEntryModal(entry, 'Substance Reflection');
             }}
           />
 
@@ -795,12 +808,7 @@ export default function HomeScreen() {
             colors={colors}
             emptyMessage="The substances are listening. As patterns emerge, they will begin to speak."
             onEntryPress={(entry) => {
-              setSelectedJournalEntry({
-                title: 'Substance Transmission',
-                date: entry.date,
-                content: entry.fullContent,
-              });
-              setIsJournalEntryModalVisible(true);
+              openEntryModal(entry, 'Substance Transmission');
             }}
           />
 
@@ -864,7 +872,7 @@ export default function HomeScreen() {
 
   // ARCHETYPES SCREEN
   if (currentScreen === 'archetypes') {
-    return (
+    screenContent = (
       <View style={[styles.container, { backgroundColor: colors.bg }]}>
         <StatusBar barStyle="dark-content" backgroundColor={colors.bg} />
         
@@ -966,12 +974,7 @@ export default function HomeScreen() {
             colors={colors}
             emptyMessage="No archetype dialogues yet. Invoke an archetype and log a substance moment to begin."
             onEntryPress={(entry) => {
-              setSelectedJournalEntry({
-                title: 'Archetype Dialogue',
-                date: entry.date,
-                content: entry.fullContent,
-              });
-              setIsJournalEntryModalVisible(true);
+              openEntryModal(entry, 'Archetype Dialogue');
             }}
           />
 
@@ -1043,8 +1046,7 @@ export default function HomeScreen() {
 
   // PATTERNS SCREEN
   if (currentScreen === 'patterns') {
-
-    return (
+    screenContent = (
       <View style={[styles.container, { backgroundColor: colors.bg }]}>
         <StatusBar barStyle="dark-content" backgroundColor={colors.bg} />
         
@@ -1072,12 +1074,7 @@ export default function HomeScreen() {
             colors={colors}
             emptyMessage="No patterns recorded yet. Tap below to add your first observation."
             onEntryPress={(entry) => {
-              setSelectedJournalEntry({
-                title: 'Pattern Observation',
-                date: entry.date,
-                content: entry.fullContent,
-              });
-              setIsJournalEntryModalVisible(true);
+              openEntryModal(entry, 'Pattern Observation');
             }}
           />
 
@@ -1178,8 +1175,7 @@ export default function HomeScreen() {
 
   // NOURISH MAP SCREEN
   if (currentScreen === 'nourish') {
-
-    return (
+    screenContent = (
       <View style={[styles.container, { backgroundColor: colors.bg }]}>
         <StatusBar barStyle="dark-content" backgroundColor={colors.bg} />
         
@@ -1220,12 +1216,7 @@ export default function HomeScreen() {
             colors={colors}
             emptyMessage="No meals logged yet. Tap below to record your first nourishment."
             onEntryPress={(entry) => {
-              setSelectedJournalEntry({
-                title: 'Nourishment Entry',
-                date: entry.date,
-                content: entry.fullContent,
-              });
-              setIsJournalEntryModalVisible(true);
+              openEntryModal(entry, 'Nourishment Entry');
             }}
           />
 
@@ -1298,12 +1289,7 @@ export default function HomeScreen() {
               colors={colors}
               emptyMessage="The field awaits your first movement. How does your body feel?"
               onEntryPress={(entry) => {
-                setSelectedJournalEntry({
-                  title: 'Movement Entry',
-                  date: entry.date,
-                  content: entry.fullContent,
-                });
-                setIsJournalEntryModalVisible(true);
+                openEntryModal(entry, 'Movement Entry');
               }}
             />
 
@@ -1368,7 +1354,7 @@ export default function HomeScreen() {
 
   // TRANSMISSIONS SCREEN
   if (currentScreen === 'transmissions') {
-    return (
+    screenContent = (
       <View style={[styles.container, { backgroundColor: colors.bg }]}>
         <StatusBar barStyle="dark-content" backgroundColor={colors.bg} />
         
@@ -1385,7 +1371,24 @@ export default function HomeScreen() {
     );
   }
 
-  return null;
+  // Single return with shared modal
+  return (
+    <>
+      {screenContent}
+
+      {/* Shared Journal Entry Modal - used by all sub-screens except home */}
+      {selectedJournalEntry && (
+        <JournalEntryModal
+          visible={isJournalEntryModalVisible}
+          onClose={closeEntryModal}
+          title={selectedJournalEntry.title}
+          date={selectedJournalEntry.date}
+          content={selectedJournalEntry.content}
+          colors={colors}
+        />
+      )}
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
