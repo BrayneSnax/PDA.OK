@@ -305,18 +305,19 @@ export default function SubstancesScreen() {
       />
 
       {/* Journal Entry Detail Modal */}
-      <JournalEntryModal
-        key={selectedJournalEntry?.content || 'empty'}
-        visible={isJournalEntryModalVisible && selectedJournalEntry !== null}
-        onClose={() => {
-          setIsJournalEntryModalVisible(false);
-          setSelectedJournalEntry(null);
-        }}
-        title={selectedJournalEntry?.title || ''}
-        date={selectedJournalEntry?.date}
-        content={selectedJournalEntry?.content || ''}
-        colors={colors}
-      />
+      {selectedJournalEntry && (
+        <JournalEntryModal
+          visible={isJournalEntryModalVisible}
+          onClose={() => {
+            setIsJournalEntryModalVisible(false);
+            setSelectedJournalEntry(null);
+          }}
+          title={selectedJournalEntry.title}
+          date={selectedJournalEntry.date}
+          content={selectedJournalEntry.content}
+          colors={colors}
+        />
+      )}
     </View>
   );
 }
