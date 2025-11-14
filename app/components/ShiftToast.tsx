@@ -9,7 +9,7 @@ interface ShiftToastProps {
   onDismiss: () => void;
 }
 
-// Single static message for "did it" / Align Flow
+// Single static message for Align Flow completion
 const warmExhaleMessage = 'Completion hums softly through the weave.';
 
 // Get time-of-day background color for toast
@@ -58,7 +58,7 @@ export const ShiftToast: React.FC<ShiftToastProps> = ({
         }),
       ]).start();
 
-      // Auto-dismiss after 2 seconds (matching "did it" duration)
+      // Auto-dismiss after 2 seconds
       const timer = setTimeout(() => {
         dismissToast();
       }, 2000);

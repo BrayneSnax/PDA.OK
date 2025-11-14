@@ -616,23 +616,16 @@ export default function HomeScreen() {
                 setIsEditMode(false);
               }}
               onComplete={(status, note) => {
-                if (status === 'did it') {
-                  // Mark task as complete with checkmark
-                  toggleCompletion(selectedItem.id);
-                  // Show completion pulse and toast
-                  handleCompletion(selectedItem.id);
-                } else {
-                  // For other actions (skipped, forgot, couldn't, not relevant),
-                  // show ring pulse (breath), then ActionToast after 1.5s
-                  setShowRingPulse(true);
-                  setCurrentActionType(status);
-                  setTimeout(() => {
-                    setShowActionToast(true);
-                  }, 1500);
-                  
-                  // Note: We're just acknowledging the action, not creating a duplicate task
-                  // The note parameter could be logged to a journal system in the future
-                }
+                // For actions (skipped, forgot, couldn't, not relevant),
+                // show ring pulse (breath), then ActionToast after 1.5s
+                setShowRingPulse(true);
+                setCurrentActionType(status);
+                setTimeout(() => {
+                  setShowActionToast(true);
+                }, 1500);
+                
+                // Note: We're just acknowledging the action, not creating a duplicate task
+                // The note parameter could be logged to a journal system in the future
 
                 // Close the modal after any action
                 setSelectedItem(null);

@@ -8,7 +8,7 @@ interface Props {
   colors: ColorScheme;
   container: ContainerId;
   onClose: () => void;
-  onComplete: (status: 'did it' | 'skipped' | 'forgot' | 'couldn\'t' | 'not relevant', note: string) => void;
+  onComplete: (status: 'skipped' | 'forgot' | 'couldn\'t' | 'not relevant', note: string) => void;
   onAlignFlow?: () => void; // Called when Align Flow is clicked
   isEditMode?: boolean;
   onSave?: (updatedItem: ContainerItem) => void;
